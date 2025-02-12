@@ -14,7 +14,9 @@ public:
         for(; fast < nums.size(); fast++)
         {
             if(nums[fast] != val)
+            {
                 nums[slow++] = nums[fast];
+            }
         }
         return slow;
     }

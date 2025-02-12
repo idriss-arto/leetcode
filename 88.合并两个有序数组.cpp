@@ -14,8 +14,14 @@ public:
         m--, n--;
         while(m >=0 || n >=0)
         {
-            if(m < 0)nums1[p--] = nums2[n--];
-            else if(n < 0)nums1[p--] = nums1[m--];
+            if(m < 0)
+            {
+                nums1[p--] = nums2[n--];
+            }
+            else if(n < 0)
+            {
+                nums1[p--] = nums1[m--];
+            }
             else
             {
                 if(nums1[m] > nums2[n])

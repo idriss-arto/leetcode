@@ -12,6 +12,7 @@ public:
     char nextGreatestLetter(vector<char>& letters, char target) {
         int left = 0, right = letters.size() - 1, middle = 0;
         while(left <= right)
+        // 左闭右闭
         {
             middle = left + (right - left) / 2;
             if(letters[middle] <= target)

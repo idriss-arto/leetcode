@@ -8,19 +8,33 @@
 class Solution {
 public:
     bool isPerfectSquare(int num) {
-        //左闭右闭
         int left = 0;
         int right = num;
         int middle = 0;
         while(left <= right)
+        // 左闭右闭
         {
             middle = left + (right - left) / 2;
-            //num=0或1时，middle为0
-            if(middle == 0)return num == 1 ? 1 : 0;
-            //middle不为0
-            if(middle > num / middle)right = middle - 1;
-            else if(middle < num / middle)left = middle + 1;
-            else if(middle * middle == num)return true;
+            if(middle == 0)
+            // num=0或1时，middle为0
+            {
+                return num == 1 ? 1 : 0;
+            }
+
+            // middle不为0
+            if(middle > num / middle)
+            {
+                right = middle - 1;
+            }
+            else if(middle < num / middle)
+            {
+                left = middle + 1;
+            }
+            else if(middle * middle == num)
+            // 不满足上面两个的也不一定满足这个，比如num = 17，middle = 4
+            {
+                return true;
+            }
             else break;
         }
         return false;

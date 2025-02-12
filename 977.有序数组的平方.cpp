@@ -15,6 +15,7 @@ public:
         while(i <= j)
         {
             if((nums[i] * nums[i]) > (nums[j] * nums[j]))
+            // 可能越界，最好用abs(nums[i]) > abs(nums[j])
             {
                 result[k] = nums[i] * nums[i];
                 k--;

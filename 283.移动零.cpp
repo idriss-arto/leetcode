@@ -16,8 +16,11 @@ public:
             if(nums[fast] != 0)
             {
                 nums[slow] = nums[fast];
-                //注意不要错误置零，比如[1]，[2,0]
-                if(slow != fast)nums[fast] = 0;
+                if(slow != fast)
+                // 注意不要错误置零，比如[1]，[2,0]
+                {
+                    nums[fast] = 0;
+                }
                 slow++;
             }
         }

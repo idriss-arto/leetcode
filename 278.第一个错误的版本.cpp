@@ -17,8 +17,8 @@ public:
             middle = left + (right - left) / 2;
             if(isBadVersion(middle))
             {
-                //因为middle也可能是第一个错误的版本，所以不能是right = middle - 1;
-                //此时如果while循环判断是left <= right，则陷入死循环（left = right = middle）
+                // 因为middle也可能是第一个错误的版本，所以不能是right = middle - 1;
+                // 此时如果while循环判断是left <= right，则陷入死循环（left = right = middle）
                 right = middle;
             }
             else
