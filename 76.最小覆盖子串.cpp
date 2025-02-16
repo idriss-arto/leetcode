@@ -36,7 +36,7 @@ public:
     }
 
     string minWindow(string s, string t) {
-        int result = INT32_MAX;
+        int result = INT_MAX;
         int border[2] = {0};
 
         for(int i = 0; i < t.length(); i++)
@@ -63,7 +63,7 @@ public:
             }
         }
 
-        if(result != INT32_MAX)
+        if(result != INT_MAX)
         {
             return s.substr(border[0], result);
         }
