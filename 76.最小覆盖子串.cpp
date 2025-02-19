@@ -81,17 +81,17 @@ public:
         string res;
         for(auto c:t) ht[c] ++;
 
-        for(int i = 0, j = 0; i < s.size(); i ++){
-            hs[s[i]] ++;
-            if(hs[s[i]] <= ht[s[i]]) count ++;
+        for(int right = 0, left = 0; right < s.size(); right++){
+            hs[s[right]] ++;
+            if(hs[s[right]] <= ht[s[right]]) count ++;
             不是看子串是否覆盖t，而是看left所指向字母的个数是否大于所需
-            while(hs[s[j]] > ht[s[j]]) {
-                hs[s[j]]--;
-                j++;
+            while(hs[s[left]] > ht[s[left]]) {
+                hs[s[left]]--;
+                left++;
             }
             if(count == t.size()){
-                if(res.empty() || i - j + 1 < res.size()){
-                    res = s.substr(j,i - j + 1);
+                if(res.empty() || right - left + 1 < res.size()){
+                    res = s.substr(left, right - left + 1);
                 }
             }
         }
