@@ -9,7 +9,7 @@
 使用map，用{nums[i],i}作为键值对，即数组里数的值为key，数的位置为value
 可能存在一个问题，就是数的值出现重复，然而map里key不允许重复
 我的思路全插完再搜，题解的思路搜完再插
-我的思路里，出现重复的key，不知道是否需要留下，比如target=6时，[3,3]和[1,1,2,4]处理不一样
+我的思路里，出现重复的key，直接忽略，但可能是需要留下的，比如target=6时，[3,3]和[1,1,2,4]处理不一样
 题解的思路可以避免这个问题
 */
 
@@ -24,7 +24,12 @@ public:
         vector<int> res;
         unordered_map <int, int> place;
 
-        for (int i : nums) {
+        // 这样写i不是下标，是元素
+        // for (int i : nums) {
+        //     place[nums[i]] = i;
+        // }
+
+        for (int i = 0; i < nums.size(); i++) {
             place[nums[i]] = i;
         }
 
