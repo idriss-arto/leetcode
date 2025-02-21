@@ -20,20 +20,25 @@ public:
         
         for (int i = 0; i < nums.size(); i++) {
             // 如果a是正数，a<b<c，不可能形成和为0的三元组
-            if (nums[i] > 0)
+            if (nums[i] > 0) {
                 break;
+            }
             
             // [a, a, ...] 如果本轮a和上轮a相同，那么找到的b，c也是相同的，所以去重a
-            if (i > 0 && nums[i] == nums[i - 1])
+            if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
+            }
             
             // 这个set的作用是存储b
             unordered_set<int> set;
             
             for (int k = i + 1; k < nums.size(); k++) {
-                // 去重b=c时的b和c
-                if (k > i + 2 && nums[k] == nums[k - 1] && nums[k - 1] == nums[k - 2])
+                // 去重
+                // 如果只判断(k>i+1 && nums[k]==nums[k-1])的话，会错过a+b+c等于0，但b=c的特殊情况
+                // 多判断一次，当a固定，b=c=d时，不管a+b+c是否为0，在循环到c时都已记录，显然不应该记录a+b+d
+                if (k > i + 2 && nums[k] == nums[k - 1] && nums[k - 1] == nums[k - 2]) {
                     continue;
+                }
                 
                 // a+b+c=0 <=> b=0-(a+c)
                 int target = 0 - (nums[i] + nums[k]);
