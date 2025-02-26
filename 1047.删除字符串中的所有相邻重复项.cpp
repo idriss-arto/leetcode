@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=1047 lang=cpp
- *
+ * 栈
  * [1047] 删除字符串中的所有相邻重复项
  */
 

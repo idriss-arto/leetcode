@@ -1,8 +1,16 @@
 /*
  * @lc app=leetcode.cn id=347 lang=cpp
- *
+ * 小顶堆
  * [347] 前 K 个高频元素
  */
+
+/* 
+ *思路：
+ * 先用unordered_map计数
+ * 后续输出最大k个，我是用的map将所有值按频率排序后输出，题解用的priority_queue（小顶堆）只保存出现频率最高的k个
+ * std::map：适用于需要根据键快速查找值，并且需要对元素按照键进行排序的场景，例如存储字典、统计单词出现的频率等。
+ * std::priority_queue：适用于需要动态维护元素优先级，并且只关心优先级最高（或最低）元素的场景，例如任务调度、Dijkstra 算法等。
+*/
 
 // @lc code=start
 #include <vector>
