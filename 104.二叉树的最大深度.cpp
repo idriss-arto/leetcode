@@ -39,15 +39,9 @@ public:
     }
 
     // 递归法
-    int loop(TreeNode* root, int& depth) {
-        if (root == nullptr) return 0;
-        else return (1 + max(loop(root->left, depth), loop(root->right, depth)));
-    }
-
     int maxDepth(TreeNode* root) {
         if (root == nullptr) return 0;
-        int depth = 0;
-        return loop(root, depth);
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
     }
 };
 // @lc code=end
