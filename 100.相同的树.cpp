@@ -29,11 +29,7 @@ public:
 
     // 递归法
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        if (!p && !q) return true;
-        else if (!p || !q || p->val != q->val) return false;
-        else {
-            return compare(p->left, q->left) && compare(p->right, q->right);
-        }
+        return compare(p, q);
     }
 
     // 迭代法
