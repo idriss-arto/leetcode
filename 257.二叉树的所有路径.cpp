@@ -64,9 +64,11 @@ public:
         treeSt.push(root);
         pathSt.push(to_string(root->val));
         while (!treeSt.empty()) {
-            TreeNode* node = treeSt.top(); treeSt.pop(); // 取出节点 中
-            string path = pathSt.top();pathSt.pop();    // 取出该节点对应的路径
-            if (node->left == NULL && node->right == NULL) { // 遇到叶子节点
+            TreeNode* node = treeSt.top();
+            treeSt.pop();                                       // 取出节点 中
+            string path = pathSt.top();
+            pathSt.pop();                                       // 取出该节点对应的路径
+            if (node->left == NULL && node->right == NULL) {    // 遇到叶子节点
                 result.push_back(path);
             }
             if (node->right) { // 右
@@ -81,7 +83,7 @@ public:
         return result;
     }
 
-    // 递归法
+    // 题解递归法
     // 因为参数列表里path没有加引用，所以是值传递，间接起到回溯作用
     void traversal(TreeNode* cur, string path, vector<string>& result) {
         path += to_string(cur->val); // 中
