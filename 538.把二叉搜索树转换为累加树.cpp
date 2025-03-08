@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=530 lang=cpp
+ * @lc app=leetcode.cn id=538 lang=cpp
  *
- * [530] 二叉搜索树的最小绝对差
+ * [538] 把二叉搜索树转换为累加树
  */
 
 // @lc code=start
@@ -9,6 +9,7 @@
 #include <queue>
 #include <stack>
 #include <climits>
+#include <unordered_map>
 using namespace std;
 // Definition for a binary tree node.
 struct TreeNode {
@@ -22,55 +23,49 @@ struct TreeNode {
 class Solution {
 public:
     //* 迭代法
-    int getMinimumDifference(TreeNode* root) {
-        int min = INT_MAX;
+    TreeNode* convertBST(TreeNode* root) {
+        if (root == nullptr) return root;
         stack<TreeNode*> sta;
+        int sum = 0;
         sta.push(root);
         TreeNode* cur = root;
-        TreeNode* pre = nullptr;
         while (!sta.empty()) {
             cur = sta.top();
             sta.pop();
+            //* 右，根，左。按此顺序，节点的值递减
             if (cur != nullptr) {
-                if (cur->right) sta.push(cur->right);
+                if (cur->left) sta.push(cur->left);
 
                 sta.push(cur);
                 sta.push(nullptr);
 
-                if (cur->left) sta.push(cur->left);
+                if (cur->right) sta.push(cur->right);
             }
             else {
                 cur = sta.top();
                 sta.pop();
-                if (pre == nullptr) {
-                    pre = cur;
-                    continue;
-                }
-                else {
-                    int x = cur->val - pre->val;
-                    min = min < x ? min : x;
-                    pre = cur;
-                }
+                int val = cur->val;
+                cur->val += sum;
+                sum += val;
             }
         }
-        return min;
+        return root;
     }
 
     //* 递归法
-    int result = INT_MAX;
-    TreeNode* parent = NULL;
-    void traversal(TreeNode* cur) {
+    int pre = 0; // 记录前一个节点的数值
+    void traversal(TreeNode* cur) { // 右中左遍历
         if (cur == NULL) return;
-        traversal(cur->left);   // 左
-        if (parent != NULL){       // 中
-            result = min(result, cur->val - parent->val);
-        }
-        parent = cur; // 记录前一个
-        traversal(cur->right);  // 右
+        traversal(cur->right);
+        cur->val += pre;
+        pre = cur->val;
+        traversal(cur->left);
     }
-    int getMinimumDifference(TreeNode* root) {
+
+    TreeNode* convertBST(TreeNode* root) {
+        pre = 0;
         traversal(root);
-        return result;
+        return root;
     }
 };
 // @lc code=end

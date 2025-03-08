@@ -56,21 +56,21 @@ public:
     //* 递归法
     int maxCount = 0;   // 最大频率
     int count = 0;      // 统计频率
-    TreeNode* pre = NULL;
+    TreeNode* parent = NULL;
     vector<int> result;
     void searchBST(TreeNode* cur) {
         if (cur == NULL) return ;
 
         searchBST(cur->left);       // 左
                                     // 中
-        if (pre == NULL) { // 第一个节点
+        if (parent == NULL) { // 第一个节点
             count = 1;
-        } else if (pre->val == cur->val) { // 与前一个节点数值相同
+        } else if (parent->val == cur->val) { // 与前一个节点数值相同
             count++;
         } else { // 与前一个节点数值不同
             count = 1;
         }
-        pre = cur; // 更新上一个节点
+        parent = cur; // 更新上一个节点
 
         if (count == maxCount) { // 如果和最大值相同，放进result中
             result.push_back(cur->val);
@@ -88,7 +88,7 @@ public:
     vector<int> findMode(TreeNode* root) {
         count = 0;
         maxCount = 0;
-        pre = NULL; // 记录前一个节点
+        parent = NULL; // 记录前一个节点
         result.clear();
 
         searchBST(root);

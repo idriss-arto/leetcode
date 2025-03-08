@@ -3,7 +3,12 @@
  *
  * [98] 验证二叉搜索树
  */
-
+/*
+ * 陷阱一
+ * 不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了，而是左子树都小于中间节点，右子树都大于中间节点。
+ * 陷阱二
+ * 在一个有序序列求最值的时候，不要定义一个全局变量，然后遍历序列更新全局变量求最值。因为最值可能就是int 或者 longlong的最小值。
+*/
 // @lc code=start
 #include <vector>
 #include <queue>
@@ -58,6 +63,7 @@ public:
         while (!sta.empty()) {
             cur = sta.top();
             sta.pop();
+            //* 二叉搜索树的中序遍历是递增序列
             if (cur != nullptr) {
                 if (cur->right) sta.push(cur->right);
 
