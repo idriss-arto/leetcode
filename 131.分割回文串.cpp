@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=131 lang=cpp
- *
+ * 回溯(分割)
  * [131] 分割回文串
  */
 #include <vector>
