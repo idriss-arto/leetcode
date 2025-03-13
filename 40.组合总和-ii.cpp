@@ -30,6 +30,7 @@ private:
             if (i > startIndex && candidates[i] == candidates[i - 1]) {
                 continue;
             }
+             * 还有一种写法见491
             */
 
             sum += candidates[i];
