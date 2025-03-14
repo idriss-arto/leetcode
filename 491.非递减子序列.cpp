@@ -16,7 +16,7 @@ class Solution {
                 result.push_back(path);
             }
             int used[201] = {0};            //* 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
-                                            //! 不能定义为全局变量，因为只记录同一父节点的本层
+                                            //! 不能定义为全局变量，因为只记录本层
             for (int i = startIndex; i < nums.size(); i++) {
                 if ((!path.empty() && nums[i] < path.back()) || used[nums[i] + 100] == 1) {
                         continue;
