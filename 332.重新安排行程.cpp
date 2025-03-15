@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=332 lang=cpp
- *
+ * 回溯
  * [332] 重新安排行程
  */
 

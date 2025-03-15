@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=51 lang=cpp
- *
+ * 回溯
  * [51] N 皇后
  */
 
@@ -14,28 +14,32 @@ private:
     vector<string> result;
 
     bool isOKPlace(int row, int column, int n) {
-        for (int i = 0; i < n; i++) {
-            if (result[row][i] == 'Q' || result[i][column] == 'Q') return false;
+        //* 因为按行遍历，所以只检查列就可以了，而且右下和左下也不用检查
+        // for (int i = 0; i < n; i++) {
+        //     if (result[row][i] == 'Q' || result[i][column] == 'Q') return false;
+        // }
+        for (int i = 0; i < row; i++) {
+            if (result[i][column] == 'Q') return false;
         }
         //* 右下
-        for (int i = 0; ; i++) {
-            if ((row + i >= n) || (column + i >= n)) break;
-            if (result[row + i][column + i] == 'Q') return false;
-        }
+        // for (int i = 0; ; i++) {
+        //     if ((row + i >= n) || (column + i >= n)) break;
+        //     if (result[row + i][column + i] == 'Q') return false;
+        // }
         //* 左上
         for (int i = 0; ; i++) {
             if ((row - i < 0) || (column - i < 0)) break;
             if (result[row - i][column - i] == 'Q') return false;
         }
         //* 左下
-        for (int i = 0; ; i++) {
-            if ((row + i >= n) || (column - i < 0)) break;
-            if (result[row + i][column - i] == 'Q') return false;
-        }
+        // for (int i = 0; ; i++) {
+        //     if ((row + i >= n) || (column - i < 0)) break;
+        //     if (result[row + i][column - i] == 'Q') return false;
+        // }
         //* 右上
         for (int i = 0; ; i++) {
             if ((row - i < 0) || (column + i >= n)) break;
-            if (result[row + i][column - i] == 'Q') return false;
+            if (result[row - i][column + i] == 'Q') return false;
         }
 
         return true;
