@@ -4,6 +4,13 @@
  * [28] 找出字符串中第一个匹配项的下标
  */
 
+/*
+ * 思路：
+ * 是haystack中找needle
+ * 我的思路是暴力枚举
+ * 题解的思路使用KMP算法，先对needle求对应的next数组
+*/
+
 // @lc code=start
 #include<string>
 #include <vector>
@@ -22,6 +29,7 @@ public:
             while (j > 0 && s[i] != s[j]) {     //* j要保证大于0，因为下面有取j-1作为数组下标的操作
                 j = next[j - 1];                //* 注意这里，是要找前一位的对应的回退位置
             }
+            //* 从回退的位置重新开始匹配
             if (s[i] == s[j]) {
                 j++;
             }
@@ -37,12 +45,15 @@ public:
         getNext(&next[0], needle);
         int j = 0;
         for (int i = 0; i < haystack.size(); i++) {
+            //* 出现不匹配的字符，根据next数组找needle中重新开始匹配的位置
             while(j > 0 && haystack[i] != needle[j]) {
                 j = next[j - 1];
             }
+            //* 重新开始匹配
             if (haystack[i] == needle[j]) {
                 j++;
             }
+            //! 判断已经找到子串匹配位置
             if (j == needle.size() ) {
                 return (i - needle.size() + 1);
             }

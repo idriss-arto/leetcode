@@ -1,8 +1,17 @@
 /*
  * @lc app=leetcode.cn id=17 lang=cpp
- * 回溯
+ * 回溯(不同集合的组合)
  * [17] 电话号码的字母组合
  */
+
+/*
+ * 思路：
+ * 回溯经典的问题，也可以说是dfs
+ * 先确定每个数字能对应的字母集合
+ * 在回溯函数里，用index指向现在对应第几位，
+ * 再根据现在指向的数字，依次取字母表里的字母，然后dfs进入下一层
+ * index超过要处理的范围时，说明得到一个结果，将结果加入结果集，然后返回上一层
+*/
 
 // @lc code=start
 #include <vector>
@@ -30,6 +39,7 @@ private:
         "wxyz", // 9
     };
     */
+
     void backtracking(string digits, int startIndex) {
         if (startIndex == digits.length()) {
             result.push_back(path);
