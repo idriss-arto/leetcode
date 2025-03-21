@@ -44,7 +44,7 @@ public:
         
         if (start == -1) return start;
         
-        //* 注意，上面遍历时已经支付了从最后一个站到0站的cost
+        //* 注意，上面遍历时已经支付了从start到最后一个站，再到0站的cost
         int cur = 0;
         while (cur != start) {
             nowGas += rest[cur];
