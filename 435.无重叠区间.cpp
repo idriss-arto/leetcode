@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=435 lang=cpp
- * 贪心
+ * 贪心，重叠区间
  * [435] 无重叠区间
  */
 
