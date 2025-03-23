@@ -4,6 +4,14 @@
  * [844] 比较含退格的字符串
  */
 
+/*
+ * 思路：
+ * 快慢指针
+ * fast找萝卜，slow找坑
+ * 一个萝卜找一个坑
+ * fast指向的位置是'#'的话撤销上一个坑里的萝卜（slow减一）
+*/
+
 // @lc code=start
 #include <string>
 using namespace std;
@@ -11,14 +19,14 @@ class Solution {
 public:
     bool backspaceCompare(string s, string t) {
         int sSlow = 0, sFast = 0;
-        for(; sFast < s.length(); sFast++)
+        for (; sFast < s.length(); sFast++)
         {
             
-            if(s[sFast] != '#')
+            if (s[sFast] != '#')
             {
                 s[sSlow++] = s[sFast];
             }
-            else if(s[sFast] == '#' && sSlow != 0)
+            else if (s[sFast] == '#' && sSlow != 0)
             {
                 sSlow -= 1;
             }
@@ -26,26 +34,25 @@ public:
         }
 
         int tSlow = 0, tFast = 0;
-        for(; tFast < t.length(); tFast++)
+        for (; tFast < t.length(); tFast++)
         {
-            if(t[tFast] != '#')
+            if (t[tFast] != '#')
             {
                 t[tSlow++] = t[tFast];
             }
-            else if(t[tFast] == '#' && tSlow != 0)
+            else if (t[tFast] == '#' && tSlow != 0)
             {
                 tSlow -= 1;
             }
             else continue;
         }
 
-        if(sSlow != tSlow)return false;
+        if (sSlow != tSlow) return false;
 
-        for(int i = 0; i < sSlow; i++)
+        for (int i = 0; i < sSlow; i++)
         {
-            if(s[i] != t[i])return false;
+            if (s[i] != t[i]) return false;
         }
-
 
         return true;
     }

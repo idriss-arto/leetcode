@@ -4,13 +4,18 @@
  * [54] 螺旋矩阵
  */
 
+/*
+ * 我的思路：运用偏移量调制循环边界，但最后需要额外处理最中间一行或最中间一列
+ * 题解的思路：使用visited二维数组记录某个位置是否访问过，遇到边界或已访问的元素，转变方向
+ * 题解的好处是不用单独处理特殊位置，但需要额外开一个二维数组
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
 class Solution {
- private:
+private:
     static constexpr int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
 
 public:
     //* 官方题解，思路更简单
@@ -42,6 +47,7 @@ public:
         return order;
     }
 
+    //* 我的题解，运用偏移量调制循环边界，但最后需要额外处理最中间一行或最中间一列
     vector<int> mySpiralOrder(vector<vector<int>>& matrix) {
         //* 先获取矩阵大小
         int m = matrix.size();

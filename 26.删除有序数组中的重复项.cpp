@@ -22,9 +22,9 @@ public:
         //* 与前一个值比较，即fast与fast-1进行比较，是去重
         //* 与后一个值比较，即fast和fast+1比较的话，是判断fast指向的值是否是最后一次出现，但最后一个数没得比
         int slow = 1, fast = 1;
-        for(; fast < nums.size(); fast++)
+        for (; fast < nums.size(); fast++)
         {
-            if(nums[fast] != nums[fast - 1])
+            if (nums[fast] != nums[fast - 1])
             {
                 nums[slow++] = nums[fast];
             }

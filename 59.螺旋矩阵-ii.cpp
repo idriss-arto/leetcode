@@ -4,6 +4,10 @@
  * [59] 螺旋矩阵 II
  */
 
+/*
+ * 思路：每转完一圈增加偏移量offset来控制循环边界，需要注意n为奇数时矩阵最中间的特殊位置
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;

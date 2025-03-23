@@ -1,7 +1,7 @@
 /*
-https://kamacoder.com/problempage.php?pid=1070
-给定一个整数数组 Array，请计算该数组在每个指定区间内元素的总和。
-* 前缀和
+ * https://kamacoder.com/problempage.php?pid=1070
+ * 给定一个整数数组 Array，请计算该数组在每个指定区间内元素的总和。
+ * 前缀和
 */
 #include <iostream>
 #include <vector>

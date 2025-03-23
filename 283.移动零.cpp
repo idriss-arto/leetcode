@@ -11,13 +11,13 @@ class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
         int slow = 0, fast = 0;
-        for(; fast < nums.size(); fast++)
+        for (; fast < nums.size(); fast++)
         {
-            if(nums[fast] != 0)
+            if (nums[fast] != 0)
             {
                 nums[slow] = nums[fast];
-                if(slow != fast)
-                // 注意不要错误置零，比如[1]，[2,0]
+                if (slow != fast)
+                //* 注意不要错误置零，比如[1]，[2,0]
                 {
                     nums[fast] = 0;
                 }

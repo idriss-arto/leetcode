@@ -4,6 +4,12 @@
  * [704] 二分查找
  */
 
+/*
+ * 使用二分前提：数组有序，无重复元素
+ * 要注意用middle = (left + right) / 2;可能导致溢出
+ * 可以换为middle = left + (right - left) / 2
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
@@ -14,7 +20,7 @@ public:
         int right = nums.size() - 1;
         int middle = 0;
         while(left <= right)
-        // 左闭右闭
+        //* 左闭右闭
         {
             middle = (left + right) / 2;
             if(nums[middle] > target)

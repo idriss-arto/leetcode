@@ -20,8 +20,8 @@ public:
     vector<int> searchRange(vector<int>& nums, int target) {
         int leftBorder = searchLeftBorder(nums, target);
         int rightBorder = searchRightBorder(nums, target);
-        //* 情况一 在数组范围的右边或者左边
-        if (leftBorder == nums.size() - 1 || rightBorder == 0) return {-1, -1};
+        //* 情况一 在数组范围的左边或者右边
+        if (rightBorder == 0 || leftBorder == nums.size() - 1) return {-1, -1};
         //* 情况三 target 在数组范围中，且数组中存在target
         if (rightBorder - leftBorder > 1) return {leftBorder + 1, rightBorder - 1};
         //* 情况二 在数组范围中，且数组中不存在target

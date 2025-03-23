@@ -4,6 +4,12 @@
  * [977] 有序数组的平方
  */
 
+/*
+ * 思路：
+ * 在包含负数的数组里，平方后最大的数是原来绝对值最大的数
+ * 所以从数组两端开始找，从后往前填result数组
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
@@ -12,10 +18,10 @@ public:
     vector<int> sortedSquares(vector<int>& nums) {
         vector<int> result(nums.size(), 0);
         int i = 0, j = nums.size() - 1, k = nums.size() - 1;
-        while(i <= j)
+        while (i <= j)
         {
-            if((nums[i] * nums[i]) > (nums[j] * nums[j]))
-            // 可能越界，最好用abs(nums[i]) > abs(nums[j])
+            if ((nums[i] * nums[i]) > (nums[j] * nums[j]))
+            //* 可能越界，最好用abs(nums[i]) > abs(nums[j])
             {
                 result[k] = nums[i] * nums[i];
                 k--;
