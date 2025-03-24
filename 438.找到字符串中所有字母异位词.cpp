@@ -4,25 +4,19 @@
  * [438] 找到字符串中所有字母异位词
  */
 
+/*
+ * 思路:
+ * 滑动窗口加哈希(因为确定只用小写字母作为key，所以直接用数组模拟hash即可，不用unordered_map)
+ * 滑动窗口移动时，左边出界的字母对应计数减一，右边新入界的字母对应计数加一
+ ! 注意，两个vector可以直接用‘==’来判断是否相等
+*/
+
 // @lc code=start
 #include<vector>
 #include<unordered_map>
 using namespace std;
 class Solution {
 public:
-    unordered_map<char, int>cnt1, cnt2;
-
-    bool check() {
-        for(auto it : cnt1) {
-            if (it.second > cnt2[it.first]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-
     vector<int> findAnagrams(string s, string p) {
         int sLen = s.size(), pLen = p.size();
 
