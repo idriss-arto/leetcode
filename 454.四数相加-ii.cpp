@@ -4,6 +4,12 @@
  * [454] 四数相加 II
  */
 
+/*
+ * 思路：
+ * 这题只需要返回满足条件的元组数
+ * 相较四数之和更简单，因为四个数来自四个数组，不用考虑去重
+*/
+
 // @lc code=start
 #include<vector>
 #include<unordered_map>

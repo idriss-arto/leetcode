@@ -9,6 +9,7 @@
  * 因为只返回值，所以可以排序改变顺序便于操作
  * 最外层for循环遍历第一个值，再在后面的区域里用双指针确定剩下的两个值
  * 需要注意去重（第一个值和后面双指针都需要去重）。另，此题可剪枝
+ * 
  * 我的思路也是先排序
  * 然后边插入set边搜：两层for循环确定两个值，再在set里看有没有第三个值，但这样去重很麻烦
 */
@@ -25,9 +26,11 @@ public:
         vector<vector<int>> result;
         sort(nums.begin(), nums.end());
         for (int i = 0; i < nums.size(); i++) {
+            //* 剪枝
             if (nums[i] > 0) {
                 break;
             }
+            //* 去重
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
@@ -54,30 +57,30 @@ public:
                 }
             }
             /*
-            while的另一种写法
-            while (right > left) {
-                去重复逻辑如果放在这里，0，0，0 的情况，可能直接导致 right<=left 了，从而漏掉了 0,0,0 这种三元组
-                //* while (right > left && nums[right] == nums[right - 1]) right--;
-                //* while (right > left && nums[left] == nums[left + 1]) left++;
-                if (nums[i] + nums[left] + nums[right] > 0) right--;
-                else if (nums[i] + nums[left] + nums[right] < 0) left++;
-                else {
-                    result.push_back(vector<int>{nums[i], nums[left], nums[right]});
-                    //* 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
-                    while (right > left && nums[right] == nums[right - 1]) right--;
-                    while (right > left && nums[left] == nums[left + 1]) left++;
+             * while的另一种写法
+             * while (right > left) {
+             *     去重复逻辑如果放在这里，0，0，0 的情况，可能直接导致 right<=left 了，从而漏掉了 0,0,0 这种三元组
+             *     //* while (right > left && nums[right] == nums[right - 1]) right--;
+             *     //* while (right > left && nums[left] == nums[left + 1]) left++;
+             *     if (nums[i] + nums[left] + nums[right] > 0) right--;
+             *     else if (nums[i] + nums[left] + nums[right] < 0) left++;
+             *     else {
+             *         result.push_back(vector<int>{nums[i], nums[left], nums[right]});
+             *         //* 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
+             *         while (right > left && nums[right] == nums[right - 1]) right--;
+             *         while (right > left && nums[left] == nums[left + 1]) left++;
 
-                    找到答案时，双指针同时收缩
-                    right--;
-                    left++;
-                }
-            }
+             *         // 找到答案时，双指针同时收缩
+             *         right--;
+             *         left++;
+             *     }
+             * }
             */
         }
         return result;
     }
 
-    //* 可以用hash，但去重很麻烦
+    //! 可以用hash，但去重很麻烦
     //* 在一个数组中找到3个数形成的三元组，它们的和为0，不能重复使用（三数下标互不相同），且三元组不能重复。
     //* b（存储）== 0-(a+c)（检索）
     vector<vector<int>> threeSumWithHash(vector<int>& nums) {
