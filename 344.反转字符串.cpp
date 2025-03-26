@@ -4,6 +4,10 @@
  * [344] 反转字符串
  */
 
+/*
+ * 思路：双指针，交换两个指针指向的值
+*/
+
 // @lc code=start
 #include<vector>
 using namespace std;

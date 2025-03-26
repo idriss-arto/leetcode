@@ -2,6 +2,12 @@
 * 字符串，双指针
 */ 
 
+/*
+ * 思路：
+ * 先遍历整个字符串求出数字个数，再resize字符串大小
+ * 双指针，都从后往前遍历（避免非数字被覆盖）
+*/
+
 #include<iostream>
 #include<string>
 using namespace std;
