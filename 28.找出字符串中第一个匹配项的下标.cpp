@@ -15,13 +15,15 @@
 #include<string>
 #include <vector>
 using namespace std;
+//* 题解解法，运用KMP算法(最长公共前后缀思路)，O(m+n)
+//* 假设next[j]=k(k<=j)，这表示在0~j这j+1个字符组成的字符串中，最长公共前后缀的长度为k
+//* 也就是，0~(k-1)这k个字符与(j-k+1)~j这k个字符严格相等
+//* 所以当要匹配的字符与s[j+1]不一样时（s[j]及前面已完成匹配），
+//* 把要匹配的字符与s[k]对比即可
+
 class Solution {
 public:
-    //* 题解解法，运用KMP算法(最长公共前后缀思路)，O(m+n)
-    //* 假设next[j]=k(k<=j)，这表示在0~j这j+1个字符组成的字符串中，最长公共前后缀的长度为k
-    //* 也就是，0~(k-1)这k个字符与(j-k+1)~j这k个字符严格相等
-    //* 所以当要匹配的字符与s[j+1]不一样时（s[j]及前面已完成匹配），
-    //* 把要匹配的字符与s[k]对比即可
+    //! 以下求next数组过程很重要！！需要理解贯通
     void getNext(int* next, const string& s) {
         int j = 0;
         next[0] = 0;
@@ -60,8 +62,11 @@ public:
         }
         return -1;
     }
+};
+//* 我的解法，暴力枚举，O(m*n)
 
-    //* 我的解法，暴力枚举，O(m*n)
+class Solution2 {
+public:
     int myStrStr(string haystack, string needle) {
         int len1 = haystack.size() - 1;
         int len2 = needle.size() - 1;
