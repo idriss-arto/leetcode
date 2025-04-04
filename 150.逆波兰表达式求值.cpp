@@ -4,6 +4,12 @@
  * [150] 逆波兰表达式求值
  */
 
+/*
+ * 思路：
+ * 栈的经典应用。逆波兰表达式
+ * 注意下数据溢出问题，用longlong储存数字
+*/
+
 // @lc code=start
 #include <stack>
 #include <vector>
@@ -12,7 +18,7 @@ using namespace std;
 class Solution {
 public:
 int evalRPN(vector<string>& tokens) {
-    // 力扣修改了后台测试数据，需要用longlong
+    //* 力扣修改了后台测试数据，需要用longlong
     stack<long long> st; 
     for (int i = 0; i < tokens.size(); i++) {
         if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
@@ -26,13 +32,13 @@ int evalRPN(vector<string>& tokens) {
             if (tokens[i] == "/") st.push(num2 / num1);
         } 
         else {
-            // 输入的不一定是个位数，用stoi或stoll函数直接转换比较好
+            //* 输入的不一定是个位数，用stoi或stoll函数直接转换比较好
             st.push(stoll(tokens[i]));
         }
     }
 
     long long result = st.top();
-    st.pop(); // 把栈里最后一个元素弹出（其实不弹出也没事）
+    st.pop();   //* 把栈里最后一个元素弹出（其实不弹出也没事）
     return result;
 }
 };

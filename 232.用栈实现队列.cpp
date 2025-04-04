@@ -4,6 +4,14 @@
  * [232] 用栈实现队列
  */
 
+/*
+ * 思路：
+ * 因为栈是先进后出，所以得用两个栈来模拟队列
+ * 一个栈专门用来处理queue.push，一个栈专门用来处理queue.pop
+ * 在queue.push时，直接装入push栈即可
+ * 在queue.pop的时候，如果对应pop栈为空，则从push栈中把所有现有数据挪到pop栈中
+*/
+
 // @lc code=start
 #include <stack>
 using namespace std;
@@ -22,9 +30,9 @@ public:
 
     /** Removes the element from in front of queue and returns that element. */
     int pop() {
-        // 只有当stOut为空的时候，再从stIn里导入数据（导入stIn全部数据）
+        //* 只有当stOut为空的时候，再从stIn里导入数据（导入stIn全部数据）
         if (stOut.empty()) {
-            // 从stIn导入数据直到stIn为空
+            //* 从stIn导入数据直到stIn为空
             while(!stIn.empty()) {
                 stOut.push(stIn.top());
                 stIn.pop();
@@ -37,8 +45,8 @@ public:
 
     /** Get the front element. */
     int peek() {
-        int res = this->pop();      // 直接使用已有的pop函数
-        stOut.push(res);            // 因为pop函数弹出了元素res，所以再添加回去
+        int res = this->pop();      //* 直接使用已有的pop函数
+        stOut.push(res);            //* 因为pop函数弹出了元素res，所以再添加回去
         return res;
     }
 
