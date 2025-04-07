@@ -44,6 +44,8 @@ public:
          * 则状态转移方程为：dp[i][j] = dp[i-1][j-nums[i]] + dp[i-1][j+nums[i]]
         */
         vector<vector<int>> dp(nums.size(), vector<int>(2005, 0));
+        
+        //* 注意，这里不能写"=1"，因为nums[0]可能为0
         dp[0][1000+nums[0]] += 1;
         dp[0][1000-nums[0]] += 1;
         for (int i = 1; i < nums.size(); i++) {
@@ -84,6 +86,7 @@ public:
         //* 初始化最左列，最左列其他数值在递推公式中就完成了赋值
         dp[0][0] = 1; 
 
+        //! 根据前i个数中0的个数，前i个数组成0的方式也会不同
         int numZero = 0;
         for (int i = 0; i < nums.size(); i++) {
             if (nums[i] == 0) numZero++;
