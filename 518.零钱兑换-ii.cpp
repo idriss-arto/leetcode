@@ -1,14 +1,37 @@
 /*
  * @lc app=leetcode.cn id=518 lang=cpp
- * 动态规划（完全背包）
+ * 动态规划（完全背包（求组合数））
  * [518] 零钱兑换 II
  */
+
+//* 求组合数
 
 // @lc code=start
 #include <vector>
 using namespace std;
-//* 二维数组版本
+//* 滚动数组版本
 class Solution {
+    public:
+        int change(int amount, vector<int>& coins) {
+            //* dp[j]表示组成数字j的方式
+            vector<unsigned long long> dp(amount+1, 0);
+    
+            dp[0] = 1;
+    
+            //! 注意，这里不能调换循环顺序，因为是求组合数，调换后变成求排列数
+            //! 解释见 https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html#%E4%B8%80%E7%BB%B4dp%E8%AE%B2%E8%A7%A3
+            for (int i = 0; i < coins.size(); i++) {
+                for (int j = coins[i]; j <= amount; j++) {
+                    dp[j] += dp[j-coins[i]];
+                }
+            }
+    
+            return dp[amount];
+        }
+    };
+
+//* 二维数组版本
+class Solution2 {
 public:
     int change(int amount, vector<int>& coins) {
         //* dp[i][j]表示前i个数组成数字j的方式
@@ -23,8 +46,10 @@ public:
             dp[0][j] = dp[0][j-coins[0]];
         }
 
-        for (int i = 1; i < coins.size(); i++) {
-            for (int j = 0; j <= amount; j++) {
+        //! 求组合方式数时，遍历顺序行列可以颠倒
+        //! 换句话说，二维数组只能用来求组合方式数，不能求排列方式数
+        for (int i = 1; i < coins.size(); i++) {    //* 行，遍历物品
+            for (int j = 0; j <= amount; j++) {     //* 列，遍历背包容量
                 if (j < coins[i]) dp[i][j] = dp[i-1][j];
                 else {
                     dp[i][j] = dp[i-1][j] + dp[i][j-coins[i]];
@@ -41,27 +66,6 @@ public:
         }
 
         return dp[coins.size()-1][amount];
-    }
-};
-
-//* 二维数组版本
-class Solution2 {
-public:
-    int change(int amount, vector<int>& coins) {
-        //* dp[j]表示组成数字j的方式
-        vector<unsigned long long> dp(amount+1, 0);
-
-        dp[0] = 1;
-
-        //! 注意，这里不能调换循环顺序，因为是求组合数，调换后变成求排列数
-        //! 解释见 https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html#%E4%B8%80%E7%BB%B4dp%E8%AE%B2%E8%A7%A3
-        for (int i = 0; i < coins.size(); i++) {
-            for (int j = coins[i]; j <= amount; j++) {
-                dp[j] += dp[j-coins[i]];
-            }
-        }
-
-        return dp[amount];
     }
 };
 // @lc code=end
