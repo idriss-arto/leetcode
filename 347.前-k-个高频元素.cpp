@@ -21,16 +21,17 @@
 #include <map>
 #include <queue>
 using namespace std;
+//* 我的解法，用map将所有值按频率排序后输出，（需要注意会有频率相同的值）
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        //* 数值，频次
+        //* 数值做key，频次做value
         unordered_map<int, int> cnt;
         for (int i : nums) {
             cnt[i]++;
         }
 
-        //* 频次，数值（多个相同频次的数字用vector存储）
+        //* 频次做key，数值做value（多个相同频次的数字用vector存储）
         //* 给的比较器是greater（即大于），内部是降序
         map<int, vector<int>, greater<int>> m;
         for (const auto& it : cnt) {
@@ -50,6 +51,7 @@ public:
     }
 };
 
+//* 题解解法，用priority_queue（小顶堆）只保存出现频率最高的k个
 class Solution2 {
 public:
     //* 小顶堆的比较函数
@@ -63,7 +65,7 @@ public:
 
     vector<int> topKFrequent(vector<int>& nums, int k) {
         //* 要统计元素出现频率
-        unordered_map<int, int> map;    //* map<nums[i],对应出现的次数>
+        unordered_map<int, int> map;    //* map<nums[i], 对应出现的次数>
         for (int i = 0; i < nums.size(); i++) {
             map[nums[i]]++;
         }

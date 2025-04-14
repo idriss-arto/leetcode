@@ -47,10 +47,10 @@ public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         MyQueue que;
         vector<int> result;
-        for (int i = 0; i < k; i++) {       //* 先将前k的元素放进队列
+        for (int i = 0; i < k; i++) {       //* 先将前k个元素放进队列
             que.push(nums[i]);
         }
-        result.push_back(que.front());      //* result 记录前k的元素的最大值
+        result.push_back(que.front());      //* result 记录前k个元素的最大值
         for (int i = k; i < nums.size(); i++) {
             que.pop(nums[i - k]);           //* 滑动窗口移除最前面元素
             que.push(nums[i]);              //* 滑动窗口前加入最后面的元素
@@ -68,7 +68,9 @@ public:
         multiset<int> st;
         vector<int> ans;
         for (int i = 0; i < nums.size(); i++) {
+            //! 关键步骤
             if (i >= k) st.erase(st.find(nums[i - k]));
+
             st.insert(nums[i]);
             if (i >= k - 1) ans.push_back(*st.rbegin());
         }
