@@ -1,52 +1,70 @@
-#include<iostream>
+/*
+ * @lc app=leetcode.cn id=139 lang=cpp
+ *
+ * [139] 单词拆分
+ */
+
+// @lc code=start
+#include <string>
+#include <vector>
 using namespace std;
-int FindSubString(char* pch){
-    int   count  = 0;
-    char  * p1   = pch;
-    while (*p1 != '\0'){   
-        if (*p1 == p1[1] - 1){
-            p1++;
-            count++;
-        }else  {
-            break;
+class Solution {
+//* dp[i]为true表示前i个字母组成的字符串可以拆分为字典中单词的累积
+public:
+    bool cmp(string subS, vector<string>& wordDict) {
+        for (int i = 0; i < wordDict.size(); i++) {
+            if (subS.compare(wordDict[i]) == 0) return true;
         }
+        return false;
     }
-    int count2 = count;
-    while (*p1 != '\0'){
-        if (*p1 == p1[1] + 1){
-            p1++;
-            count2--;
-        }else  {
-            break;
-        }
-    }
-    if (count2 == 0)
-        return(count);
-    return(0);
-}
-void ModifyString(char* pText){
-    char  * p1   = pText;
-    char  * p2   = p1;
-    while (*p1 != '\0'){
-        int count = FindSubString(p1);
-        if (count > 0){
-            printf("before1:%s\n", pText);
-            *p2++ = *p1;
-            printf("before2:%s\n", pText);
-            sprintf( p2, "%i", count );
-            printf("after:%s\n", pText);
-            while (*p2 != '\0')  {
-                p2++;
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<bool> dp(s.length() - 1, false);
+
+        for (int i = 0; i < s.length(); i++) {
+            if (dp[i] == false) {
+                printf("before dp[%d] = false\n", i);
             }
-            p1 += count + count + 1;
-        }else  {
-            *p2++ = *p1++;
         }
+
+        dp[0] = cmp(s.substr(0, 1), wordDict);
+
+        for (int i = 1; i < s.length(); i++) {
+            for (int j = i-1; j >= 0; j--) {
+                if (j == 0) {
+                    if (dp[0]) {
+                        string subS = s.substr(1, i);
+                        if (cmp(subS, wordDict)) dp[i] = true;
+                    }
+                    string subS = s.substr(0, i+1);
+                    if (cmp(subS, wordDict)) dp[i] = true;
+                }
+                else if (dp[j] == true) {
+                    string subS = s.substr(j+1, i-j);
+                    if (cmp(subS, wordDict)) {
+                        dp[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            if (dp[i]) {
+                printf("dp[%d] = true\n", i);
+            }
+        }
+        
+        return dp[s.length() - 1];
     }
-}
-int main(void){
-    char text[32] = "XYBCDCBABABA";
-    ModifyString(text);
-    printf("%s\n", text);
+};
+
+int main() {
+    Solution s;
+    string s1 = "ab";
+    vector<string> wordDict = {"a", "b"};
+    s.wordBreak(s1, wordDict);
     return 0;
-}  
+}
+// @lc code=end
+
