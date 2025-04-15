@@ -4,6 +4,8 @@
  * [116] 填充每个节点的下一个右侧节点指针
  */
 
+//* 层序遍历（BFS，广度优先遍历），使用队列
+
 // @lc code=start
 #include <queue>
 using namespace std;

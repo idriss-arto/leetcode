@@ -19,27 +19,25 @@ struct TreeNode {
 };
 class Solution {
 public:
-    // 迭代法
+    //! 迭代法
     int minDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         queue<TreeNode*> que;
         que.push(root);
         int depth = 0;
-        int flag = 0;
         while (!que.empty()) {
             depth++;
             int size = que.size();
             for (int i = 0; i < size; i++) {
                 TreeNode* cur = que.front();
                 que.pop();
+                //! 左右孩子均为空，说明为叶子结点
                 if (!cur->left && !cur->right) {
-                    flag = 1;
-                    break;
+                    return depth;
                 }
                 if (cur->left) que.push(cur->left);
                 if (cur->right) que.push(cur->right);
             }
-            if (flag) break;
         }
         return depth;
     }

@@ -1,8 +1,11 @@
 /*
  * @lc app=leetcode.cn id=226 lang=cpp
- *
+ * 二叉树
  * [226] 翻转二叉树
  */
+
+//* 层序遍历（BFS）和前序或后序（DFS）都可以
+//! 中序不行
 
 // @lc code=start
 #include <vector>
@@ -25,7 +28,7 @@ public:
         queue<TreeNode*> que;
         que.push(root);
         while (!que.empty()) {
-        // 这里没定义size，是因为不用按照层次序列访问节点，只需保证所有节点左右孩子交换即可
+        //! 这里没定义size，是因为不用按照层次序列访问节点，只需保证所有节点左右孩子交换即可
             TreeNode* cur = que.front();
             que.pop();
             TreeNode* tmp = cur->left;

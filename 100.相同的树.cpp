@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=100 lang=cpp
- *
+ * 二叉树
  * [100] 相同的树
  */
 
@@ -17,6 +17,8 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+//* 递归法
 class Solution {
 public:
     bool compare(TreeNode* p, TreeNode* q) {
@@ -27,13 +29,15 @@ public:
         }
     }
 
-    // 递归法
     bool isSameTree(TreeNode* p, TreeNode* q) {
         return compare(p, q);
     }
+};
 
-    // 迭代法
-    bool isSameTreeV2(TreeNode* p, TreeNode* q) {
+//* 迭代法
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
         if (!p && !q) return true;
         else if (!p || !q || p->val != q->val) return false;
         else {

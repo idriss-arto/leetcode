@@ -4,6 +4,8 @@
  * [104] 二叉树的最大深度
  */
 
+//* 层序遍历（BFS，广度优先遍历），使用队列
+
 // @lc code=start
 #include <vector>
 #include <queue>
@@ -19,7 +21,7 @@ struct TreeNode {
 };
 class Solution {
 public:
-    // 迭代法
+    //* 迭代法
     int maxDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         queue<TreeNode*> que;
@@ -38,7 +40,7 @@ public:
         return depth;
     }
 
-    // 递归法
+    //* 递归法
     int maxDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         return 1 + max(maxDepth(root->left), maxDepth(root->right));

@@ -4,6 +4,9 @@
  * [429] N 叉树的层序遍历
  */
 
+//* 层序遍历（BFS，广度优先遍历），使用队列
+//! 要求答案中只存储每一层的最后一个节点，则queue遍历时多加一个判断即可
+
 // @lc code=start
 #include <vector>
 #include <queue>
@@ -34,7 +37,7 @@ public:
         while (!que.empty()) {
             int size = que.size();
             vector<int> vec;
-            // 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
+            //! 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
             for (int i = 0; i < size; i++) {
                 Node* node = que.front();
                 que.pop();

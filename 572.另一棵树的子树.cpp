@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=572 lang=cpp
- *
+ * 二叉树
  * [572] 另一棵树的子树
  */
 
@@ -21,7 +21,7 @@ struct TreeNode {
 };
 class Solution {
 public:
-    // 深度优先搜索暴力匹配
+    //* 深度优先搜索暴力匹配
     /*
         bool check(TreeNode *o, TreeNode *t) {
             if (!o && !t) {
@@ -45,7 +45,7 @@ public:
         }
     */
 
-    // 用深度优先搜索的结果做串匹配
+    //* 用深度优先搜索的结果做串匹配
     vector <int> sOrder, tOrder;
     int maxElement, lNull, rNull;
 
@@ -77,19 +77,21 @@ public:
 
     bool kmp() {
         int sLen = sOrder.size(), tLen = tOrder.size();
-        vector <int> fail(tOrder.size(), -1);
+        vector <int> next(tOrder.size(), -1);
+        //* 求子串的next数组
         for (int i = 1, j = -1; i < tLen; ++i) {
             while (j != -1 && tOrder[i] != tOrder[j + 1]) {
-                j = fail[j];
+                j = next[j];
             }
             if (tOrder[i] == tOrder[j + 1]) {
                 ++j;
             }
-            fail[i] = j;
+            next[i] = j;
         }
+        //* 判断是否为子串
         for (int i = 0, j = -1; i < sLen; ++i) {
             while (j != -1 && sOrder[i] != tOrder[j + 1]) {
-                j = fail[j];
+                j = next[j];
             }
             if (sOrder[i] == tOrder[j + 1]) {
                 ++j;

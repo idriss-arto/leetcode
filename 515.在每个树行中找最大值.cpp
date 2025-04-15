@@ -4,6 +4,8 @@
  * [515] 在每个树行中找最大值
  */
 
+//* 层序遍历（BFS，广度优先遍历），使用队列
+
 // @lc code=start
 #include <vector>
 #include <queue>
@@ -26,7 +28,7 @@ public:
         while (!que.empty()) {
             int size = que.size();
             int max = INT_MIN;
-            // 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
+            //! 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
             for (int i = 0; i < size; i++) {
                 TreeNode* node = que.front();
                 que.pop();

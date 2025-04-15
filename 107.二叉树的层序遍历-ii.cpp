@@ -4,6 +4,9 @@
  * [107] 二叉树的层序遍历 II
  */
 
+//* 层序遍历（BFS，广度优先遍历），使用队列
+//! 要求自底往上，按照自顶往下求完后反转一下即可
+
 // @lc code=start
 #include <vector>
 #include <queue>
@@ -27,7 +30,7 @@ public:
         while (!que.empty()) {
             int size = que.size();
             vector<int> vec;
-            // 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
+            //! 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
             for (int i = 0; i < size; i++) {
                 TreeNode* node = que.front();
                 que.pop();
@@ -37,7 +40,8 @@ public:
             }
             result.push_back(vec);
         }
-        reverse(result.begin(), result.end()); // 在这里反转一下数组即可
+        //! 要求result里最底层的放最前面，在这里反转一下数组即可
+        reverse(result.begin(), result.end()); 
         return result;
     }
 };
