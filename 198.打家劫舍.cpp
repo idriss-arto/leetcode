@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=198 lang=cpp
- * 打家劫舍
+ * 动态规划（打家劫舍）
  * [198] 打家劫舍
  */
 
@@ -22,7 +22,7 @@ public:
     }
 };
 
-//* 我的解法
+//* 题解的解法
 //* dp[i]表示打劫下标i及之前的家最多获得的金额
 class Solution {
 public:
