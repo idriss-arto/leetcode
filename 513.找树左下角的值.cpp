@@ -1,8 +1,15 @@
 /*
  * @lc app=leetcode.cn id=513 lang=cpp
- *
+ * 二叉树
  * [513] 找树左下角的值
  */
+
+/*
+ * 思路：
+ * 题解递归法：用先序遍历+回溯找到深度最大的节点，同时有多个深度最大的节点时，因为遍历顺序以及最大深度判断式子，会选中最左边的
+ * 我的递归法：判断当前节点左子树和右子树谁更深，要求的节点一定在更深的子树里。但会对中间的节点重复求深度
+ * 迭代法：层序遍历，最简单
+*/
 
 // @lc code=start
 #include <vector>
@@ -17,9 +24,9 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+//* 题解的递归法，不会对一个节点重复求深度
 class Solution {
 public:
-    // 题解的递归法，不会对一个节点重复求深度
     int maxDepth = INT_MIN;
     int result;
     void traversal(TreeNode* root, int depth) {
@@ -31,10 +38,10 @@ public:
             return;
         }
         if (root->left) {
-            traversal(root->left, depth + 1); // 隐藏着回溯
+            traversal(root->left, depth + 1);       //* 隐藏着回溯
         }
         if (root->right) {
-            traversal(root->right, depth + 1); // 隐藏着回溯
+            traversal(root->right, depth + 1);      //* 隐藏着回溯
         }
         return;
     }
@@ -42,8 +49,11 @@ public:
         traversal(root, 0);
         return result;
     }
+};
 
-    // 递归法
+//* 我的递归法
+class Solution {
+public:
     int getDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         else return max(getDepth(root->left), getDepth(root->right)) + 1;
@@ -58,8 +68,11 @@ public:
             return getDepth(root->right) > getDepth(root->left) ? findBottomLeftValue(root->right) : findBottomLeftValue(root->left);
         }
     }
+};
 
-    // 迭代法
+//* 迭代法
+class Solution {
+public:
     int findBottomLeftValue(TreeNode* root) {
         if (root == nullptr) return 0;
         queue<TreeNode*> que;

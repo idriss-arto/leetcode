@@ -1,8 +1,13 @@
 /*
  * @lc app=leetcode.cn id=404 lang=cpp
- *
+ * 二叉树
  * [404] 左叶子之和
  */
+
+/*
+ * 递归法思路：在递归函数参数中加一个参数分辨当前节点是否为父节点左孩子
+ * 迭代法思路：前序遍历，某节点出栈时，分辨是否有左孩子以及左孩子是否为叶子结点
+*/
 
 // @lc code=start
 #include <vector>
@@ -17,9 +22,10 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+//* 递归法
 class Solution {
 public:
-    // 递归法
     int getLeftSum(TreeNode* root, bool isLeft){
         if (root == nullptr) return 0;
         else if (isLeft && root->left == nullptr && root->right == nullptr) {
@@ -33,8 +39,11 @@ public:
     int sumOfLeftLeaves(TreeNode* root) {
         return getLeftSum(root->left, true) + getLeftSum(root->right, false);
     }
+};
 
-    // 迭代法
+//* 迭代法
+class Solution {
+public:
     int sumOfLeftLeaves(TreeNode* root) {
         if (root == nullptr) return 0;
         int result = 0;
