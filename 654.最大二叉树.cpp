@@ -1,8 +1,13 @@
 /*
  * @lc app=leetcode.cn id=654 lang=cpp
- *
+ * 二叉树
  * [654] 最大二叉树
  */
+
+/*
+ * 基本思路与105、106差不多，都是找到分割点然后分割数组
+ * 重点看下两个优化思路
+*/
 
  #include <vector>
  #include <queue>
@@ -46,15 +51,17 @@ public:
 
         return node;
     }
-/*
- * 优化思路：使用下标索引避免每次创建新vector
- * 时间复杂度 O(n*n)，空间复杂度 O(n)
+};
+
+//* 优化思路：使用下标索引避免每次创建新vector
+//* 时间复杂度 O(n*n)，空间复杂度 O(n)
+class Solution {
 private:
-    // 在左闭右开区间[left, right)，构造二叉树
+    //* 在左闭右开区间[left, right)，构造二叉树
     TreeNode* traversal(vector<int>& nums, int left, int right) {
         if (left >= right) return nullptr;
 
-        // 分割点下标：maxValueIndex
+        //* 分割点下标：maxValueIndex
         int maxValueIndex = left;
         for (int i = left + 1; i < right; ++i) {
             if (nums[i] > nums[maxValueIndex]) maxValueIndex = i;
@@ -62,10 +69,10 @@ private:
 
         TreeNode* root = new TreeNode(nums[maxValueIndex]);
 
-        // 左闭右开：[left, maxValueIndex)
+        //* 左闭右开：[left, maxValueIndex)
         root->left = traversal(nums, left, maxValueIndex);
 
-        // 左闭右开：[maxValueIndex + 1, right)
+        //* 左闭右开：[maxValueIndex + 1, right)
         root->right = traversal(nums, maxValueIndex + 1, right);
 
         return root;
@@ -74,7 +81,7 @@ public:
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
         return traversal(nums, 0, nums.size());
     }
-*/
+};
 
 /*
  * 优化思路：
@@ -82,7 +89,9 @@ public:
  * 使用单调栈可以找到每个元素左侧和右侧的最近的比自身大的元素
  * 其中较小的元素对应的节点是自身的父节点
  * 思路与排序解法类似
- public:
+*/
+class Solution {
+public:
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
         int n = nums.size();
         vector<int> stk;
@@ -114,7 +123,6 @@ public:
         }
         return root;
     }
-*/
 };
 // @lc code=end
 
