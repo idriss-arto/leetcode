@@ -1,17 +1,18 @@
 /*
- * @lc app=leetcode.cn id=122 lang=cpp
- * 贪心，动态规划
- * [122] 买卖股票的最佳时机 II
+ * @lc app=leetcode.cn id=121 lang=cpp
+ * 动态规划，贪心
+ * [121] 买卖股票的最佳时机
  */
 
 /*
- * 可多次买卖（不带冷静期）
- * 贪心思路：
- * 第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。
- * 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
+ * 只能买卖一次
+ * 思路：
+ * 我的思路：贪心，记录每一个位置往左侧看的最小值
  * 
- * 动态规划思路：
- * dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
+ * 题解思路：动态规划
+ * dp[i][1] 表示第i天持有股票所得最多现金，dp[i][0] 表示第i天不持有股票所得最多现金
+ * 持有 != 买入，前一天买入，今天没卖，也是持有
+ * 
  * 如果第i天不持有股票即dp[i][0]， 也可以由两个状态推出来
  * 第i-1天就不持有股票，那么就保持现状，所得现金就是昨天不持有股票的所得现金 即：dp[i - 1][0]
  * 第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金即：prices[i] + dp[i - 1][1]
@@ -19,15 +20,14 @@
  * 
  * 如果第i天持有股票即dp[i][1]， 那么可以由两个状态推出来
  * 第i-1天就持有股票，那么就保持现状，所得现金就是昨天持有股票的所得现金 即：dp[i - 1][1]
- * 第i天买入股票，所得现金就是第i-1天不持有的现金减去买入今天的股票后剩下的现金即：dp[i-1][0] - prices[i]
- * dp[i][1]应该选所得现金最大的，所以dp[i][1] = max(dp[i - 1][1], dp[i-1][0] - prices[i]);
+ * 第i天买入股票，所得现金就是买入今天的股票后所得现金即：-prices[i]
+ * dp[i][1]应该选所得现金最大的，所以dp[i][1] = max(dp[i - 1][1], -prices[i]);
 */
 
 // @lc code=start
 #include <vector>
-#include <climits>
 using namespace std;
-//* 动态规划
+//* 题解解法，动态规划
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
 public:
@@ -36,13 +36,13 @@ public:
         dp[0][1] = -prices[0];
         for (int i = 1; i < prices.size(); i++) {
             dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]);
-            dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]);
+            dp[i][1] = max(dp[i-1][1], -prices[i]);
         }
         return dp[prices.size()-1][0];
     }
 };
 
-//* 动态规划(滚动数组)
+//* 题解解法，动态规划（滚动数组）
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
 public:
@@ -52,25 +52,26 @@ public:
         dp[0][1] -= prices[0];
         dp[0][0] = 0;
         for (int i = 1; i < len; i++) {
-            dp[i % 2][1] = max(dp[(i - 1) % 2][1], dp[(i - 1) % 2][0] - prices[i]);
+            dp[i % 2][1] = max(dp[(i - 1) % 2][1], -prices[i]);
             dp[i % 2][0] = max(dp[(i - 1) % 2][0], dp[(i - 1) % 2][1] + prices[i]);
         }
         return dp[(len - 1) % 2][0];
     }
 };
 
-//* 贪心
-//* 假如第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。
-//* 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
+//* 我的解法，贪心
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int income = 0;
+        int little = prices[0];
+        int max = 0;
         for (int i = 1; i < prices.size(); i++) {
-            int n = prices[i] - prices[i - 1];
-            if (n > 0) income += n;
+            int tmp = prices[i] - little;
+            if (tmp < 0) little = prices[i];
+            else if (tmp > max) max = tmp;
         }
-        return income;
+
+        return max;
     }
 };
 // @lc code=end
