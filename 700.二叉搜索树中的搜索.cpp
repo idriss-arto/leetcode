@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=700 lang=cpp
- *
+ * 二叉搜索树
  * [700] 二叉搜索树中的搜索
  */
 
@@ -18,17 +18,20 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+//* 递归法
 class Solution {
 public:
-    //* 递归法
     TreeNode* searchBST(TreeNode* root, int val) {
         if (root == nullptr) return nullptr;
         if (root->val == val) return root;
         else if (root->val > val) return searchBST(root->left, val);
         else return searchBST(root->right, val);
     }
+};
 
-    //* 迭代法
+//* 迭代法
+class Solution {
+public:
     TreeNode* searchBST(TreeNode* root, int val) {
         while (root) {
             if (root->val == val) return root;
