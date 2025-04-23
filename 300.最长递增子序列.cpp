@@ -1,0 +1,98 @@
+/*
+ * @lc app=leetcode.cn id=300 lang=cpp
+ * 动态规划
+ * [300] 最长递增子序列
+ */
+
+/*
+ * 思路一：
+ * dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
+ * 则对j从0到i-1，执行if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
+ * 注意，计算dp[i]时，nums[i]一定在递增子序列中，所以dp.back()不是所求值，dp数组中的最大值才是
+ * 
+ * dp[i]必须表示 “以nums[i]结尾的最长递增子序” ，
+ * 因为我们在做递增比较的时候，如果比较 nums[j] 和 nums[i] 的大小，
+ * 那么两个递增子序列一定分别以nums[j]为结尾 和 nums[i]为结尾，
+ * 要不然这个比较就没有意义了
+ * 
+ * 
+ * 思路二：动态规划+二分查找
+ * 通过维护一个tails数组，
+ * 对输入数组nums中的每个元素，
+ * 利用二分查找在tails中找到合适位置进行更新，
+ * tails数组的有效长度即为原数组nums最长递增子序列的长度。
+*/
+
+// @lc code=start
+#include <vector>
+using namespace std;
+//* 我的动态规划
+//* 思路：dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
+//* 注意，计算dp[i]时，nums[i]一定在递增子序列中，所以dp.back()不是所求值，dp数组中的最大值才是
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> dp(nums.size(), 1);
+        int maxCnt = 1;
+        for (int i = 1; i < nums.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
+            }
+            maxCnt = max(maxCnt, dp[i]);
+        }
+        return maxCnt;
+
+    }
+};
+
+//* 题解
+//* 动态规划+二分查找
+//* 思路：
+//* 通过维护一个tails数组，
+//* 对输入数组nums中的每个元素，
+//* 利用二分查找在tails中找到合适位置进行更新，
+//* tails数组的有效长度即为原数组nums最长递增子序列的长度。
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> tails(nums.size(), 0);
+        int k = 0;
+        tails[0] = nums[0];
+
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] > tails[k]) {
+                k++;
+                tails[k] = nums[i];
+            }
+            else {
+                int left = 0, right = k;
+                int middle;
+                //! 想清楚二分查找要找啥，这里是找第一个大于等于nums[i]的位置
+                while (left <= right) {
+                    middle = (left + right) / 2;
+                    if (tails[middle] < nums[i]) left = middle + 1;
+                    else if (tails[middle] >= nums[i]) right = middle - 1;
+            
+                }
+                tails[left] = nums[i];
+
+                /*
+                while (left < right) {
+                    middle = (left + right) / 2;
+                    if (tails[middle] < nums[i]) left = middle + 1;
+                    else if (tails[middle] > nums[i]) right = middle;
+                    else {
+                        left = middle;
+                        break;
+                    }
+                }
+                tails[left] = nums[i];
+                */
+            }
+        }
+
+        return k+1;
+    }
+};
+// @lc code=end
+
