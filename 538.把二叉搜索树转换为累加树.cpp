@@ -1,8 +1,13 @@
 /*
  * @lc app=leetcode.cn id=538 lang=cpp
- *
+ * 二叉搜索树
  * [538] 把二叉搜索树转换为累加树
  */
+
+/*
+ * 思路：
+ * 注意遍历顺序（右中左）即可
+*/
 
 // @lc code=start
 #include <vector>
@@ -20,9 +25,29 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+//* 递归法
 class Solution {
 public:
-    //* 迭代法
+    int pre = 0;                    //* 记录前一个节点的数值
+    void traversal(TreeNode* cur) { //* 右中左遍历
+        if (cur == NULL) return;
+        traversal(cur->right);
+        cur->val += pre;
+        pre = cur->val;
+        traversal(cur->left);
+    }
+
+    TreeNode* convertBST(TreeNode* root) {
+        pre = 0;
+        traversal(root);
+        return root;
+    }
+};
+
+//* 迭代法
+class Solution {
+public:
     TreeNode* convertBST(TreeNode* root) {
         if (root == nullptr) return root;
         stack<TreeNode*> sta;
@@ -49,22 +74,6 @@ public:
                 sum += val;
             }
         }
-        return root;
-    }
-
-    //* 递归法
-    int pre = 0; // 记录前一个节点的数值
-    void traversal(TreeNode* cur) { // 右中左遍历
-        if (cur == NULL) return;
-        traversal(cur->right);
-        cur->val += pre;
-        pre = cur->val;
-        traversal(cur->left);
-    }
-
-    TreeNode* convertBST(TreeNode* root) {
-        pre = 0;
-        traversal(root);
         return root;
     }
 };

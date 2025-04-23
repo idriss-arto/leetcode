@@ -1,8 +1,15 @@
 /*
  * @lc app=leetcode.cn id=701 lang=cpp
- *
+ * 二叉搜索树
  * [701] 二叉搜索树中的插入操作
  */
+
+/*
+ * 思路：
+ * 根据二叉搜索树的性质，往下找新节点的插入位置
+ * 当找到空节点时，此时就是新节点的插入位置
+ * 再与父节点比较大小，决定放在父节点的左子树或者右子树上
+*/
 
 // @lc code=start
 #include <vector>
@@ -20,9 +27,10 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+//* 递归法
 class Solution {
 public:
-    //* 递归法
     TreeNode* parent = nullptr;
     void traversal(TreeNode* root, int val) {
         if (root == nullptr) {
@@ -42,8 +50,11 @@ public:
         else traversal(root, val);
         return root;
     }
-    /*
-     * 递归代码也可以这样写，利用函数返回值完成父子节点的赋值
+};
+
+//* 递归代码也可以这样写，利用函数返回值完成父子节点的赋值
+class Solution {
+public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         if (root == NULL) {
             TreeNode* node = new TreeNode(val);
@@ -53,9 +64,11 @@ public:
         if (root->val < val) root->right = insertIntoBST(root->right, val);
         return root;
     }
-    */
+};
 
-    //* 迭代法
+//* 迭代法
+class Solution {
+public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         if (root == nullptr) {
             TreeNode* cur = new TreeNode(val);

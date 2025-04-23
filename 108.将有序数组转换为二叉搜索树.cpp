@@ -1,8 +1,14 @@
 /*
  * @lc app=leetcode.cn id=108 lang=cpp
- *
+ * 二叉搜索树
  * [108] 将有序数组转换为二叉搜索树
  */
+
+/*
+ * 思路：
+ * 递归法和迭代法思路是一致的，即不断中间分割，然后递归处理左区间，右区间
+ * 注意可以通过递归函数的返回值来设置左右孩子
+*/
 
 // @lc code=start
 #include <vector>
@@ -20,9 +26,10 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+//* 递归法
 class Solution {
 public:
-    //* 递归法
     TreeNode* traversal(vector<int>& nums, int left, int right) {
         if (right < left) return nullptr;
         int middle = left + (right - left) / 2;
@@ -35,8 +42,11 @@ public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
         return traversal(nums, 0, nums.size() - 1);
     }
+};
 
-    //* 迭代法
+//* 迭代法
+class Solution {
+public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
         if (nums.size() == 0) return nullptr;
 
