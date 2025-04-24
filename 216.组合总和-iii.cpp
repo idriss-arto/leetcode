@@ -1,8 +1,22 @@
 /*
  * @lc app=leetcode.cn id=216 lang=cpp
- * 回溯，剪枝
+ * 回溯（组合），剪枝
  * [216] 组合总和 III
  */
+
+/*
+ * 注意由于是求组合数，所以不强调元素顺序，
+ * 我的思路：
+ * 加k-1次不同数，最后一次看sum离target还差多少，以及差的这个数target-sum能否取
+ * 
+ * 题解思路：
+ * 加k次，看sum是否刚好等于target
+ * 
+ * 本题可剪枝
+ * 剪枝思路：
+ * 一：sum大于target时可直接return
+ * 二：可推得i上限为9 - (k - path.size()) + 1（推理过程见下方代码）
+*/
 
 // @lc code=start
 #include <vector>
@@ -22,6 +36,14 @@ private:
             path.pop_back();
             return;
         }
+
+        /*
+         * 剪枝思路
+         * 已经选择的元素个数：path.size();
+         * 还需要的元素个数为: k - path.size();
+         * 在集合n中至多要从该起始位置 : n - (k - path.size()) + 1，开始遍历
+         * 再往后的位置会发现遍历完也凑不够k个元素！
+        */
         for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++) { //* 剪枝
             sum += i;           //* 处理
             path.push_back(i);  //* 处理
