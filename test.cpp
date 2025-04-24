@@ -1,62 +1,42 @@
-/*
- * @lc app=leetcode.cn id=139 lang=cpp
- *
- * [139] 单词拆分
- */
-
 // @lc code=start
 #include <iostream>
 #include <vector>
 #include <stdio.h>
 using namespace std;
 class Solution {
-    public:
-        int lengthOfLIS(vector<int>& nums) {
-            vector<int> tails(nums.size(), 0);
-            int k = 0;
-            tails[0] = nums[0];
-    
-            for (int i = 1; i < nums.size(); i++) {
-                if (nums[i] > tails[k]) {
-                    k++;
-                    tails[k] = nums[i];
-
-                    cout << "i=" << i << " " << "tails:";
-                    for (int j = 0; j <= k; j++) {
-                        cout << tails[j] << " ";
-                    }
-                    cout << endl;
-                }
-                else {
-                    int left = 0, right = k;
-                    int middle;
-                    while (left < right) {
-                        middle = (left + right) / 2;
-                        if (tails[middle] < nums[i]) left = middle + 1;
-                        else if (tails[middle] > nums[i]) right = middle;
-                        else {
-                            left = middle;
-                            break;
-                        }
-                    }
-                    tails[left] = nums[i];
-
-                    cout << "i=" << i << " " << "left=" << left << " " << "right=" << right << " " << "tails:";
-                    for (int j = 0; j <= k; j++) {
-                        cout << tails[j] << " ";
-                    }
-                    cout << endl;
-                }
-            }
-    
-            return k+1;
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        vector<vector<int>> dp(text1.size(), vector<int>(text2.size(), 0));
+        for (int i = 0; i < text1.size(); i++) {
+            if (text1[i] == text2[0] || (i > 0 && dp[i-1][0])) dp[i][0] = 1;
         }
-    };
+        for (int j = 0; j < text2.size(); j++) {
+            if (text1[0] == text2[j] || (j > 0 && dp[0][j-1])) dp[0][j] = 1;
+        }
+
+        for (int i = 1; i < text1.size(); i++) {
+            for (int j = 1; j < text2.size(); j++) {
+                if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
+                dp[i][j] = max(dp[i][j], dp[i-1][j]);
+                dp[i][j] = max(dp[i][j], dp[i][j-1]);
+            }
+        }
+        for (int i = 0; i < text1.size(); i++) {
+            for (int j = 0; j < text2.size(); j++) {
+                printf("%2d ", dp[i][j]);
+            }
+            printf("\n");
+        }
+        
+        return dp.back().back();
+    }
+};
 
 int main() {
     Solution s;
-    vector<int> x = {3,5,6,2,5,4,19,5,6,7,12};
-    s.lengthOfLIS(x);
+    string s1 = "abcde";
+    string s2 = "ace";
+    s.longestCommonSubsequence(s1, s2);
     return 0;
 }
 // @lc code=end

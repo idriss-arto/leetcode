@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=53 lang=cpp
- * 贪心或动态规划
+ * 贪心，动态规划(连续子序列)
  * [53] 最大子数组和
  */
 
@@ -8,10 +8,36 @@
 #include <vector>
 #include <climits>
 using namespace std;
-//* 贪心
+/* 
+ * 动态规划
+ * 思路：
+ * dp[i]：包括下标i（以nums[i]为结尾）的最大连续子序列和为dp[i]。
+ * 
+ * dp[i]只有两个方向可以推出来：
+ * dp[i - 1] + nums[i]，即：nums[i]加入当前连续子序列和
+ * nums[i]，即：从头开始计算当前连续子序列和
+ * 一定是取最大的，所以dp[i] = max(dp[i - 1] + nums[i], nums[i]);
+*/
 class Solution {
 public:
-    //* 题解写法
+    int maxSubArray(vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+
+        vector<int> dp(nums.size());
+        dp[0] = nums[0];
+        int result = dp[0];
+
+        for (int i = 1; i < nums.size(); i++) {
+            dp[i] = max(dp[i - 1] + nums[i], nums[i]);  //* 状态转移公式
+            if (dp[i] > result) result = dp[i];         //* result 保存dp[i]的最大值
+        }
+        return result;
+    }
+};
+
+//* 贪心题解写法
+class Solution {
+public:
     int maxSubArray(vector<int>& nums) {
         int result = INT_MIN;
         int count = 0;
@@ -24,8 +50,12 @@ public:
         }
         return result;
     }
+};
 
-    //* 我的解法，虽然过了，但太麻烦，没体现贪心的好处
+//* 我的解法，虽然过了，但太麻烦，没体现贪心的好处
+class Solution {
+public:
+    
     int myMaxSubArray(vector<int>& nums) {
         int result = INT_MIN;
         int sum = 0;
