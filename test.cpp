@@ -5,38 +5,34 @@
 using namespace std;
 class Solution {
 public:
-    int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>> dp(text1.size(), vector<int>(text2.size(), 0));
-        for (int i = 0; i < text1.size(); i++) {
-            if (text1[i] == text2[0] || (i > 0 && dp[i-1][0])) dp[i][0] = 1;
-        }
-        for (int j = 0; j < text2.size(); j++) {
-            if (text1[0] == text2[j] || (j > 0 && dp[0][j-1])) dp[0][j] = 1;
-        }
+    int numDistinct(string s, string t) {
+        vector<vector<int>> dp(s.size()+1, vector<int>(t.size()+1, 0));
 
-        for (int i = 1; i < text1.size(); i++) {
-            for (int j = 1; j < text2.size(); j++) {
-                if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
-                dp[i][j] = max(dp[i][j], dp[i-1][j]);
-                dp[i][j] = max(dp[i][j], dp[i][j-1]);
+        for (int i = 0; i <= s.size(); i++) dp[i][0] = 1;
+
+        for (int i = 1; i <= s.size(); i++) {
+            for (int j = 1; j <= t.size(); j++) {
+                dp[i][j] = dp[i-1][j];
+                if (s[i-1] == t[j-1]) dp[i][j] += dp[i-1][j-1];
             }
         }
-        for (int i = 0; i < text1.size(); i++) {
-            for (int j = 0; j < text2.size(); j++) {
-                printf("%2d ", dp[i][j]);
+
+        for (int i = 0; i <= s.size(); i++) {
+            for (int j = 0; j <= t.size(); j++) {
+                printf("%d ", dp[i][j]);
             }
             printf("\n");
         }
-        
+
         return dp.back().back();
     }
 };
 
 int main() {
-    Solution s;
-    string s1 = "abcde";
-    string s2 = "ace";
-    s.longestCommonSubsequence(s1, s2);
+    Solution a;
+    string s = "babgbag";
+    string t = "bag";
+    a.numDistinct(s, t);
     return 0;
 }
 // @lc code=end
