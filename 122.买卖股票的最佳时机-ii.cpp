@@ -6,9 +6,11 @@
 
 /*
  * 可多次买卖（不带冷静期）
+ *
  * 贪心思路：
  * 第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。
  * 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
+ * 
  * 
  * 动态规划思路：
  * dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
@@ -26,6 +28,7 @@
 // @lc code=start
 #include <vector>
 #include <climits>
+#include <tuple>
 using namespace std;
 //* 动态规划
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
@@ -58,6 +61,21 @@ public:
         return dp[(len - 1) % 2][0];
     }
 };
+
+//* 动态规划(tie)
+//* no表示不持有股票所得最多现金，yes表示第i天持有股票所得最多现金
+class Solution {
+    public:
+        int maxProfit(vector<int>& prices) {
+            int len = prices.size();
+            if (len == 0) return 0;
+            int no = 0, yes = -prices[0];
+            for (int i = 1; i < len; i++) {
+                tie(no, yes) = make_pair(max(no, yes + prices[i]), max(yes, -prices[i]));
+            }
+            return no;
+        }
+    };
 
 //* 贪心
 //* 假如第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。

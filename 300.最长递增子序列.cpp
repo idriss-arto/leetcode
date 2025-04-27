@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=300 lang=cpp
- * 动态规划
+ * 动态规划（递增序列）
  * [300] 最长递增子序列
  */
 
@@ -10,7 +10,7 @@
  * 则对j从0到i-1，执行if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
  * 注意，计算dp[i]时，nums[i]一定在递增子序列中，所以dp.back()不是所求值，dp数组中的最大值才是
  * 
- * dp[i]必须表示 “以nums[i]结尾的最长递增子序” ，
+ ! dp[i]必须表示 “以nums[i]结尾的最长递增子序列” ，
  * 因为我们在做递增比较的时候，如果比较 nums[j] 和 nums[i] 的大小，
  * 那么两个递增子序列一定分别以nums[j]为结尾 和 nums[i]为结尾，
  * 要不然这个比较就没有意义了
@@ -33,7 +33,8 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         vector<int> dp(nums.size(), 1);
-        int maxCnt = 1;
+        int maxCnt = 1;         //* 不能初始化为小于1的数，否则数组大小为1时会出错
+
         for (int i = 1; i < nums.size(); i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
@@ -60,10 +61,12 @@ public:
         tails[0] = nums[0];
 
         for (int i = 1; i < nums.size(); i++) {
+            //! 如果当前数字大于tail数组尾部，则直接插入尾部
             if (nums[i] > tails[k]) {
                 k++;
                 tails[k] = nums[i];
             }
+            //! 否则，在tail数组中找到第一个大于等于这个数字的位置
             else {
                 int left = 0, right = k;
                 int middle;
@@ -77,6 +80,8 @@ public:
                 tails[left] = nums[i];
 
                 /*
+                 * 这个写法有问题，找到的不一定是第一个大于等于nums[i]的位置
+                 * 如在{5，5，5，5，5}中找5
                 while (left < right) {
                     middle = (left + right) / 2;
                     if (tails[middle] < nums[i]) left = middle + 1;

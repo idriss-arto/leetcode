@@ -12,21 +12,8 @@
 #include <vector>
 #include <tuple>
 using namespace std;
-//* 题解动态规划
-class Solution {
-public:
-    int maxProfit(vector<int>& prices, int fee) {
-        int n = prices.size();
-        int sell = 0, buy = -prices[0];
-        for (int i = 1; i < n; ++i) {
-            //* 不能用pair(sell, buy)
-            tie(sell, buy) = make_pair(max(sell, buy + prices[i] - fee), max(buy, sell - prices[i]));
-        }
-        return sell;
-    }
-};
 
-//* 题解贪心
+//* 题解贪心，将手续费放在买入时进行计算
 //* 当我们卖出一支股票时，我们就立即获得了以相同价格并且免除手续费买入一支股票的权利。
 class Solution {
 public:
@@ -46,6 +33,21 @@ public:
         return profit;
     }
 };
+
+//* 题解动态规划，将手续费放在卖出时进行计算
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        int sell = 0, buy = -prices[0];
+        for (int i = 1; i < n; ++i) {
+            //* 不能用pair(sell, buy)
+            tie(sell, buy) = make_pair(max(sell, buy + prices[i] - fee), max(buy, sell - prices[i]));
+        }
+        return sell;
+    }
+};
+
 
 //* 我的动态规划
 class Solution {

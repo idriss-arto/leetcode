@@ -80,6 +80,7 @@ public:
         int result = 0;
         for (int i = 1; i <= nums1.size(); i++) {
             for (int j = 1; j <= nums2.size(); j++) {
+                //! 注意这里是比较下标i-1和下标j-1
                 if (nums1[i - 1] == nums2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 }
@@ -97,6 +98,7 @@ public:
         vector<int> dp(vector<int>(B.size() + 1, 0));
         int result = 0;
         for (int i = 1; i <= A.size(); i++) {
+            //* 注意这里是从后往前遍历，避免状态转移时用到错的值
             for (int j = B.size(); j > 0; j--) {
                 if (A[i - 1] == B[j - 1]) {
                     dp[j] = dp[j - 1] + 1;

@@ -45,8 +45,8 @@ public:
         for (int i = 1; i < text1.size(); i++) {
             for (int j = 1; j < text2.size(); j++) {
                 if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
-                dp[i][j] = max(dp[i][j], dp[i-1][j]);
-                dp[i][j] = max(dp[i][j], dp[i][j-1]);
+                //! 和718.最长重复连续子序列不一样的地方
+                else dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
             }
         }
         
@@ -69,7 +69,9 @@ public:
             for (int j = 1; j <= text2.size(); j++) {
                 if (text1[i - 1] == text2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
-                } else {
+                } 
+                //! 和718.最长重复连续子序列不一样的地方
+                else {
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
                 }
             }

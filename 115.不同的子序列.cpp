@@ -35,6 +35,7 @@ public:
     int numDistinct(string s, string t) {
         vector<vector<uint64_t>> dp(s.size()+1, vector<uint64_t>(t.size()+1, 0));
 
+        //* 初始化
         for (int i = 0; i <= s.size(); i++) dp[i][0] = 1;
 
         for (int i = 1; i <= s.size(); i++) {

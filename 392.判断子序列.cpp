@@ -6,7 +6,7 @@
 
 /*
  * 只有一个s判断是不是t子序列时
- * 解法：双指针，动态规划
+ * 两个解法：双指针，动态规划
  * 
  * 进阶：有很多个s分别判断是不是t子序列时
  * 解法：预处理+动态规划
@@ -35,7 +35,7 @@ public:
 /*
  * 我的解法二，动态规划
  * 思路：
- * 让dp[i][j]表示s前i个字母是否是t前j个字母的子序列
+ * 让dp[i][j]表示s前i个字母（即下标i-1及之前）是否是t前j个字母（即下标j-1及之前）的子序列
  * 则dp[i][j]为true，有两种情况
  * 情况一：dp[i][j-1]就为true
  * 情况二：s[i-1]==t[j-1]且dp[i-1][j-1]为true
@@ -111,10 +111,12 @@ public:
         int n = s.size(), m = t.size();
 
         vector<vector<int> > dp(m + 1, vector<int>(26, 0));
+        //* 初始化
         for (int alp_j = 0; alp_j < 26; alp_j++) {
             dp[m][alp_j] = m;
         }
 
+        //! 预处理
         for (int pos_i = m - 1; pos_i >= 0; pos_i--) {
             for (int alp_j = 0; alp_j < 26; alp_j++) {
                 if (t[pos_i] == alp_j + 'a')
@@ -123,6 +125,8 @@ public:
                     dp[pos_i][alp_j] = dp[pos_i + 1][alp_j];
             }
         }
+
+        //* 使用预处理的结果
         int pos = 0;
         for (int i = 0; i < n; i++) {
             if (dp[pos][s[i] - 'a'] == m) {

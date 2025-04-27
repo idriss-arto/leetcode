@@ -7,7 +7,9 @@
 /*
  * 只能买卖一次
  * 思路：
+ * 
  * 我的思路：贪心，记录每一个位置往左侧看的最小值
+ * 
  * 
  * 题解思路：动态规划
  * dp[i][1] 表示第i天持有股票所得最多现金，dp[i][0] 表示第i天不持有股票所得最多现金
@@ -26,8 +28,26 @@
 
 // @lc code=start
 #include <vector>
+#include <tuple>
 using namespace std;
-//* 题解解法，动态规划
+
+
+//* 官方题解解法，动态规划（使用tie(tuple头文件)）
+//* no 表示不持有股票所得最多现金，yes 表示持有股票所得最多现金
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int len = prices.size();
+        if (len == 0) return 0;
+        int sell = 0, buy = -prices[0];
+        for (int i = 1; i < len; i++) {
+            tie(sell, buy) = make_pair(max(sell, buy + prices[i]), max(buy, -prices[i]));
+        }
+        return sell;
+    }
+};
+
+//* Carl题解解法，动态规划
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
 public:
@@ -42,7 +62,7 @@ public:
     }
 };
 
-//* 题解解法，动态规划（滚动数组）
+//* Carl题解解法，动态规划（滚动数组）
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
 public:
