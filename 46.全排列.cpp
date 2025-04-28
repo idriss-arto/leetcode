@@ -6,7 +6,11 @@
 /*
  * 排列问题的不同：
  * 每层都是从0开始搜索而不是startIndex
- * 需要used数组记录path里都放了哪些元素了(同枝去重)
+ * 需要used数组记录path里都放了哪些元素了(树枝去重)
+ * 
+ * 因为没有index了，每次进入下一层都是从0开始遍历，
+ * 同时同一元素在一个全排列中不会多次出现，
+ * 所以需要used数组进行树枝去重
 */
 // @lc code=start
 #include <vector>
@@ -23,6 +27,7 @@ private:
             return;
         }
         for (int i = 0; i < nums.size(); i++) {
+            //* 当前树枝已经用过了则跳过
             if ((used[i])) {
                 continue;
             }
