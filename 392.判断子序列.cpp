@@ -102,8 +102,8 @@ public:
  * 
  * 从递推公式可以看出需要从后往前遍历pos_i
  * 
- * 那么边界情况就是dp[s.size()][alp_j]，将其置为s.size()，
- * 这样dp[pos_i][alp_j]为 s.size() 表示下标pos_i及以后不存在字符j
+ * 那么边界情况就是dp[t.size()][alp_j]，将其置为t.size()，
+ * 这样dp[pos_i][alp_j]为 t.size() 表示下标pos_i及以后不存在字符j
  */
 class Solution {
 public:
