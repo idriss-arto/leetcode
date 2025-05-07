@@ -26,6 +26,8 @@ public:
     int longestPalindromeSubseq(string s) {
         vector<vector<int>> dp(s.size(), vector<int>(s.size(), 0));
         for (int i = 0; i < s.size(); i++) dp[i][i] = 1;
+
+        //! 注意这里外层遍历顺序是从下往上
         for (int i = s.size() - 1; i >= 0; i--) {
             for (int j = i + 1; j < s.size(); j++) {
                 if (s[i] == s[j]) {
