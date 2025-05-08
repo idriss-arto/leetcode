@@ -4,6 +4,12 @@
  * [51] N 皇后
  */
 
+/*
+ * 思路：
+ * 按行遍历，找到能放的位置就进入下一行
+ * 找能放的位置时遍历列和左上、右上即可
+*/
+
 // @lc code=start
 #include <vector>
 #include <string>
