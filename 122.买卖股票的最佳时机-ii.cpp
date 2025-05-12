@@ -9,11 +9,12 @@
  *
  * 贪心思路：
  * 第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。
- * 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
+ ! 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
  * 
  * 
  * 动态规划思路：
  * dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
+ * 
  * 如果第i天不持有股票即dp[i][0]， 也可以由两个状态推出来
  * 第i-1天就不持有股票，那么就保持现状，所得现金就是昨天不持有股票的所得现金 即：dp[i - 1][0]
  * 第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金即：prices[i] + dp[i - 1][1]
@@ -30,6 +31,7 @@
 #include <climits>
 #include <tuple>
 using namespace std;
+
 //* 动态规划
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
@@ -79,7 +81,7 @@ class Solution {
 
 //* 贪心
 //* 假如第 0 天买入，第 3 天卖出，那么利润为：prices[3] - prices[0]。
-//* 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
+//! 相当于(prices[3] - prices[2]) + (prices[2] - prices[1]) + (prices[1] - prices[0])。
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {

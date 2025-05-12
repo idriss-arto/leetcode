@@ -56,7 +56,16 @@ public:
     }
 };
 
-//* 贪心题解写法
+/* 
+ * Carl贪心
+ * 思路：
+ * 局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。
+ * 全局最优：选取最大“连续和”
+ * 局部最优的情况下，并记录最大的“连续和”，可以推出全局最优。
+
+ * 从代码角度上来讲：遍历 nums，从头开始用 count 累积，如果 count 一旦加上 nums[i]变为负数，
+ * 那么就应该从 nums[i+1] 开始从 0 累积 count 了，因为已经变为负数的 count，只会拖累总和。
+*/
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
@@ -97,16 +106,21 @@ public:
                 continue;
             }
             else {
+                //* 先记录现在的结果
                 result = result > sum ? result : sum;
+
+                //* 统计连续负值的总和
                 now = 0;
                 while (i < nums.size() && nums[i] < 0) {
                     now += nums[i];
                     i++;
                 }
+
                 if (i == nums.size()) {
                     break;
                 }
                 else {
+                    //* 判断当前连续和是否为正
                     if (sum + now >= 0) {
                         sum += nums[i] + now;
                         continue;
