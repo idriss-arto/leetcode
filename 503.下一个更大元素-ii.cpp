@@ -51,7 +51,9 @@ class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
         vector<int> result(nums.size(), -1);
-        if (nums.size() == 0) return result;
+        
+        if (nums.size() == 0) return result;        //* 不要这句也可以
+
         stack<int> st;
         st.push(0);
         for (int i = 1; i < nums.size() * 2; i++) { 

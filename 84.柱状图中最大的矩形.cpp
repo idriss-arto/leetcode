@@ -87,7 +87,7 @@ public:
         //* 求和
         int result = 0;
         for (int i = 0; i < size; i++) {
-            int sum = heights[i] * (minRightIndex[i] - minLeftIndex[i] - 1);
+            int sum = heights[i] * (minRightIndex[i] - minLeftIndex[i] - 1);    //* 注意这里减一，因为是求中间宽度
             result = max(sum, result);
         }
         return result;
@@ -102,8 +102,8 @@ public:
     int largestRectangleArea(vector<int>& heights) {
         int result = 0;
         stack<int> st;
-        heights.insert(heights.begin(), 0); //* 数组头部加入元素0
-        heights.push_back(0);               //* 数组尾部加入元素0
+        heights.insert(heights.begin(), 0); //! 数组头部加入元素0
+        heights.push_back(0);               //! 数组尾部加入元素0
         st.push(0);
 
         //* 第一个元素已经入栈，从下标1开始

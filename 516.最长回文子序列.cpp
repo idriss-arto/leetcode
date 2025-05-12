@@ -32,7 +32,9 @@ public:
             for (int j = i + 1; j < s.size(); j++) {
                 if (s[i] == s[j]) {
                     dp[i][j] = dp[i + 1][j - 1] + 2;
-                } else {
+                } 
+                //* 因为是求最长回文子序列，所以可以只加入s[i]和s[j]的一个
+                else {
                     dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
                 }
             }

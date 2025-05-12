@@ -49,6 +49,7 @@ public:
         //! 注意这里外层遍历顺序是从下往上
         for (int i = s.size() - 1; i >= 0; i--) {
             for (int j = i; j < s.size(); j++) {
+                //* 这里是简略写法，或符号之前是情况一和二，或符号之后是情况三
                 if (s[i] == s[j] && (j - i <= 1 || dp[i+1][j-1])) {
                     dp[i][j] = true;
                     result++;
