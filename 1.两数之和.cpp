@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=1 lang=cpp
  * 哈希
- * [1] 两数之和
+ ! [1] 两数之和
  */
 
 /*
@@ -38,6 +38,16 @@ public:
             }
             //* 如果没找到匹配对，就把访问过的元素和下标加入到map中
             map.insert(pair<int, int>(nums[i], i)); 
+
+            /*
+             * 上述对map的find操作可换为count，代码如下
+            if (map.count(target - nums[i]) > 0) {
+                return {map[target-nums[i]], i};
+            }
+            else {
+                map[nums[i]] = i;
+            }
+            */
         }
         return {};
     }
