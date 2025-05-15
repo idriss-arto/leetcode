@@ -1,14 +1,14 @@
 /*
  * @lc app=leetcode.cn id=438 lang=cpp
  * 滑动窗口，哈希
- * [438] 找到字符串中所有字母异位词
+ ! [438] 找到字符串中所有字母异位词
  */
 
 /*
  * 思路:
  * 滑动窗口加哈希(因为确定只用小写字母作为key，所以直接用数组模拟hash即可，不用unordered_map)
  * 滑动窗口移动时，左边出界的字母对应计数减一，右边新入界的字母对应计数加一
- ! 注意，两个vector可以直接用‘==’来判断是否相等
+ ! 注意，两个vector可以直接用"=="来判断是否相等
 */
 
 // @lc code=start
@@ -38,9 +38,12 @@ public:
 
         for (int i = 0; i < sLen - pLen; ++i) {
             --sCount[s[i] - 'a'];
+            //* 如果SCount和pCount用的是unordered_map，需要加下面一行代码
+            //* if (sCount[s[i]] == 0) sCount.erase(s[i]);
             ++sCount[s[i + pLen] - 'a'];
 
             if (sCount == pCount) {
+                //! 此时s中子串开头位置为i + 1
                 ans.emplace_back(i + 1);
             }
         }

@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=42 lang=cpp
  * 单调栈，动态规划，双指针
- * [42] 接雨水
+ ! [42] 接雨水
  */
 
 // @lc code=start
@@ -96,7 +96,7 @@ public:
                 while (!st.empty() && height[i] > height[st.top()]) {   //* 注意这里是while
                     int mid = st.top();
                     st.pop();
-                    if (!st.empty()) {
+                    if (!st.empty()) {              //! 注意这里需要判断栈stack是否为空
                         int h = min(height[st.top()], height[i]) - height[mid];
                         int w = i - st.top() - 1;   //! 注意减一，只求中间宽度
                         sum += h * w;
