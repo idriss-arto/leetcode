@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=968 lang=cpp
  * 贪心，状态记录
- * [968] 监控二叉树
+ ! [968] 监控二叉树
  */
 
 // @lc code=start
@@ -17,13 +17,44 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+/*
+ * 思路：
+ * 显然，此题应用后序遍历，也就是从下往上遍历，
+ * 这是因为头结点放不放摄像头也就省下一个摄像头， 
+ * 叶子节点放不放摄像头省下了的摄像头数量是指数阶别的。
+ * 
+ * 将每个节点状态分为以下三种：
+ * 0：该节点无覆盖
+ * 1：本节点设置摄像头
+ * 2：本节点有覆盖
+ * 
+ * 每个节点状态优自己子节点状态推出，具体以下几种情况
+ * 情况1：
+ * 左右节点都为2：有覆盖
+ * 这种情况应该返回0：无覆盖
+ * 
+ * 情况2：
+ * 左右节点中至少有一个为0：无覆盖
+ * 这种情况应该返回1：设置摄像头
+ * 
+ * 情况3：
+ * 左右孩子至少有1个为1：设置摄像头
+ * 这种情况应该返回2：有覆盖
+ * 
+ * 
+ * 特殊情况：
+ * 对于空节点，因为我们想让空节点的父节点也就是叶子节点不放摄像头，也不能是被覆盖的状态
+ * 所以，空节点状态设为2：本节点有覆盖
+ * 
+ * 对于根节点，如果发现最后状态是0：该节点无覆盖，则放一个摄像头
+*/
 class Solution {
 private:
     int result;
     int traversal(TreeNode* cur) {
 
         //* 空节点，该节点有覆盖
-        if (cur == NULL) return 2;
+        if (cur == nullptr) return 2;
 
         int left = traversal(cur->left);
         int right = traversal(cur->right);
