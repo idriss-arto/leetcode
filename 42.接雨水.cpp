@@ -57,6 +57,7 @@ public:
         for (int i = size - 2; i >= 0; i--) {
             maxRight[i] = max(height[i], maxRight[i + 1]);
         }
+
         //* 求和
         int sum = 0;
         for (int i = 0; i < size; i++) {
@@ -87,13 +88,18 @@ public:
         st.push(0);
         int sum = 0;
         for (int i = 1; i < height.size(); i++) {
-            if (height[i] < height[st.top()]) {             //* 情况一
+            //* 情况一
+            if (height[i] < height[st.top()]) {
                 st.push(i);
-            } else if (height[i] == height[st.top()]) {     //* 情况二
+            } 
+            //* 情况二
+            else if (height[i] == height[st.top()]) {
                 st.pop();                           //* 其实这一句可以不加，结果是一样的，但处理高度相同的情况的思路却变了。
                 st.push(i);
-            } else {                                        //* 情况三
-                while (!st.empty() && height[i] > height[st.top()]) {   //* 注意这里是while
+            }
+            //* 情况三
+            else {
+                while (!st.empty() && height[i] > height[st.top()]) {   //* 注意这里是while，还有先判断stack非空
                     int mid = st.top();
                     st.pop();
                     if (!st.empty()) {              //! 注意这里需要判断栈stack是否为空
@@ -102,6 +108,8 @@ public:
                         sum += h * w;
                     }
                 }
+
+                //! while循环完了别忘了还有push
                 st.push(i);
             }
         }

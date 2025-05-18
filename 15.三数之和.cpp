@@ -30,10 +30,12 @@ public:
             if (nums[i] > 0) {
                 break;
             }
+
             //* 去重
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
+
             int left = i + 1, right = nums.size() - 1;
             while (right > left) {
                 //* 去重复逻辑如果放在这里，在[-2,1,1]时可能直接导致 right<=left 了，从而漏掉了唯一三元组
@@ -43,7 +45,7 @@ public:
                 else if (nums[i] + nums[left] + nums[right] < 0) left++;
                 else {
                     result.push_back(vector<int>{nums[i], nums[left], nums[right]});
-                    //* 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
+                    //* 去重逻辑应该放在找到一个三元组之后，对 b 和 c 去重
                     while (right > left && nums[right] == nums[right - 1]) right--;
                     while (right > left && nums[left] == nums[left + 1]) left++;
 

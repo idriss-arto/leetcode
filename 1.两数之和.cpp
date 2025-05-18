@@ -19,9 +19,10 @@
 #include<vector>
 #include<unordered_map>
 using namespace std;
+
+//* Carl方案，边插边搜，同时处理map不能出现同样的键的问题
 class Solution {
 public:
-    //! 边插边搜，同时处理map不能出现同样的键的问题
     vector<int> twoSum(vector<int>& nums, int target) {
         std::unordered_map <int,int> map;
         for(int i = 0; i < nums.size(); i++) {
@@ -51,8 +52,11 @@ public:
         }
         return {};
     }
+};
 
-    //! 插完再搜，有误
+//* 我的方案，插完再搜，有误
+class Solution {
+public:
     vector<int> myTwoSum(vector<int>& nums, int target) {
         vector<int> res;
         unordered_map <int, int> place;

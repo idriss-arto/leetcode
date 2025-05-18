@@ -11,6 +11,41 @@ using namespace std;
 
 /*
  * 思路：
+ * 添加和删除不是看子串是否覆盖t，而是看指针所指向字母的个数是否大于所需
+ * 添加时，right指向的字符小于所需才count++，count==t.size()时说明覆盖了
+ * 删除时，left指向的字符大于所需才能删除
+ * 同时，不再是覆盖了才能删除，而是添加完就能删除
+ * 例如t="ABCD"，s="AXXXXBCAXXD"，在s遇到第二个A时，就可以把left挪到B
+*/
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int s_cnt[123], t_cnt[123];
+        int count = 0;
+        string res;
+        for (auto c : t) t_cnt[c] ++;
+
+        for (int right = 0, left = 0; right < s.size(); right++){
+            s_cnt[s[right]]++;
+            if (s_cnt[s[right]] <= t_cnt[s[right]]) count++;
+            //* 不是看子串是否覆盖t，而是看left所指向字母的个数是否大于所需
+            while (s_cnt[s[left]] > t_cnt[s[left]]) {
+                s_cnt[s[left]]--;
+                left++;
+            }
+            if (count == t.size()) {
+                if (res.empty() || right - left + 1 < res.size()) {
+                    res = s.substr(left, right - left + 1);
+                }
+            }
+        }
+        return res;
+
+    }
+};
+
+/*
+ * 思路：
  * 用unordered_map记录两个字符串中出现字符数量
  * right先往右走，直到满足s从left到right的字符能覆盖t，
  * 再尝试left往右走，缩减s子串长度
@@ -69,41 +104,6 @@ public:
         else {
             return "";
         }
-    }
-};
-
-/*
- * 思路：
- * 添加和删除不是看子串是否覆盖t，而是看指针所指向字母的个数是否大于所需
- * 添加时，right指向的字符小于所需才count++，count==t.size()时说明覆盖了
- * 删除时，left指向的字符大于所需才能删除
- * 同时，不再是覆盖了才能删除，而是添加完就能删除
- * 例如t="ABCD"，s="AXXXXBCAXD"，在s遇到第二个A时，就可以把left挪到B
-*/
-class Solution {
-public:
-    string minWindow(string s, string t) {
-        int hs[123], ht[123];
-        int count = 0;
-        string res;
-        for (auto c : t) ht[c] ++;
-
-        for (int right = 0, left = 0; right < s.size(); right++){
-            hs[s[right]]++;
-            if (hs[s[right]] <= ht[s[right]]) count++;
-            //* 不是看子串是否覆盖t，而是看left所指向字母的个数是否大于所需
-            while (hs[s[left]] > ht[s[left]]) {
-                hs[s[left]]--;
-                left++;
-            }
-            if (count == t.size()) {
-                if (res.empty() || right - left + 1 < res.size()) {
-                    res = s.substr(left, right - left + 1);
-                }
-            }
-        }
-        return res;
-
     }
 };
 // @lc code=end

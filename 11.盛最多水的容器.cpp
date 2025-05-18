@@ -25,16 +25,16 @@ using namespace std;
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int l = 0, r = height.size() - 1;
+        int left = 0, right = height.size() - 1;
         int ans = 0;
-        while (l < r) {
-            int area = min(height[l], height[r]) * (r - l);
+        while (left < right) {
+            int area = min(height[left], height[right]) * (right - left);
             ans = max(ans, area);
-            if (height[l] <= height[r]) {
-                ++l;
+            if (height[left] <= height[right]) {
+                ++left;
             }
             else {
-                --r;
+                --right;
             }
         }
         return ans;
