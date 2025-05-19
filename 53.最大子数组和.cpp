@@ -21,8 +21,8 @@
  * 全局最优：选取最大“连续和”
  * 局部最优的情况下，并记录最大的“连续和”，可以推出全局最优。
 
- * 从代码角度上来讲：遍历 nums，从头开始用 count 累积，如果 count 一旦加上 nums[i]变为负数，
- * 那么就应该从 nums[i+1] 开始从 0 累积 count 了，因为已经变为负数的 count，只会拖累总和。
+ * 从代码角度上来讲：遍历 nums，从头开始用 sum 累积，如果 sum 一旦加上 nums[i]变为负数，
+ * 那么就应该从 nums[i+1] 开始从 0 累积 sum 了，因为已经变为负数的 count，只会拖累总和。
 */
 
 // @lc code=start
@@ -63,20 +63,20 @@ public:
  * 全局最优：选取最大“连续和”
  * 局部最优的情况下，并记录最大的“连续和”，可以推出全局最优。
 
- * 从代码角度上来讲：遍历 nums，从头开始用 count 累积，如果 count 一旦加上 nums[i]变为负数，
- * 那么就应该从 nums[i+1] 开始从 0 累积 count 了，因为已经变为负数的 count，只会拖累总和。
+ * 从代码角度上来讲：遍历 nums，从头开始用 sum 累积，如果 sum 一旦加上 nums[i]变为负数，
+ * 那么就应该从 nums[i+1] 开始从 0 累积 sum 了，因为已经变为负数的 sum，只会拖累总和。
 */
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
         int result = INT_MIN;
-        int count = 0;
+        int sum = 0;
         for (int i = 0; i < nums.size(); i++) {
-            count += nums[i];
-            if (count > result) {       //* 取区间累计的最大值（相当于不断确定最大子序终止位置）
-                result = count;
+            sum += nums[i];
+            if (sum > result) {         //* 取区间累计的最大值（相当于不断确定最大子序终止位置）
+                result = sum;
             }
-            if (count <= 0) count = 0;  //* 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和
+            if (sum <= 0) sum = 0;      //* 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和
         }
         return result;
     }
