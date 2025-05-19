@@ -7,22 +7,27 @@
 // @lc code=start
 #include <vector>
 using namespace std;
+
+//* 普通版本
 class Solution {
 public:
     int climbStairs(int n) {
         if (n <= 2) return n;
         vector<int> result(n+1);
-        result[0] = 0;
+
         result[1] = 1;
         result[2] = 2;
+
+        //* 注意这里从3开始
         for (int i = 3; i < result.size(); i++) {
             result[i] = result[i-2] + result[i-1];
         }
+
         return result[n];
     }
 };
 
-//* 优化空间复杂度版本
+//* 空间复杂度优化版本
 class Solution2 {
     public:
         int climbStairs(int n) {

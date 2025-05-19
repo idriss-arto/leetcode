@@ -4,14 +4,21 @@
  * [63] 不同路径 II
  */
 
+/*
+ * 注意初始化第一行和第一列时遇见障碍的处理
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
+
+//* 普通版本
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int m = obstacleGrid.size();
         int n = obstacleGrid[0].size();
+
         vector<vector<int>> result(m, vector<int>(n, 0));
         for (int i = 0; i < m; i++) {
             if (obstacleGrid[i][0] != 1) result[i][0] = 1;
@@ -41,12 +48,13 @@ public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         if (obstacleGrid[0][0] == 1)
             return 0;
+
         vector<int> dp(obstacleGrid[0].size());
-        for (int j = 0; j < dp.size(); ++j)
+        //* 初始化第一行
+        dp[0] = 1;
+        for (int j = 1; j < dp.size(); ++j)
             if (obstacleGrid[0][j] == 1)
                 dp[j] = 0;
-            else if (j == 0)
-                dp[j] = 1;
             else
                 dp[j] = dp[j-1];
 

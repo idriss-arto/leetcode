@@ -7,6 +7,8 @@
 // @lc code=start
 #include <vector>
 using namespace std;
+
+//* 普通版本
 class Solution {
 public:
     int uniquePaths(int m, int n) {
