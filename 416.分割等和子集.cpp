@@ -6,6 +6,15 @@
 
 /*
  * 给定背包容量，判断能不能装满这个背包
+
+ * 我的思路：
+ * dp[j]表示给定数组里是否有子数组满足和为j。
+ * 所以状态转移方程是if (j == nums[i] || dp[j-nums[i]] == true) dp[j] = true;
+ * 最后检查dp[target]是否为true即可
+ * 
+ * Carl题解思路：
+ * dp[j]表示容量为j的背包最多能放下的物品。
+ * 按正常01背包过程计算，最后检查dp[target]是否为target
 */
 
 //! 背包问题，不仅可以求背包能被的最大价值，还可以求这个背包是否可以装满。
@@ -37,7 +46,7 @@ public:
 };
 
 //* dp[i]表示数字加起来小于等于i的和的最大值
-class Solution2 {
+class Solution {
 public:
     bool canPartition(vector<int>& nums) {
         int sum = 0;

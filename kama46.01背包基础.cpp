@@ -17,8 +17,8 @@
  * 3.dp数组如何初始化
  * 如果背包容量j为0的话，即dp[i][0]，无论是选取哪些物品，背包价值总和一定为0。
  * 从状态转移方程可以看出，i 是由 i-1 推导出来，那么i为0的时候就一定要初始化。
- * 当 j < weight[0]的时候，dp[0][j] 应该是 0，因为背包容量比编号0的物品重量还小。
- * 当j >= weight[0]时，dp[0][j] 应该是value[0]，因为背包容量放足够放编号0物品。
+ * 当 j < weight[0] 的时候，dp[0][j] 应该是 0，因为背包容量比编号0的物品重量还小。
+ * 当 j >= weight[0] 时，dp[0][j] 应该是value[0]，因为背包容量放足够放编号0物品。
  *
  * 4.确定遍历顺序
  * dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]); 
@@ -57,7 +57,7 @@ int main() {
 
     for(int i = 1; i < weight.size(); i++) {        //* 遍历科研物品
         for(int j = 0; j <= bagweight; j++) {       //* 遍历行李箱容量
-            if (j < weight[i]) dp[i][j] = dp[i - 1][j];     //* 如果装不下这个物品,那么就继承dp[i - 1][j]的值
+            if (j < weight[i]) dp[i][j] = dp[i - 1][j];     //! 如果装不下这个物品,那么就继承dp[i - 1][j]的值
             else {
                 dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
             }
