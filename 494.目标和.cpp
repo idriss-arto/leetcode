@@ -40,6 +40,8 @@ using namespace std;
  * 则2*left = target+sum，其中target和sum是已知的，可以求出left
  ! 注意：target+sum为奇数时，left不为整数，即无解
  * 则原问题转换为求“取nums中的数（每一个数分为取和不取），使得和为left的取法计数”
+ *
+ * dp[i][j]表示从下标0到下标i，有多少种取法使得和为j
 */
 class Solution {
 public:

@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=518 lang=cpp
  * 动态规划（完全背包（求组合数））
- * [518] 零钱兑换 II
+ ! [518] 零钱兑换 II
  */
 
 //* 求组合数
@@ -9,35 +9,36 @@
 // @lc code=start
 #include <vector>
 using namespace std;
+
 //* 滚动数组版本
 class Solution {
-    public:
-        int change(int amount, vector<int>& coins) {
-            //* dp[j]表示组成数字j的方式
-            vector<unsigned long long> dp(amount+1, 0);
-    
-            dp[0] = 1;
-    
-            //! 注意，这里不能调换循环顺序，因为是求组合数，调换后变成求排列数
-            //! 解释见 https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html#%E4%B8%80%E7%BB%B4dp%E8%AE%B2%E8%A7%A3
-            for (int i = 0; i < coins.size(); i++) {
-                for (int j = coins[i]; j <= amount; j++) {
-                    dp[j] += dp[j-coins[i]];
-                }
+public:
+    int change(int amount, vector<int>& coins) {
+        //* dp[j]表示组成数字j的方式
+        vector<unsigned long long> dp(amount+1, 0);
+
+        dp[0] = 1;
+
+        //! 注意，这里不能调换循环顺序，因为是求组合数，调换后变成求排列数
+        //! 解释见 https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html#%E4%B8%80%E7%BB%B4dp%E8%AE%B2%E8%A7%A3
+        for (int i = 0; i < coins.size(); i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] += dp[j-coins[i]];
             }
-    
-            return dp[amount];
         }
-    };
+
+        return dp[amount];
+    }
+};
 
 //* 二维数组版本
-class Solution2 {
+class Solution {
 public:
     int change(int amount, vector<int>& coins) {
         //* dp[i][j]表示前i个数组成数字j的方式
         vector<vector<unsigned long long>> dp(coins.size(), vector<unsigned long long>(amount+1, 0));
 
-        //* 注意组成0的方式固定为1（因为coins[i]大于0）
+        //* 注意组成0的方式固定为1（因为coins[i]大于0），即第一列固定为1
         for (int i = 0; i < coins.size(); i++) {
             dp[i][0] = 1;
         }

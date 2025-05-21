@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=377 lang=cpp
  * 动态规划（完全背包（求排列数））
- * [377] 排列总和 Ⅳ
+ ! [377] 排列总和 Ⅳ
  */
 
 //* 求排列数
@@ -11,6 +11,7 @@
 #include <vector>
 #include <climits>
 using namespace std;
+
 //* 滚动数组版本
 class Solution {
 public:
@@ -46,7 +47,7 @@ public:
 
 //* 二维数组版本（错误）
 //! 求出来是组合数不是排列数
-class Solution2 {
+class Solution {
 public:
     int combinationSum4(vector<int>& nums, int target) {
         vector<vector<int>> dp(nums.size() , vector<int>(target+1, 0));
@@ -57,7 +58,7 @@ public:
 
         for (int j = 1; j <= target; j++) {             //* 外层遍历背包
             for (int i = 0; i < nums.size(); i++) {     //* 内层遍历物品
-                if(i != 0) dp[i][j] = dp[i-1][j];
+                if (i != 0) dp[i][j] = dp[i-1][j];
                 //* 测试用例有两个数相加超过int范围的数据
                 if (j >= nums[i] && dp[i][j] < INT_MAX - dp[i][j - nums[i]]) {
                     dp[i][j] += dp[i][j-nums[i]];
@@ -72,7 +73,7 @@ public:
 
 //* 二维数组版本（正确）
 //! 根据滚动数组版本强行推出来的，dp[i][j]失去意义
-class Solution2 {
+class Solution {
 public:
     int combinationSum4(vector<int>& nums, int target) {
         vector<vector<int>> dp(nums.size() , vector<int>(target+1, 0));

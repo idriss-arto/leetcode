@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=474 lang=cpp
- * 动态规划（01背包）
- * [474] 一和零
+ * 动态规划（多维01背包）
+ ! [474] 一和零
  */
 
 /*
@@ -20,6 +20,8 @@
 #include <vector>
 #include <string>
 using namespace std;
+
+//* 滚动数组版本
 class Solution {
 public:
     vector<int> getMN(string& s) {
@@ -33,6 +35,7 @@ public:
 
     int findMaxForm(vector<string>& strs, int m, int n) {
         vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+		//* dp[j][k]表示最多有j个0、k个1的情况下，最多能有几个子串
         
         for (int i = 0; i < strs.size(); i++) {
             vector<int> mn = getMN(strs[i]);
@@ -48,7 +51,7 @@ public:
 };
 
 //* 三维数组版本
-class Solution2 {
+class Solution {
 public:
     int findMaxForm(vector<string>& strs, int m, int n) {
         int num_of_str = strs.size();
@@ -96,9 +99,10 @@ public:
 			int count_of_ones = num_of_ones[i]; 
 			for (int j = 0; j <= m; j++){
 				for (int k = 0; k <= n; k++){
-					if( j < count_of_zeros || k < count_of_ones){
+					if (j < count_of_zeros || k < count_of_ones){
 						dp[i][j][k] = dp[i-1][j][k];
-					}else{
+					}
+					else{
 						dp[i][j][k] = max(dp[i-1][j][k], dp[i-1][j - count_of_zeros][k - count_of_ones] + 1);
 					}
 				}
