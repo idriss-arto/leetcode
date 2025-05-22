@@ -4,7 +4,7 @@
 #include<iostream>
 using namespace std;
 //* 实现方式一，把个数为n的物品1展开为n个重量、价值相等的物品
-//! 会超时，因为vector底层扩容
+//! 会超时，因为vector底层扩容。可以计算好一共要扩容多少再用resize一次解决
 int main() {
     int bagWeight,n;
     cin >> bagWeight >> n;

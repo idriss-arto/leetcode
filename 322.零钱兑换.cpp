@@ -4,6 +4,17 @@
  * [322] 零钱兑换
  */
 
+/*
+ * 1.确定dp数组以及下标的含义
+ * dp[j]：凑足总额为j所需钱币的最少个数为dp[j]
+ * 
+ * 2.确定递推公式
+ * 凑足总额为j - coins[i]的最少个数为dp[j - coins[i]]，
+ * 那么只需要加上一个钱币coins[i]即dp[j - coins[i]] + 1就是dp[j]（考虑coins[i]）
+ * 所以dp[j] 要取所有 dp[j - coins[i]] + 1 中最小的。
+ * 即递推公式：dp[j] = min(dp[j - coins[i]] + 1, dp[j]);
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
