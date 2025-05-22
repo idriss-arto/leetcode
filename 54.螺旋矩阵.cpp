@@ -13,12 +13,13 @@
 // @lc code=start
 #include <vector>
 using namespace std;
+
+//* 官方题解，思路更简单
 class Solution {
 private:
     static constexpr int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
 public:
-    //* 官方题解，思路更简单
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         if (matrix.size() == 0 || matrix[0].size() == 0) {
             return {};
@@ -46,17 +47,21 @@ public:
         }
         return order;
     }
+};
 
-    //* 我的题解，运用偏移量调制循环边界，但最后需要额外处理最中间一行或最中间一列
-    vector<int> mySpiralOrder(vector<vector<int>>& matrix) {
+//* 我的题解，运用偏移量控制循环边界，但最后需要额外处理最中间一行或最中间一列
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
         //* 先获取矩阵大小
         int m = matrix.size();
         int n = matrix[0].size();
-        int loop = 0;
-        int count = 0;          //* 计数已经读了多少个值
-        int offset = 0;
         
         vector<int> res(m * n, 0);
+        int count = 0;          //* 计数已经读了多少个值
+
+        int loop = 0; 
+        int offset = 0;
         int i, j;
         //* 会进行{min(m, n) / 2}次圈
         while(loop++ < min(m, n) / 2) {

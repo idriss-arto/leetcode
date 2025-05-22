@@ -1,41 +1,69 @@
 // @lc code=start
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <stdio.h>
 using namespace std;
+
+void myprint(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << setw(2) << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
 class Solution {
 public:
-    long long maximumTripletValue(vector<int>& nums) {
-        vector<int> leftMaxIndex(nums.size(), 0);
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[leftMaxIndex[i-1]] > nums[i]) leftMaxIndex[i] = leftMaxIndex[i-1];
-            else leftMaxIndex[i] = i;
-        }
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
 
-        vector<int> rightMaxIndex(nums.size(), nums.size()-1);
-        for (int i = nums.size() - 2; i >= 0; i--) {
-            if (nums[rightMaxIndex[i+1]] > nums[i+1]) rightMaxIndex[i] = rightMaxIndex[i+1];
-            else rightMaxIndex[i] = i + 1;
-        }
+        // cout << "n = " << n << endl;
 
-        long long result = 0;
-        for (int i = 1; i <= nums.size() - 2; i++) {
-            if (rightMaxIndex[i] == i) continue;
-            long long tmp = (long long)(nums[leftMaxIndex[i]] - nums[i]) * nums[rightMaxIndex[i]];
-            if (tmp > result) {
-                result = tmp;
-                printf("%d %d %d", leftMaxIndex[i], i, rightMaxIndex[i]);
-            }
-        }
+        int offset = 0;
 
-        return result;
+        while (n - 2 * offset >= 2) {
+            int cnt = n - 2 * offset - 1;
+            // cout << "offset = " << offset << endl;
+            // cout << "cnt = " << cnt << endl;
+            while (cnt) {
+                int nowi = offset;
+                int nowj = offset + cnt - 1;
+                int nexti = nowj;
+                int nextj = n - 1 - nowi;
+
+                int now = matrix[nowi][nowj];
+                int tmp;
+
+                for (int i = 1; i <= 4; i++) {
+                    tmp = matrix[nexti][nextj];
+                    matrix[nexti][nextj] = now;
+                    now = tmp;
+                    nowi = nexti;
+                    nowj = nextj;
+                    nexti = nowj;
+                    nextj = n - 1 - nowi;
+
+                    cout << "offset = " << offset << " cnt = " << cnt << " i = " << i << endl;
+                    myprint(matrix);
+                }
+
+                cnt--;
+            } 
+
+            offset++;
+        }
     }
 };
 
 int main() {
     Solution a;
-    vector<int> nums = {10, 13, 6, 2};
-    a.maximumTripletValue(nums);
+    vector<vector<int>> nums = {{5,1,9,11}, {2,4,8,10}, {13,3,6,7}, {15,14,12,16}};
+    myprint(nums);
+    a.rotate(nums);
+    myprint(nums);
     return 0;
 }
 // @lc code=end
