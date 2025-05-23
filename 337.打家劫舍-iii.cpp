@@ -19,26 +19,6 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-//* 我的解法三
-//* 思路：解法二的基础上，用unordered_map存储中间状态
-class Solution {
-public:
-    unordered_map<TreeNode*, int> umap;     //* 记录计算过的结果
-    int rob(TreeNode* root) {
-        if (root == NULL) return 0;
-        if (root->left == NULL && root->right == NULL) return root->val;
-        if (umap[root]) return umap[root];  //* 如果umap里已经有记录则直接返回
-        //* 偷父节点
-        int val1 = root->val;
-        if (root->left) val1 += rob(root->left->left) + rob(root->left->right);     //* 跳过root->left
-        if (root->right) val1 += rob(root->right->left) + rob(root->right->right);  //* 跳过root->right
-        //* 不偷父节点
-        int val2 = rob(root->left) + rob(root->right);  //* 考虑root的左右孩子
-        umap[root] = max(val1, val2);                   //* umap记录一下结果
-        return max(val1, val2);
-    }
-};
-
 //* 题解解法
 class Solution {
 public:
@@ -46,22 +26,30 @@ public:
         vector<int> result = robTree(root);
         return max(result[0], result[1]);
     }
-    //* 长度为2的数组，0：不偷，1：偷
+    //* 长度为2的数组，考虑当前节点为根节点的子树
+    //* 下标0：不偷此节点时能获得的最大金额，
+    //* 下标1：偷此节点时能获得的最大金额
     vector<int> robTree(TreeNode* cur) {
         if (cur == NULL) return vector<int>{0, 0};
+        
         vector<int> left = robTree(cur->left);
         vector<int> right = robTree(cur->right);
+
         //* 偷cur，那么就不能偷左右节点。
         int val1 = cur->val + left[0] + right[0];
-        //* 不偷cur，那么可以偷也可以不偷左右节点，则取较大的情况
+
+        //! 不偷cur，那么可以偷也可以不偷左右节点，则取较大的情况
         int val2 = max(left[0], left[1]) + max(right[0], right[1]);
+
         return {val2, val1};
     }
 };
 
+//! 错误
 //* 我的解法一
-//* 思路：用一个value数组把整个树的节点存起来，包括空节点
-//* 让节点i的左孩子是2*i+1、右孩子是2*i+2
+//* 思路：用一个value数组把整个树的节点存起来，包括空节点，
+//* 让节点i的左孩子是2*i+1、右孩子是2*i+2。
+//* 可以从value数组的尾部向头部遍历
 //! vector初始化大小有问题，n个节点往一个方向走，vector需要有2^n-1的大小
 class Solution {
 public:
@@ -116,7 +104,9 @@ public:
     }
 };
 
+//! 错误
 //* 我的解法二，递归法
+//* 和题解解法很像，但多了很多重复计算。
 //* 最后两个用例超时
 class Solution {
 public:
@@ -129,6 +119,26 @@ public:
         if (root->right) val1 += rob(root->right->left) + rob(root->right->right);  //* 跳过root->right，相当于不考虑右孩子了
         //* 不偷父节点
         int val2 = rob(root->left) + rob(root->right);  //* 考虑root的左右孩子
+        return max(val1, val2);
+    }
+};
+
+//* 我的解法三
+//* 思路：解法二的基础上，用unordered_map存储中间状态
+class Solution {
+public:
+    unordered_map<TreeNode*, int> umap;     //* 记录计算过的结果
+    int rob(TreeNode* root) {
+        if (root == NULL) return 0;
+        if (root->left == NULL && root->right == NULL) return root->val;
+        if (umap[root]) return umap[root];  //* 如果umap里已经有记录则直接返回
+        //* 偷父节点
+        int val1 = root->val;
+        if (root->left) val1 += rob(root->left->left) + rob(root->left->right);     //* 跳过root->left
+        if (root->right) val1 += rob(root->right->left) + rob(root->right->right);  //* 跳过root->right
+        //* 不偷父节点
+        int val2 = rob(root->left) + rob(root->right);  //* 考虑root的左右孩子
+        umap[root] = max(val1, val2);                   //* umap记录一下结果
         return max(val1, val2);
     }
 };
