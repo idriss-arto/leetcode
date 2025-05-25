@@ -4,6 +4,12 @@
  * [213] 打家劫舍 II
  */
 
+/*
+ * 思路：
+ * 打家劫舍的环形版本，即首尾相连。
+ * 分别计算不考虑首家和不考虑尾家的情况，取较大值
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
@@ -15,7 +21,7 @@ using namespace std;
 //* 情况三：不考虑首元素，即考虑[1, nums.size()-1]
 //* 注意，情况二和情况三 都包含了情况一了，所以只考虑情况二和情况三就可以了。
 //* 注意注释中的情况二情况三
-class Solution2 {
+class Solution {
 public:
     int rob(vector<int>& nums) {
         if (nums.size() == 0) return 0;
