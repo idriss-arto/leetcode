@@ -60,13 +60,21 @@ public:
         
         bool row0_zero = false, col0_zero = false;
 
-        for (int j = 0; j < n; j++) {
-            if (matrix[0][j] == 0) row0_zero = true;
-        }
+        //* 1.预处理出两个标记变量
         for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 0) col0_zero = true;
+            if (matrix[i][0] == 0) {
+                col0_zero = true;
+                break;
+            }
+        }
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                row0_zero = true;
+                break;
+            }
         }
 
+        //* 2.用其他行与列去处理第一行与第一列
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
@@ -76,6 +84,14 @@ public:
             }
         }
 
+        //* 3.反过来使用第一行与第一列去更新其他行与列
+        for (int i = 1; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < n; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
         for (int j = 1; j < n; j++) {
             if (matrix[0][j] == 0) {
                 for (int i = 1; i < m; i++) {
@@ -84,20 +100,12 @@ public:
             }
         }
 
-        for (int i = 1; i < m; i++) {
-            if (matrix[i][0] == 0) {
-                for (int j = 1; j < n; j++) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-
+        //* 4.使用两个标记变量更新第一行与第一列
         if (row0_zero) {
             for (int j = 0; j < n; j++) {
                 matrix[0][j] = 0;
             }
         }
-
         if (col0_zero) {
             for (int i = 0; i < m; i++) {
                 matrix[i][0] = 0;

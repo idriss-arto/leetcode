@@ -55,6 +55,7 @@ public:
                 swap(nums[next], temp);
                 count++;
                 current = next;
+                //! 关键步骤，否则在n%k为0时会死循环
                 if (current == start) break;
             }
         }
