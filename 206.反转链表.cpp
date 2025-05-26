@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=206 lang=cpp
- * 链表基础
+ * 链表
  * [206] 反转链表
  */
 
@@ -12,7 +12,7 @@
 
 // @lc code=start
 
-// Definition for singly-linked list.
+//* Definition for singly-linked list.
 struct ListNode {
     int val;
     ListNode *next;
@@ -40,6 +40,7 @@ public:
 };
 
 //* 双指针，调换相邻两节点的指向关系
+//* 注意需要让原始头结点的next指向nullptr
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
