@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=142 lang=cpp
- *
- * [142] 环形链表 II
+ * 链表
+ ! [142] 环形链表 II
  */
 
 /*
@@ -11,38 +11,64 @@
  * 假设从头结点到环形入口节点的节点数为x。 
  * 环形入口节点到fast指针与slow指针相遇节点,节点数为y。 
  * 从相遇节点再到环形入口节点,节点数为 z。
- * (x + y) * 2 = x + y + n * (y + z)
+ * 通过fast指针走的步数是slow指针的两倍，可以得到以下方程：
+ ! (x + y) * 2 = x + y + n * (y + z)
  * x = (n - 1) (y + z) + z
 */
 
-// Definition for singly-linked list.
+// @lc code=start
+#include <unordered_set>
+using namespace std;
+
+//* Definition for singly-linked list.
 struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(nullptr) {}
 };
 
+//* 思路一：快慢指针加数学
+//* 时间复杂度O（n），空间复杂度O（1）
 class Solution {
-    public:
-        ListNode *detectCycle(ListNode *head) {
-            ListNode* fast = head;
-            ListNode* slow = head;
-            while(fast != nullptr && fast->next != nullptr) {
-                slow = slow->next;
-                fast = fast->next->next;
-                //* 快慢指针相遇，此时从head 和 相遇点，同时查找直至相遇
-                if (slow == fast) {
-                    ListNode* index1 = fast;
-                    ListNode* index2 = head;
-                    while (index1 != index2) {
-                        index1 = index1->next;
-                        index2 = index2->next;
-                    }
-                    return index2; //* 返回环的入口
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        //* 注意除了fast，还需要判断fast->next是否为空
+        while(fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+            //* 快慢指针相遇，此时从head 和 相遇点，同时查找直至相遇
+            if (slow == fast) {
+                ListNode* index1 = fast;
+                ListNode* index2 = head;
+                while (index1 != index2) {
+                    index1 = index1->next;
+                    index2 = index2->next;
                 }
+                return index2; //* 返回环的入口
             }
-            return nullptr;
         }
+        //* 从这里退出说明链表无环
+        return nullptr;
+    }
+};
+
+//* 思路二：使用哈希表记录走过的节点
+//* 时间复杂度O（n），空间复杂度O（n）
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_set<ListNode *> visited;
+        while (head != nullptr) {
+            if (visited.count(head)) {
+                return head;
+            }
+            visited.insert(head);
+            head = head->next;
+        }
+        return nullptr;
+    }
 };
 // @lc code=end
 
