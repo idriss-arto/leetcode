@@ -1,14 +1,15 @@
 /*
  * @lc app=leetcode.cn id=300 lang=cpp
  * 动态规划（递增序列）
- * [300] 最长递增子序列
+ ! [300] 最长递增子序列
  */
 
 /*
  * 思路一：
  * dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
  * 则对j从0到i-1，执行if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
- * 注意，计算dp[i]时，nums[i]一定在递增子序列中，所以dp.back()不是所求值，dp数组中的最大值才是
+ * 注意，计算dp[i]时，nums[i]一定在递增子序列中，
+ ! 所以dp.back()不是所求值，dp数组中的最大值才是
  * 
  ! dp[i]必须表示 “以nums[i]结尾的最长递增子序列” ，
  * 因为我们在做递增比较的时候，如果比较 nums[j] 和 nums[i] 的大小，
@@ -28,20 +29,21 @@
 using namespace std;
 //* 我的动态规划
 //* 思路：dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
-//* 注意，计算dp[i]时，nums[i]一定在递增子序列中，所以dp.back()不是所求值，dp数组中的最大值才是
+//* 注意，计算dp[i]时，nums[i]一定在递增子序列中，
+//! 所以dp.back()不是所求值，dp数组中的最大值才是
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         vector<int> dp(nums.size(), 1);
-        int maxCnt = 1;         //* 不能初始化为小于1的数，否则数组大小为1时会出错
+        int maxLen = 1;         //* 不能初始化为小于1的数，否则数组大小为1时会出错
 
         for (int i = 1; i < nums.size(); i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
             }
-            maxCnt = max(maxCnt, dp[i]);
+            maxLen = max(maxLen, dp[i]);
         }
-        return maxCnt;
+        return maxLen;
 
     }
 };

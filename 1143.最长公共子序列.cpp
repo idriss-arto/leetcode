@@ -11,7 +11,7 @@
  * dp[i][j]表示text1下标i之前，text2下标j之前，能满足的最长公共子序列（不要求连续）
  * if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
  * else dp[i][j] = max(dp[i-1][j], dp[i][j-1]); 
- * 需要初始化第一行和第一列
+ * 需要初始化第一行和第一列（这题初始化很麻烦）
  * 
  * 题解动态规划
  * 思路：
@@ -24,6 +24,7 @@
 #include <vector>
 #include <string>
 using namespace std;
+
 /*
  * 思路：
  * dp[i][j]表示text1下标i之前，text2下标j之前，能满足的最长公共子序列（不要求连续）
