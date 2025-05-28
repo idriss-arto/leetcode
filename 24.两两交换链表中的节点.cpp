@@ -20,12 +20,14 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
         ListNode* dummyHead = new ListNode(0);      //* 设置一个虚拟头结点
-        dummyHead->next = head;                     //* 将虚拟头结点指向head，这样方便后面做删除操作
-        ListNode* cur = dummyHead;
+        dummyHead->next = head;                     //* 将虚拟头结点指向head，这样方便后面做交换操作
+
+        ListNode* cur = dummyHead;                  //! cur指向的是要交换的两个节点之前的一个节点
         while(cur->next != nullptr && cur->next->next != nullptr) {
             ListNode* tmp1 = cur->next;             //* 记录临时节点
             ListNode* tmp2 = cur->next->next;       //* 记录临时节点
@@ -37,8 +39,10 @@ public:
 
             cur = cur->next->next;                  //* cur移动两位，准备下一轮交换
         }
+
         ListNode* result = dummyHead->next;
         delete dummyHead;
+
         return result;
     }
 };
