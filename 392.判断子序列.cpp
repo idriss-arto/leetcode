@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=392 lang=cpp
  * 双指针，动态规划（非连续子序列）
- * [392] 判断子序列
+ ! [392] 判断子序列
  */
 
 /*
@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 using namespace std;
+
 //* 我的解法一，双指针
 class Solution {
 public:
@@ -44,6 +45,7 @@ class Solution {
 public:
     bool isSubsequence(string s, string t) {
         vector<vector<bool>> dp(s.size()+1, vector<bool>(t.size()+1, false));
+        //* 注意这里的初始化
         for (int j = 0; j <= t.size(); j++) dp[0][j] = true;
 
         for (int i = 1; i <= s.size(); i++) {
@@ -126,12 +128,13 @@ public:
             }
         }
 
-        //* 使用预处理的结果
+        //* 使用预处理的结果判断s是否为t子序列
         int pos = 0;
         for (int i = 0; i < n; i++) {
             if (dp[pos][s[i] - 'a'] == m) {
                 return false;
             }
+            //* 注意这里，s的下一个字母的搜索范围是当前字母在t中位置的后面，所以加一
             pos = dp[pos][s[i] - 'a'] + 1;
         }
         return true;

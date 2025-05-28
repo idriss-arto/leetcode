@@ -8,9 +8,12 @@
 #include <string>
 #include <vector>
 using namespace std;
+
 /*
  * 我的动态规划
  * 思路：
+ ! 求出最长公共子序列s，再间接求出word1和word2变为这个s所需要删除的字符数
+ * 
  * 让dp[i][j]表示word1以下标i-1为尾的子序列s1，word2以下标j-1为尾的子序列s2，s1和s2的最长公共子序列为dp[i][j]
  * 
  * dp[i][j]的状态转移有两种情况
@@ -55,7 +58,8 @@ public:
  * 最后取最小值，所以当word1[i - 1] 与 word2[j - 1]不相同的时候，
  * 递推公式：dp[i][j] = min({dp[i - 1][j - 1] + 2, dp[i - 1][j] + 1, dp[i][j - 1] + 1});
  * 
- * 
+ * 初始化：
+ * 根据状态转移方程，需要初始化第一行和第一列。显然dp[i][0]应该为i，dp[0][j]应该为j
 */
 class Solution {
 public:
@@ -63,12 +67,16 @@ public:
         vector<vector<int>> dp(word1.size() + 1, vector<int>(word2.size() + 1));
         for (int i = 0; i <= word1.size(); i++) dp[i][0] = i;
         for (int j = 0; j <= word2.size(); j++) dp[0][j] = j;
+
         for (int i = 1; i <= word1.size(); i++) {
             for (int j = 1; j <= word2.size(); j++) {
                 if (word1[i - 1] == word2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1];
                 }
                 else {
+                    //* 因为dp[i-1][j] = min(dp[i-1][j-1]+1, dp[i-2][j]+1, dp[i-2][j-1]+2) <= dp[i-1][j-1]+1
+                    //* 所以dp[i-1][j]+1 <= dp[i-1][j-1]+2
+                    //* 所以以下式子可化简为 dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1)
                     dp[i][j] = min(min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i-1][j-1] + 2);
                 }
             }
