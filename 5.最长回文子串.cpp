@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=5 lang=cpp
- * 动态规划，双指针（中心扩展）
+ * 动态规划，双指针（中心扩展），Manacher算法
  * [5] 最长回文子串
  */
 
@@ -129,7 +129,6 @@ public:
             t += c;
             t += '#';
         }
-        t += '#';
         s = t;
 
         vector<int> arm_len;
