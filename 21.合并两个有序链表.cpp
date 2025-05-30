@@ -31,6 +31,7 @@ public:
                 prev->next = list1;
                 list1 = list1->next;
             }
+            prev = prev->next;
         }
 
         //* list1还没遍历完，list2遍历完了
