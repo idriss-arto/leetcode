@@ -33,6 +33,24 @@
 #include <tuple>
 using namespace std;
 
+//* 动态规划(tie)
+//* sell 表示不持有股票所得最多现金，buy 表示第i天持有股票所得最多现金
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int len = prices.size();
+        if (len == 0) return 0;
+
+        int sell = 0, buy = -prices[0];
+        for (int i = 1; i < len; i++) {
+            //* 不能用pair(sell, buy)
+            tie(sell, buy) = make_pair(max(sell, buy + prices[i]), max(buy, -prices[i]));
+        }
+
+        return sell;
+    }
+};
+
 //* 动态规划
 //* dp[i][0] 表示第i天不持有股票所得最多现金，dp[i][1] 表示第i天持有股票所得最多现金
 class Solution {
@@ -40,10 +58,12 @@ public:
     int maxProfit(vector<int>& prices) {
         vector<vector<int>> dp(prices.size(), vector<int>(2, 0));
         dp[0][1] = -prices[0];
+
         for (int i = 1; i < prices.size(); i++) {
             dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]);
             dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]);
         }
+
         return dp[prices.size()-1][0];
     }
 };
@@ -57,27 +77,13 @@ public:
         vector<vector<int>> dp(2, vector<int>(2));  //* 注意这里只开辟了一个2 * 2大小的二维数组
         dp[0][1] -= prices[0];
         dp[0][0] = 0;
+
         for (int i = 1; i < len; i++) {
             dp[i % 2][1] = max(dp[(i - 1) % 2][1], dp[(i - 1) % 2][0] - prices[i]);
             dp[i % 2][0] = max(dp[(i - 1) % 2][0], dp[(i - 1) % 2][1] + prices[i]);
         }
-        return dp[(len - 1) % 2][0];
-    }
-};
 
-//* 动态规划(tie)
-//* sell 表示不持有股票所得最多现金，buy 表示第i天持有股票所得最多现金
-class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        int len = prices.size();
-        if (len == 0) return 0;
-        int sell = 0, buy = -prices[0];
-        for (int i = 1; i < len; i++) {
-            //* 不能用pair(sell, buy)
-            tie(sell, buy) = make_pair(max(sell, buy + prices[i]), max(buy, -prices[i]));
-        }
-        return sell;
+        return dp[(len - 1) % 2][0];
     }
 };
 
@@ -88,10 +94,12 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int income = 0;
+
         for (int i = 1; i < prices.size(); i++) {
             int n = prices[i] - prices[i - 1];
             if (n > 0) income += n;
         }
+        
         return income;
     }
 };

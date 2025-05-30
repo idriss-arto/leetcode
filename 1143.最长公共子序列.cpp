@@ -7,17 +7,17 @@
 /*
  * 此题求最长公共子序列，不要求连续
  *
+ * 题解动态规划
+ * 思路：
+ * dp[i][j] ：只考虑下标i - 1之前元素的A，和只考虑下标j - 1之前的B，最长公共子序列长度为dp[i][j]。
+ * 状态转移和下面一样
+ * 这样写不用单独初始化
+ * 
  * 我的思路：
  * dp[i][j]表示text1下标i之前，text2下标j之前，能满足的最长公共子序列（不要求连续）
  * if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
  * else dp[i][j] = max(dp[i-1][j], dp[i][j-1]); 
  * 需要初始化第一行和第一列（这题初始化很麻烦）
- * 
- * 题解动态规划
- * 思路：
- * dp[i][j] ：只考虑下标i - 1之前元素的A，和只考虑下标j - 1之前的B，最长公共子序列长度为dp[i][j]。
- * 状态转移和上面一样
- * 这样写不用单独初始化
 */
 
 // @lc code=start
@@ -26,7 +26,34 @@
 using namespace std;
 
 /*
- * 思路：
+ * Carl动态规划：
+ * dp[i][j] ：只考虑下标i - 1之前元素的A，和只考虑下标j - 1之前的B，最长公共子序列长度为dp[i][j]。
+ * 状态转移和下面一样
+ * 这样写不用单独初始化
+*/
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
+        
+        for (int i = 1; i <= text1.size(); i++) {
+            for (int j = 1; j <= text2.size(); j++) {
+                if (text1[i - 1] == text2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } 
+                //! 和718.最长重复连续子序列不一样的地方
+                else {
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        
+        return dp[text1.size()][text2.size()];
+    }
+};
+
+/*
+ * 我的动态规划：
  * dp[i][j]表示text1下标i之前，text2下标j之前，能满足的最长公共子序列（不要求连续）
  * if (text1[i] == text2[j]) dp[i][j] = dp[i-1][j-1] + 1;
  * else dp[i][j] = max(dp[i-1][j], dp[i][j-1]); 
@@ -52,32 +79,6 @@ public:
         }
         
         return dp.back().back();
-    }
-};
-
-/*
- * 题解动态规划
- * 思路：
- * dp[i][j] ：只考虑下标i - 1之前元素的A，和只考虑下标j - 1之前的B，最长公共子序列长度为dp[i][j]。
- * 状态转移和上面一样
- * 这样写不用单独初始化
-*/
-class Solution {
-public:
-    int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>> dp(text1.size() + 1, vector<int>(text2.size() + 1, 0));
-        for (int i = 1; i <= text1.size(); i++) {
-            for (int j = 1; j <= text2.size(); j++) {
-                if (text1[i - 1] == text2[j - 1]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                } 
-                //! 和718.最长重复连续子序列不一样的地方
-                else {
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-                }
-            }
-        }
-        return dp[text1.size()][text2.size()];
     }
 };
 // @lc code=end

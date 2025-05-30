@@ -9,7 +9,8 @@
  * 动态规划思路：
  * dp[i][j] ：第i天的状态为j，所剩下的最大现金是dp[i][j]
  * 
- ! 考虑到第 n 次不持有是由第 n 次持有推出来的，第 n 次持有是由第 n-1 次不持有推出来的
+ ! 考虑到第 n 次不持有是由第 n 次持有推出来的，
+ ! 第 n 次持有是由第 n-1 次不持有推出来的。
  ! 建议把持有放不持有前面
  * 
  * 一天一共就有2*k+1个状态，
@@ -29,6 +30,7 @@ class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
         vector<vector<int>> dp(prices.size(), vector<int>(2*k+1, 0));
+        //* 注意这里的初始化
         for (int i = 1; i < 2*k; i += 2) {
             dp[0][i] = -prices[0];
         }

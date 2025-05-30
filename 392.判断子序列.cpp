@@ -76,12 +76,14 @@ class Solution {
 public:
     bool isSubsequence(string s, string t) {
         vector<vector<int>> dp(s.size() + 1, vector<int>(t.size() + 1, 0));
+        
         for (int i = 1; i <= s.size(); i++) {
             for (int j = 1; j <= t.size(); j++) {
                 if (s[i - 1] == t[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
                 else dp[i][j] = dp[i][j - 1];
             }
         }
+
         if (dp[s.size()][t.size()] == s.size()) return true;
         return false;
     }
@@ -91,7 +93,7 @@ public:
  * 官方题解，动态规划
  * 可用来应对进阶问题，即s有很多个，分别判断是不是t的子序列
  * 思路：
- * 预处理出对于 t 的每一个位置，从该位置开始往后每一个字符第一次出现的位置。
+ ! 预处理出对于 t 的每一个位置，从该位置开始往后每一个字符第一次出现的位置。
  * dp[pos_i][alp_j] 表示字符串 t 中从下标 pos_i 开始往后（包括下标pos_i），字符 alp_j 第一次出现的下标。
  * 
  * 递推公式有两种情况：

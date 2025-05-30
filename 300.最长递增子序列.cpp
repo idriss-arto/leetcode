@@ -27,10 +27,16 @@
 // @lc code=start
 #include <vector>
 using namespace std;
-//* 我的动态规划
-//* 思路：dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
-//* 注意，计算dp[i]时，nums[i]一定在递增子序列中，
-//! 所以dp.back()不是所求值，dp数组中的最大值才是
+
+/*
+ * 我的动态规划
+ * 思路：dp[i]表示nums[i]作为递增子序列最后一个元素时，递增子序列的最大长度
+ * 则对j从0到i-1，执行if (nums[i] > nums[j]) dp[i] = max(dp[i], dp[j] + 1);
+ * 时间复杂度O（N^2）
+ * 
+ * 注意，计算dp[i]时，nums[i]一定在递增子序列中，
+ ! 所以dp.back()不是所求值，dp数组中的最大值才是
+*/
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
@@ -48,19 +54,23 @@ public:
     }
 };
 
-//* 题解
-//* 动态规划+二分查找
-//* 思路：
-//* 通过维护一个tails数组，
-//* 对输入数组nums中的每个元素，
-//* 利用二分查找在tails中找到合适位置进行更新，
-//* tails数组的有效长度即为原数组nums最长递增子序列的长度。
+/*
+ * 题解
+ * 动态规划+二分查找
+ * 思路：
+ * 通过维护一个tails数组，
+ * 对输入数组nums中的每个元素，
+ * 利用二分查找在tails中找到合适位置进行更新，
+ * tails数组的有效长度即为原数组nums最长递增子序列的长度。
+ * 时间复杂度O（N）
+*/
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         vector<int> tails(nums.size(), 0);
-        int k = 0;
         tails[0] = nums[0];
+        //* k为当前tail数组末尾元素的下标
+        int k = 0;
 
         for (int i = 1; i < nums.size(); i++) {
             //! 如果当前数字大于tail数组尾部，则直接插入尾部

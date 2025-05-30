@@ -20,26 +20,30 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int n = prices.size();
+
         int sell = 0, buy = -prices[0];
         for (int i = 1; i < n; ++i) {
             //* 不能用pair(sell, buy)
             tie(sell, buy) = make_pair(max(sell, buy + prices[i] - fee), max(buy, sell - prices[i]));
         }
+
         return sell;
     }
 };
 
 
-//* 我的动态规划
+//* 我的动态规划，将手续费放在卖出时进行计算
 class Solution {
 public:
     int maxProfit(vector<int>& prices, int fee) {
         vector<vector<int>> dp(prices.size(), vector<int>(2, 0));
         dp[0][1] = -prices[0];
+
         for (int i = 1; i < prices.size(); i++) {
             dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i] - fee);
             dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]);
         }
+
         return dp[prices.size()-1][0];
     }
 };
@@ -72,6 +76,7 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int n = prices.size();
+
         int buy = prices[0] + fee;
         int profit = 0;
         for (int i = 1; i < n; ++i) {
@@ -83,6 +88,7 @@ public:
                 buy = prices[i];
             }
         }
+        
         return profit;
     }
 };
