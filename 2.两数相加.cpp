@@ -4,6 +4,10 @@
  * [2] 两数相加
  */
 
+/*
+ * 不难，注意下连续进位的情况和最后首位进一的情况
+*/
+
 // @lc code=start
 //* Definition for singly-linked list.
 struct ListNode {

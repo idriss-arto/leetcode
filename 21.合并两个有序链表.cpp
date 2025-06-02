@@ -4,6 +4,11 @@
  * [21] 合并两个有序链表
  */
 
+/*
+ * 因为两个链表已经有序，所以比较表头的元素即可。
+ * 插入新链表时，有一个虚拟头结点好操作一些。
+*/
+
 // @lc code=start
 //* Definition for singly-linked list.
 struct ListNode {

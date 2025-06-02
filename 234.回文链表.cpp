@@ -4,6 +4,15 @@
  * [234] 回文链表
  */
 
+/*
+ * 官方题解解法：
+ * 复制链表值到数组列表中，然后使用双指针法判断是否为回文。
+ * 
+ * 别人的解法，用栈：
+ * 
+ * 先把所有元素压入栈中，然后弹出栈就是“从后往前”读，此时再遍历一遍“从前往后”读，两者一致就是true。
+*/
+
 // @lc code=start
 #include <vector>
 #include <stack>
@@ -45,11 +54,13 @@ class Solution {
 public:
     bool isPalindrome(ListNode* head) {
         stack<int> stack;
+
         ListNode* p = head;
         while (p != nullptr) {
             stack.push(p->val);
             p = p->next;
         }
+
         p = head;
         while (p != nullptr) {
             if (p->val != stack.top())
@@ -57,6 +68,7 @@ public:
             stack.pop();
             p = p->next;
         }
+
         return true;
     }
 };

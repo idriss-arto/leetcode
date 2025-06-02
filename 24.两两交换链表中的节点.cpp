@@ -5,10 +5,18 @@
  */
 
 /*
- * 思路：
+ * 迭代思路：
  * 必须使用虚拟头结点才好做
  * 需要预先用临时指针存储所有需要处理的节点，否则next变化后就乱了
  * 最后记得内存回收虚拟头结点
+ * 
+ * 递归思路：
+ * 用 head 表示原始链表的头节点，新的链表的第二个节点，
+ * 用 newHead 表示新的链表的头节点，原始链表的第二个节点，
+ * 则原始链表中的其余节点的头节点是 newHead.next。
+ * 令 head.next = swapPairs(newHead.next)，表示将其余节点进行两两交换，
+ * 交换后的新的头节点为 head 的下一个节点。
+ * 然后令 newHead.next = head，即完成了所有节点的交换。最后返回新的链表的头节点 newHead。
 */
 
 // @lc code=start
@@ -21,6 +29,7 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+//* 官方解法一，迭代
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
@@ -44,6 +53,20 @@ public:
         delete dummyHead;
 
         return result;
+    }
+};
+
+//* 官方解法二：递归
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        ListNode* newHead = head->next;
+        head->next = swapPairs(newHead->next);
+        newHead->next = head;
+        return newHead;
     }
 };
 // @lc code=end

@@ -4,6 +4,18 @@
  ! [25] K 个一组翻转链表
  */
 
+/*
+ * 我的解法：
+ * 记录要翻转的k个节点之前的最后一个节点，
+ * 同时将要翻转的k个节点（不能为空）和下一次翻转的头结点（可以为空）记录进一个数组。
+ * 通过数组下标实现节点翻转。
+ * 时间复杂度O(N)，空间复杂度O(K)
+ * 
+ * 官方题解解法：
+ * 大致思路相同，但翻转k个节点是用头插法依次插在prev后面以实现翻转
+ * 时间复杂度O(N)，空间复杂度O(1)
+*/
+
 // @lc code=start
 #include <vector>
 using namespace std;
@@ -17,10 +29,13 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-//* 我的解法
-//* 记录要翻转的k个节点之前的最后一个节点，
-//* 同时将要翻转的k个节点（不能为空）和下一次翻转的头结点（可以为空）记录进一个数组。
-//* 通过数组下标实现节点翻转
+/*
+ * 我的解法：
+ * 记录要翻转的k个节点之前的最后一个节点，
+ * 同时将要翻转的k个节点（不能为空）和下一次翻转的头结点（可以为空）记录进一个数组。
+ * 通过数组下标实现节点翻转。
+ * 时间复杂度O(N)，空间复杂度O(K)
+*/
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
@@ -34,7 +49,7 @@ public:
             vector<ListNode*> tmp(k+1);             //* 记录要翻转位置的k个节点，和下一次翻转的第一个节点。一共k+1个节点
 
             for (int i = 0; i < k; i++) {
-                //* 要翻转的k个节点不能为空，为空的话说明前面的翻转后，现在剩下的节点不够k个
+                //* 要翻转的k个节点不能为空，为空的话说明前面的多次翻转后，现在剩下的节点不够k个
                 if (node) {
                     tmp[i] = node;
                     node = node->next;
@@ -65,7 +80,11 @@ public:
     }
 };
 
-//* 题解解法，将翻转逻辑单独写为一个函数
+/* 
+ * 官方题解解法：
+ * 大致思路相同，但翻转k个节点是用头插法依次插在prev后面以实现翻转
+ * 时间复杂度O(N)，空间复杂度O(1)
+*/
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
@@ -73,21 +92,26 @@ public:
         ListNode* pre = dummyHead;
         while (pre->next != nullptr) {
             ListNode* nextPre = rotate(pre, k);
+            //* 最后一次翻转节点数不足k，需要调换回来
             if (nextPre == nullptr) {
                 rotate(pre, k);
                 break;
-            } else {
+            } 
+            else {
                 pre = nextPre;
             }
         }
         return dummyHead->next;
     }
 
+    //* 传入的第一个参数是要翻转的k个节点之前的最后一个节点，
+    //* 第二个参数是要翻转的节点数k。
     ListNode* rotate(ListNode* pre, int k) {
         ListNode* tail = pre->next;         //* tail是本次翻转里已经翻转部分的尾节点
        
         int i = 1;
         //* tail为nullptr说明链表节点数刚好是k的倍数
+        //* tail->next为nullptr说明此次翻转节点数不足k
         //* 最后一次循环，i=k-1，tail->next此时是此次翻转范围里的原最后一个节点
         for (; i < k && tail != nullptr && tail->next != nullptr; i++) {
             ListNode* cur = tail->next;     //* cur是要从未翻转部分挪到翻转部分的节点
