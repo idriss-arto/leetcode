@@ -72,7 +72,7 @@ public:
 /*
  * 单调栈，行方向
  * 思路：
- * 从栈头（元素从栈头弹出）到栈底的顺序应该是从小到大的顺序。
+ * 从栈顶（元素从栈顶弹出）到栈底的顺序应该是从小到大的顺序。
  * 因为一旦发现添加的柱子高度大于栈头元素了，此时就出现凹槽了，
  * 栈头元素就是凹槽底部的柱子，栈头第二个元素就是凹槽左边的柱子，而添加的元素就是凹槽右边的柱子。
  * 
@@ -137,6 +137,7 @@ public:
         int ans = 0;
         int left = 0, right = height.size() - 1;
         int leftMax = 0, rightMax = 0;
+
         while (left < right) {
             leftMax = max(leftMax, height[left]);
             rightMax = max(rightMax, height[right]);
@@ -149,6 +150,7 @@ public:
                 right--;
             }
         }
+        
         return ans;
     }
 };

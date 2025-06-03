@@ -68,6 +68,7 @@ public:
                 result[st.top()] = i - st.top();
                 st.pop();
             }
+            //* 别忘了处理完之前的下标后将当前下标入栈
             st.push(i);
         }
         return result;

@@ -40,12 +40,13 @@ public:
                 st.push(i);
             } else {                                    //* 情况三
                 while (!st.empty() && nums2[i] > nums2[st.top()]) {
-                    if (umap.count(nums2[st.top()]) > 0) {  //* 看map里是否存在这个元素
+                    if (umap.count(nums2[st.top()]) > 0) {  //* 看map里即nums1中是否存在这个元素
                         int index = umap[nums2[st.top()]];  //* 根据map找到 nums2[st.top()] 在 nums1 中的下标
                         result[index] = nums2[i];
                     }
                     st.pop();
                 }
+                //* 别忘了处理完之前的下标后将当前下标入栈
                 st.push(i);
             }
         }

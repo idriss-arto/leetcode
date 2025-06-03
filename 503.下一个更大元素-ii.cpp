@@ -31,8 +31,12 @@ public:
         st.push(0);
         for (int i = 1; i < nums.size(); i++) { 
             //* 显然这里三种情况可以一起写，这里为了看得清楚分开写
-            if (nums[i] < nums[st.top()]) st.push(i); 
-            else if (nums[i] == nums[st.top()]) st.push(i);
+            if (nums[i] < nums[st.top()]) {
+                st.push(i);
+            } 
+            else if (nums[i] == nums[st.top()]) {
+                st.push(i);
+            }
             else { 
                 while (!st.empty() && nums[i] > nums[st.top()]) {
                     result[st.top()] = nums[i];
@@ -59,13 +63,18 @@ public:
         for (int i = 1; i < nums.size() * 2; i++) { 
             //* 模拟遍历两边nums，注意一下都是用i % nums.size()来操作
             //* 显然这里三种情况可以一起写，这里为了看得清楚分开写
-            if (nums[i % nums.size()] < nums[st.top()]) st.push(i % nums.size());
-            else if (nums[i % nums.size()] == nums[st.top()]) st.push(i % nums.size()); 
+            if (nums[i % nums.size()] < nums[st.top()]) {
+                st.push(i % nums.size());
+            }
+            else if (nums[i % nums.size()] == nums[st.top()]) {
+                st.push(i % nums.size());
+            } 
             else {
                 while (!st.empty() && nums[i % nums.size()] > nums[st.top()]) {
                     result[st.top()] = nums[i % nums.size()];
                     st.pop();
                 }
+                //* 别忘了处理完之前的下标后将当前下标入栈
                 st.push(i % nums.size());
             }
         }
