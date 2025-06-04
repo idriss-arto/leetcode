@@ -17,6 +17,7 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -25,6 +26,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
 //* 迭代法（层序遍历，队列）
 class Solution {
 public:

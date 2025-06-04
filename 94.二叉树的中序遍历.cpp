@@ -1,13 +1,23 @@
 /*
- * @lc app=leetcode.cn id=144 lang=cpp
+ * @lc app=leetcode.cn id=94 lang=cpp
  * 二叉树
- * [144] 二叉树的前序遍历
+ * [94] 二叉树的中序遍历
  */
+
+/*
+ * 中序为根左右
+ * 有以下几种方案，
+ * 递归法
+ * 迭代法
+ * 统一迭代法，null标记版
+ * 统一迭代法，bool判断版
+*/
 
 // @lc code=start
 #include <vector>
 #include <stack>
 using namespace std;
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -17,6 +27,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+//* 递归法
 class Solution {
 public:
     void traversal(TreeNode* cur, vector<int>& vec) {
@@ -35,7 +46,11 @@ public:
         traversal(root->right, result);
         return result;
     }
+};
 
+//* 迭代法
+class Solution {
+public:
     //* 迭代法
     vector<int> inorderTraversalV2(TreeNode* root) {
         vector<int> result;
@@ -55,8 +70,11 @@ public:
         }
         return result;
     }
+};
 
-    //* 统一迭代法，null标记版
+//* 统一迭代法，null标记版
+class Solution {
+public:
     vector<int> inorderTraversalV3(TreeNode* root) {
         vector<int> result;
         stack<TreeNode*> st;
@@ -81,8 +99,10 @@ public:
         }
         return result;
     }
+};
 
-    //* 统一迭代法，bool判断版
+//* 统一迭代法，bool判断版
+class Solution {
     vector<int> inorderTraversalV4(TreeNode* root) {
         vector<int> result;
         stack<pair<TreeNode*, bool>> st;

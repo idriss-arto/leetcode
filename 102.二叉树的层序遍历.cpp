@@ -10,6 +10,7 @@
 #include <vector>
 #include <queue>
 using namespace std;
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -22,9 +23,10 @@ struct TreeNode {
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        queue<TreeNode*> que;
-        if (root != nullptr) que.push(root);
         vector<vector<int>> result;
+        if (!root) return result;
+        queue<TreeNode*> que;
+
         while (!que.empty()) {
             int size = que.size();
             //* vec用来装一层的节点
@@ -40,6 +42,7 @@ public:
             //* 将一层的节点放入答案
             result.push_back(vec);
         }
+        
         return result;
     }
 };

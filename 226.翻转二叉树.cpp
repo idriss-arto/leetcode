@@ -11,7 +11,8 @@
 #include <vector>
 #include <queue>
 using namespace std;
-// Definition for a binary tree node.
+
+//* Definition for a binary tree node.
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -21,6 +22,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+//* 层序遍历
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
@@ -37,6 +39,18 @@ public:
             if (cur->left) que.push(cur->left);
             if (cur->right) que.push(cur->right);
         }
+        return root;
+    }
+};
+
+//* 前序遍历
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (!root) return nullptr;
+        swap(root->left, root->right);
+        invertTree(root->left);
+        invertTree(root->right);
         return root;
     }
 };
