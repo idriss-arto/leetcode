@@ -21,7 +21,8 @@
 #include <stack>
 #include <climits>
 using namespace std;
-// Definition for a binary tree node.
+
+//* Definition for a binary tree node.
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -30,6 +31,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
 //* 递归法
 //* 先递归生成中序序列，再判断序列是否是递增的
 class Solution {
@@ -91,9 +93,11 @@ public:
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
+        if (!root) return;
         stack<TreeNode*> sta;
         sta.push(root);
-        TreeNode* cur = root;
+        
+        TreeNode* cur;
         TreeNode* pre = nullptr;
         while (!sta.empty()) {
             cur = sta.top();
