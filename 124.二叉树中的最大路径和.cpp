@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=124 lang=cpp
  * 二叉树（递归）
- * [124] 二叉树中的最大路径和
+ ! [124] 二叉树中的最大路径和
  */
 
 /*
@@ -10,12 +10,15 @@
  * 因为对于某节点，他的贡献只能带其中一个孩子（带大孩子走），整个路径才能向上延伸
 */
 
+//! 不要想着用递归函数返回值记录全局最大值，
+//! 上层节点无法利用下层节点返回的全局最大值（因为不一定能连成一条路径）。
+
 // @lc code=start
 #include <climits>
 #include <algorithm>
 using namespace std;
 
-// Definition for a binary tree node.
+//* Definition for a binary tree node.
 struct TreeNode {
     int val;
     TreeNode *left;
