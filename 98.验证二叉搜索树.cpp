@@ -12,7 +12,8 @@
 */
 
 /*
- * 思路：中序遍历，看数字是不是从小到大
+ * 思路一：中序遍历，看数字是不是从小到大
+ * 思路二：分别给左右子树提供一个范围，判断值是否在范围中
 */
 
 // @lc code=start
@@ -56,35 +57,40 @@ public:
 };
 
 //* 递归法
-//* 递归过程中直接比较
+//* 按中序遍历的顺序递归，递归过程中直接比较
 class Solution {
 public:
     long long maxVal = LONG_MIN;    //* 因为后台测试数据中有int最小值
+ 
+    //* 中序遍历，验证遍历的元素是不是从小到大
     bool isValidBST(TreeNode* root) {
         if (root == nullptr) return true;
 
         bool left = isValidBST(root->left);
-        //* 中序遍历，验证遍历的元素是不是从小到大
+
         if (maxVal < root->val) maxVal = root->val;
         else return false;
+
         bool right = isValidBST(root->right);
 
         return left && right;
     }
 };
 
-//* 递归法第二种写法，避免节点值可以取到LONG_MIN
+//* 递归法直接比较第二种写法，避免节点值可以取到LONG_MIN
 class Solution {
 public:
     TreeNode* pre = nullptr;            //* 用来记录前一个节点
     bool isValidBST(TreeNode* root) {
         if (root == nullptr) return true;
+
         bool left = isValidBST(root->left);
 
         if (pre != nullptr && pre->val >= root->val) return false;
         pre = root;                     //* 记录前一个节点
 
         bool right = isValidBST(root->right);
+
         return left && right;
     }
 };
@@ -125,6 +131,25 @@ public:
             }
         }
         return true;
+    }
+};
+
+//* 以上皆基于二叉搜索树中序遍历结果是递增序列的性质
+//* 下面这个方法是直接判断左子树的值都小于当前值，右子树的值都大于当前值
+class Solution {
+public:
+    bool helper(TreeNode* root, long long lower, long long upper) {
+        if (root == nullptr) {
+            return true;
+        }
+        if (root -> val <= lower || root -> val >= upper) {
+            return false;
+        }
+        return helper(root -> left, lower, root -> val) && helper(root -> right, root -> val, upper);
+    }
+    bool isValidBST(TreeNode* root) {
+        //* 因为后台测试数据中有int最小值，所以用LONG_MIN
+        return helper(root, LONG_MIN, LONG_MAX);
     }
 };
 // @lc code=end

@@ -31,6 +31,7 @@ struct TreeNode {
 //* 递归法
 class Solution {
 public:
+    //* 返回的是，nums中left到right部分，生成的子二叉搜索树的根节点
     TreeNode* traversal(vector<int>& nums, int left, int right) {
         if (right < left) return nullptr;
         int middle = left + (right - left) / 2;

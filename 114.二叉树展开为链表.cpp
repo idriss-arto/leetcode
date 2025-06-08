@@ -4,6 +4,12 @@
  * [114] 二叉树展开为链表
  */
 
+/*
+ * 思路一：用一个节点数组储存先序遍历的结果，然后用数组实现节点之间连接关系的改变
+ * 思路二：类似验证二叉树的思路，前序遍历的过程中维护prev节点
+ * 思路三：如果当前节点有左子树，将左子树插在当前节点和右孩子之间
+*/
+
 // @lc code=start
 #include <vector>
 #include <stack>
@@ -21,6 +27,7 @@ struct TreeNode {
 
 //* 思路一：
 //* 最直接的思路，用一个节点数组储存先序遍历的结果，然后用数组实现节点之间连接关系的改变
+//* 这里用的递归法，也可以用迭代法
 class Solution {
 public:
     void preorderTraversal(TreeNode* root, vector<TreeNode*> &l) {
@@ -44,7 +51,8 @@ public:
 };
 
 //* 思路二：
-//* 类似验证二叉树的思路，维护prev节点
+//* 类似验证二叉树的思路，前序遍历的过程中维护prev节点
+//* 这里用的迭代法，也可以用递归法
 class Solution {
 public:
     void flatten(TreeNode* root) {
@@ -77,6 +85,32 @@ public:
                     prev = cur;
                 }
             }
+        }
+    }
+};
+
+//* 思路三，寻找前驱节点
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        TreeNode *cur = root;
+        while (cur != nullptr) {
+            if (cur->left != nullptr) {
+                //* 在cur左子树中找到最右边的节点，作为前驱节点
+                auto next = cur->left;
+                auto predecessor = next;
+                while (predecessor->right != nullptr) {
+                    predecessor = predecessor->right;
+                }
+                //* 将cur节点的右孩子赋给前驱节点的右孩子
+                predecessor->right = cur->right;
+                //* 然后将cur的左孩子赋给cur的右孩子
+                cur->left = nullptr;
+                //* 并将cur的左孩子设为空
+                cur->right = next;
+            }
+            //* 对当前节点处理结束后，继续处理链表中的下一个节点
+            cur = cur->right;
         }
     }
 };

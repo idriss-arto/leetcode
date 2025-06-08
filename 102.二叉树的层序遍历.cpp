@@ -29,7 +29,7 @@ public:
 
         while (!que.empty()) {
             int size = que.size();
-            //* vec用来装一层的节点
+            //* vec用来装当前层的节点
             vector<int> vec;
             //! 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
             for (int i = 0; i < size; i++) {
@@ -39,8 +39,9 @@ public:
                 if (node->left) que.push(node->left);
                 if (node->right) que.push(node->right);
             }
-            //* 将一层的节点放入答案
+            //* 将当前层的节点放入答案
             result.push_back(vec);
+            //* 这之后再进入while循环，处理下一层的节点
         }
         
         return result;

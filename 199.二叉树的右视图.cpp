@@ -28,6 +28,7 @@ public:
         queue<TreeNode*> que;
         if (root != nullptr) que.push(root);
         vector<int> result;
+
         while (!que.empty()) {
             int size = que.size();
             //! 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
@@ -39,6 +40,7 @@ public:
                 if (node->right) que.push(node->right);
             }
         }
+        
         return result;
     }
 };

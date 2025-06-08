@@ -4,6 +4,11 @@
  * [230] 二叉搜索树中第 K 小的元素
  */
 
+/*
+ * 思路一：生成一个数组储存二叉树中序遍历的结果
+ * 思路二：直接中序遍历过程中找第k小的值
+*/
+
 // @lc code=start
 #include <vector>
 #include <stack>
@@ -37,7 +42,7 @@ public:
     }
 };
 
-//* 迭代法，直接迭代过程中找第k小的值
+//* 迭代法，直接中序遍历过程中找第k小的值
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {

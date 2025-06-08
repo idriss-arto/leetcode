@@ -4,6 +4,18 @@
  ! [437] 路径总和 III
  */
 
+/*
+ * 思路一：
+ * 递归遍历每一个节点。
+ * 计算以该节点为路径首节点的情况下，满足条件的路径数。
+ * 最后求和。
+ * 时间复杂度O(N^2)，空间复杂度O(N)
+ * 
+ * 思路二：
+ * 前缀和
+ * 时间复杂度O(N)，空间复杂度O(N)
+*/
+
 // @lc code=start
 #include <unordered_map>
 using namespace std;
@@ -20,8 +32,9 @@ struct TreeNode {
 
 /*
  * 官方题解一：递归搜索
- * 访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。
- * 递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。
+ * 访问每一个节点 node，检测以 node 为起始节点且向下延深的路径中满足要求的有多少种。
+ * 递归遍历每一个节点的所有可能的路径，然后将这些满足要求的路径数目加起来即为返回结果。
+ * 时间复杂度O(N^2)，空间复杂度O(N)
 */
 class Solution {
 public:
@@ -47,6 +60,7 @@ public:
         }
         
         int ret = rootSum(root, targetSum);
+        //! 这里必须对左右孩子都调用pathSum函数，也就是都尝试当做路径第一个节点
         ret += pathSum(root->left, targetSum);
         ret += pathSum(root->right, targetSum);
         return ret;
@@ -63,6 +77,10 @@ public:
  * 假设从根节点 root 到节点 node 的路径中存在节点 pi 满足：
  * 从根节点 root 到节点 pi 的前缀和为 curr−targetSum，
  * 则节点 p(i+1)到 node 的路径上所有节点的和一定为 targetSum。
+ * 
+ ! 注意过程中需要回溯
+ * 
+ * 时间复杂度O(N)，空间复杂度O(N)
 */
 class Solution {
 public:

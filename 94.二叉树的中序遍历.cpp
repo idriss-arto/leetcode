@@ -37,7 +37,6 @@ public:
         traversal(cur->right, vec);
     }
 
-    //* 递归法
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> result;
         if (root == nullptr) return result;
@@ -51,8 +50,7 @@ public:
 //* 迭代法
 class Solution {
 public:
-    //* 迭代法
-    vector<int> inorderTraversalV2(TreeNode* root) {
+    vector<int> inorderTraversal(TreeNode* root) {
         vector<int> result;
         stack<TreeNode*> st;
         TreeNode* cur = root;
