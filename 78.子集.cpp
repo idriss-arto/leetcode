@@ -56,7 +56,7 @@ private:
     vector<int> path;
     void backtracking(vector<int>& nums, int startIndex) {
         result.push_back(path);             //* 收集子集，要放在终止添加的上面，否则会漏掉自己
-        if (startIndex >= nums.size()) {    //* 终止条件可以不加
+        if (startIndex >= nums.size()) {    //* 终止条件，可以不加
             return;
         }
         for (int i = startIndex; i < nums.size(); i++) {
