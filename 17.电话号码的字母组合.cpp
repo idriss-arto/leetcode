@@ -57,7 +57,7 @@ public:
     vector<string> letterCombinations(string digits) {
         result.clear(); //* 可以不加
         path.clear();   //* 可以不加
-        if (digits.length() != 0) backtracking(digits, 0);
+        if (digits.length() != 0) backtracking(digits, 0);  //* 必须有这个判断，否则digits长度为0时结果会多一个空串
         return result;
     }
 };

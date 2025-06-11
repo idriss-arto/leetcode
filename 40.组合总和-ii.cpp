@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=40 lang=cpp
  * 回溯（组合），剪枝，树层去重与树枝去重的区别
- * [40] 组合总和 II
+ ! [40] 组合总和 II
  */
 
 /*
@@ -29,12 +29,18 @@ class Solution {
 private:
     vector<vector<int>> result;
     vector<int> path;
-    void backtracking(vector<int>& candidates, int target, int sum, int startIndex, vector<bool> used) {
+    int sum = 0;
+    vector<bool> used;
+
+    void backtracking(vector<int>& candidates, int target, int startIndex) {
         if (sum == target) {
             result.push_back(path);
             return;
         }
-        for (int i = startIndex; i < candidates.size() && sum + candidates[i] <= target; i++) {
+        for (int i = startIndex; i < candidates.size(); i++) {
+            //* 去重
+            if (sum + candidates[i] > target) break;
+            
             //* used[i - 1] == true，说明同一树枝candidates[i - 1]使用过
             //* used[i - 1] == false，说明同一树层candidates[i - 1]使用过
             //* 要对同一树层使用过的元素进行跳过
@@ -53,7 +59,7 @@ private:
             sum += candidates[i];
             path.push_back(candidates[i]);
             used[i] = true;
-            backtracking(candidates, target, sum, i + 1, used);
+            backtracking(candidates, target, i + 1);
             used[i] = false;
             sum -= candidates[i];
             path.pop_back();
@@ -62,12 +68,12 @@ private:
 
 public:
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<bool> used(candidates.size(), false);
+        used.resize(candidates.size());
         path.clear();
         result.clear();
         //* 首先把candidates给排序，让其相同的元素都挨在一起，便于后续去重和剪枝
         sort(candidates.begin(), candidates.end());
-        backtracking(candidates, target, 0, 0, used);
+        backtracking(candidates, target, 0);
         return result;
     }
 };

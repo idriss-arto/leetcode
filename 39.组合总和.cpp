@@ -20,10 +20,12 @@
 #include <algorithm>
 using namespace std;
 class Solution {
-    private:
+private:
     vector<vector<int>> result;
     vector<int> path;
-    void backtracking(vector<int>& candidates, int target, int sum, int startIndex) {
+    int sum = 0;
+
+    void backtracking(vector<int>& candidates, int target, int startIndex) {
         if (sum == target) {
             result.push_back(path);
             return;
@@ -33,7 +35,7 @@ class Solution {
         for (int i = startIndex; i < candidates.size() && sum + candidates[i] <= target; i++) {
             sum += candidates[i];
             path.push_back(candidates[i]);
-            backtracking(candidates, target, sum, i);       //* 不用i+1了，表示可以重复读取当前的数
+            backtracking(candidates, target, i);        //* 不用i+1了，表示可以重复读取当前的数
             sum -= candidates[i];
             path.pop_back();
 
@@ -45,7 +47,7 @@ public:
         result.clear();
         path.clear();
         sort(candidates.begin(), candidates.end());     //* 剪枝需要排序
-        backtracking(candidates, target, 0, 0);
+        backtracking(candidates, target, 0);
         return result;
     }
 };
