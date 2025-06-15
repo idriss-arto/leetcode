@@ -41,6 +41,8 @@ private:
     }
 public:
     vector<vector<int>> permute(vector<int>& nums) {
+        //* 在类的成员变量中声明，再在方法函数中重新定义大小。
+        //* 避免每次回溯递归时传参
         used.resize(nums.size(), 0);
         backtracking(nums);
         return result;

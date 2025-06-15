@@ -7,10 +7,11 @@
 /*
  * 此题集合中有重复的元素，要求子集中可以有重复的元素，但是不能有重复的子集。
  * 所以需要进行树层去重（树层去重和树枝去重区别可见40）
- * 树层去重方案：
- * 法一：排序+index判断
- * 法二：排序+used数组
- * 法三：排序+set去重
+ * 
+ * 树层去重思路：
+ * 一：排序+startIndex判断是同一树枝还是同一树层
+ * 二：排序+used数组判断是同一树枝还是同一树层
+ * 三：排序+每层定义一个set记录哪些数用过
 */
 
 // @lc code=start
@@ -19,17 +20,17 @@
 #include <unordered_set>
 using namespace std;
 
-//* index判断进行树层去重
+//* startIndex判断进行树层去重
 class Solution {
 private:
     vector<vector<int>> result;
     vector<int> path;
 
-    void backtracking(vector<int>& nums, int cnt, int index) {
+    void backtracking(vector<int>& nums, int cnt, int startIndex) {
         if (cnt == 0) result.push_back(path);
-        if (index >= nums.size()) return;
-        for (int i = index; i < nums.size(); i++) {
-            if (i > index && nums[i] == nums[i - 1]) continue;  //* 树层去重
+        if (startIndex >= nums.size()) return;       //* 这行不加也可以
+        for (int i = startIndex; i < nums.size(); i++) {
+            if (i > startIndex && nums[i] == nums[i - 1]) continue;  //* 树层去重
             path.push_back(nums[i]);
             backtracking(nums, cnt - 1, i + 1);
             path.pop_back();
@@ -53,6 +54,7 @@ class Solution {
 private:
     vector<vector<int>> result;
     vector<int> path;
+
     void backtracking(vector<int>& nums, int startIndex, vector<bool>& used) {
         result.push_back(path);
         for (int i = startIndex; i < nums.size(); i++) {
@@ -86,9 +88,10 @@ class Solution {
 private:
     vector<vector<int>> result;
     vector<int> path;
+
     void backtracking(vector<int>& nums, int startIndex) {
         result.push_back(path);
-        unordered_set<int> uset;
+        unordered_set<int> uset;        //! 不能定义为全局变量，因为只记录本层
         for (int i = startIndex; i < nums.size(); i++) {
             if (uset.find(nums[i]) != uset.end()) {
                 continue;

@@ -26,9 +26,11 @@ private:
     vector<vector<bool>> isPalindrome;  //* 放事先计算好的是否回文子串的结果
 
     //* 动态规划预处理判断子串是否为回文串
+    //* isPalindrome[i][j] 代表 s[i:j](闭区间)是否是回文字串 
+    //* isPalindrome[i][j] 由 isPalindrome[i+1][j-1] 推出
     void computePalindrome(const string& s) {
-        //* isPalindrome[i][j] 代表 s[i:j](双边包括)是否是回文字串 
         isPalindrome.resize(s.size(), vector<bool>(s.size(), false));   //* 根据字符串s, 刷新布尔矩阵的大小
+
         for (int i = s.size() - 1; i >= 0; i--) { 
             //* 需要倒序计算, 保证在i行时, i+1行已经计算好了
             for (int j = i; j < s.size(); j++) {
@@ -39,7 +41,7 @@ private:
                     isPalindrome[i][j] = (s[i] == s[j]);
                 }
                 else {
-                    //* 从此处状态转移方程可以看出，求isPalindrome[i][j]时要求isPalindrome[i+1][j-1]以算好
+                    //* 从此处状态转移方程可以看出，求isPalindrome[i][j]时要求isPalindrome[i+1][j-1]已算好
                     //* 即i从大往小遍历，j从小往大遍历
                     isPalindrome[i][j] = (s[i] == s[j] && isPalindrome[i+1][j-1]);
                 }
@@ -61,7 +63,8 @@ private:
                 path.push_back(str);
                 backtracking(s, i + 1); //* 寻找i+1为起始位置的子串
                 path.pop_back();        //* 回溯过程，弹出本次已经添加的子串
-            } else {                                //* 不是回文，跳过
+            }
+            else {                                //* 不是回文，跳过
                 continue;
             }
         }

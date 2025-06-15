@@ -4,13 +4,20 @@
  * [153] 寻找旋转排序数组中的最小值
  */
 
+/*
+ * 最小值为x的话，旋转后x左边的值大于nums[right]，x及x右边的值小于等于nums[right]。
+ * 当前 mid 为分割位置分割出来的两个部分 [l, mid] 和 [mid + 1, r] 时，
+ * 如果nums[mid] > nums[r]，则应该将搜索范围缩小至 [mid + 1, r]。
+ * 如果nums[mid] <= nums[r]，则应该将搜索范围缩小至 [l, mid]。
+*/
+
 // @lc code=start
 #include<vector>
 using namespace std;
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        //* 最小值为x的话，旋转后x左边的值大于nums[right]，x右边的值小于等于nums[right]
+        //* 最小值为x的话，旋转后x左边的值大于nums[right]，x及x右边的值小于等于nums[right]
         int left = 0, right = nums.size() - 1, middle = 0;
         while(left < right) {
             middle = left + (right - left) / 2;

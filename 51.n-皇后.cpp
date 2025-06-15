@@ -97,14 +97,19 @@ private:
         return board;
     }
 
-    //* 回溯函数
+    /*
+     * 回溯函数
+     * row：当前遍历到的行数
+     * columns：遍历到当前行时，考虑列冲突，能选的位置为0
+     * diagonals1：左上冲突
+     * diagonals2：右上冲突
+    */ 
     void solve(vector<vector<string>> &solutions, vector<int> &queens, int n, int row, int columns, int diagonals1, int diagonals2) {
         if (row == n) {
             auto board = generateBoard(queens, n);
             solutions.push_back(board);
         } else {
-            //* 下一行处理后，availablePositions低n位表示目前行n列能不能放皇后，为1表示能放
-            int availablePositions = ((1 << n) - 1) & (~(columns | diagonals1 | diagonals2));
+            int availablePositions = ((1 << n) - 1) & (~(columns | diagonals1 | diagonals2));   //* availablePositions低n位表示目前行n列能不能放皇后，为1表示能放
             while (availablePositions != 0) {
                 /*
                  ! x & (−x) 可以获得 x 的二进制表示中的最低位的 1 的位置。

@@ -68,8 +68,10 @@ private:
     
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
+        //* 清空result和path，也可以忽略
         result.clear();
         path.clear();
+
         backtracking(nums, 0);
         return result;
     }

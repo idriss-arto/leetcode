@@ -17,6 +17,7 @@
 #include <vector>
 #include <string>
 using namespace std;
+
 class Solution {
 private:
     vector<string> result;      //* 存放结果集

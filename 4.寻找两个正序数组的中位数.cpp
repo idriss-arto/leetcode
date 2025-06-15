@@ -23,6 +23,7 @@ using namespace std;
 */
 class Solution {
 public:
+    //* 找到第 k (k>=1) 小的元素
     int getKthElement(const vector<int>& nums1, const vector<int>& nums2, int k) {
         int m = nums1.size();
         int n = nums2.size();
@@ -70,7 +71,17 @@ public:
 };
 
 /*
- * 官方题解2
+ * 官方题解二：
+ * 将nums_1划分为n1_left和n1_right两部分，将nums_2划分为n2_left和n2_right两部分。
+ * 让n1_left和n2_left的长度和刚好等于n1_right和n2_right的长度和（偶数时可以刚好相等，奇数时让前者大后者一），
+ * 且left的最大值小于right的最小值。
+ * 此时偶数情况下left的最大值和right的最小值的平均值为中位数，
+ * 奇数情况下left的最大值为中位数。
+ * 
+ * 设n1_left长度为i，n2_left长度为j，显然有i+j = (m+n+1)/2。
+ * 即在 [0,m] 中找到 i，使得 B[j−1]≤A[i] 且 A[i−1]≤B[j]。
+ * 它等价于：
+ * 在 [0,m] 中找到最大的 i，使得 A[i−1]≤B[j]
 */
 class Solution {
 public:
@@ -82,17 +93,17 @@ public:
         int m = nums1.size();
         int n = nums2.size();
         int left = 0, right = m;
-        // median1：前一部分的最大值
-        // median2：后一部分的最小值
+        //* median1：前一部分的最大值
+        //* median2：后一部分的最小值
         int median1 = 0, median2 = 0;
 
         while (left <= right) {
-            // 前一部分包含 nums1[0 .. i-1] 和 nums2[0 .. j-1]
-            // 后一部分包含 nums1[i .. m-1] 和 nums2[j .. n-1]
+            //* 前一部分包含 nums1[0 .. i-1] 和 nums2[0 .. j-1]
+            //* 后一部分包含 nums1[i .. m-1] 和 nums2[j .. n-1]
             int i = (left + right) / 2;
             int j = (m + n + 1) / 2 - i;
 
-            // nums_im1, nums_i, nums_jm1, nums_j 分别表示 nums1[i-1], nums1[i], nums2[j-1], nums2[j]
+            //* nums_im1, nums_i, nums_jm1, nums_j 分别表示 nums1[i-1], nums1[i], nums2[j-1], nums2[j]
             int nums_im1 = (i == 0 ? INT_MIN : nums1[i - 1]);
             int nums_i = (i == m ? INT_MAX : nums1[i]);
             int nums_jm1 = (j == 0 ? INT_MIN : nums2[j - 1]);
@@ -102,7 +113,8 @@ public:
                 median1 = max(nums_im1, nums_jm1);
                 median2 = min(nums_i, nums_j);
                 left = i + 1;
-            } else {
+            }
+            else {
                 right = i - 1;
             }
         }

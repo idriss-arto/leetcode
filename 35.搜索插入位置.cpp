@@ -22,16 +22,13 @@ public:
         int left = 0;
         int right = nums.size() - 1;
         int middle = 0;
-        while (left <= right)
+        while (left <= right) {
         //* 左闭右闭
-        {
             middle = left + ((right - left) / 2);
-            if (nums[middle] > target)
-            {
+            if (nums[middle] > target) {
                 right = middle - 1;
             }
-            else if (nums[middle] < target)
-            {
+            else if (nums[middle] < target) {
                 left = middle + 1;
             }
             else 
@@ -42,11 +39,11 @@ public:
         //* 分别处理如下四种情况
         //* 目标值在数组所有元素之前  [0, -1]，return  right + 1
         //* 目标值等于数组中某一个元素  return middle;
-        //* 目标值插入数组中的位置 [right, left]，return  right + 1
-            //* 在while循环最后一次循环里，left=right=middle
-            //* 此时在对比大小后，right一定指向数组中刚好小于target那一个下标
-            //* left一定指向数组中刚好大于target那一个下标
-        //* 目标值在数组所有元素之后的情况 [nums.size(), nums.size() - 1]
+        //* 目标值插入数组中的位置 return  right + 1
+            //! 在while循环最后一次循环里，left=right=middle
+            //! 此时在对比大小后，right一定指向数组中刚好小于target那一个下标
+            //! left一定指向数组中刚好大于target那一个下标
+        //* 目标值在数组所有元素之后的情况 [nums.size() - 1, nums.size()]
         return right + 1;
         //! return left;   也可以
     }

@@ -46,6 +46,7 @@ private:
     bool isEnd;
 
     Trie* searchPrefix(string prefix) {
+        //* 搜索和插入的一开始都要使指针指向根节点
         Trie* node = this;
         for (char ch : prefix) {
             ch -= 'a';
@@ -58,9 +59,11 @@ private:
     }
 
 public:
+    //* 注意这里的初始化
     Trie() : children(26), isEnd(false) {}
 
     void insert(string word) {
+        //* 搜索和插入的一开始都要使指针指向根节点
         Trie* node = this;
         for (char ch : word) {
             ch -= 'a';

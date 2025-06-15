@@ -13,12 +13,17 @@
  * for循环中（同一层中），sum + candidates[i] > target 就终止遍历，
  * 因为candidates有经过排序，所以后面的元素只会更大，即对于j大于i，
  * sum + candidates[j] 也会大于 target
+ * 
+ * 本题需排序+使用startIndex，因为数组为{2, 3, 4}，target为7时，
+ * 不使用startIndex的话结果会出现{2,2,3}、{2,3,2}、{3,2,2}，
+ * 这对集合来说是不同的集合，但对组合来说是相同的组合
 */
 
 // @lc code=start
 #include <vector>
 #include <algorithm>
 using namespace std;
+
 class Solution {
 private:
     vector<vector<int>> result;
