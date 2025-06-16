@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=739 lang=cpp
- * 单调栈
+ * 单调栈，动态规划
  * [739] 每日温度
  */
 
@@ -72,6 +72,28 @@ public:
             st.push(i);
         }
         return result;
+    }
+};
+
+//* 别人的解法，动态规划
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        vector<int> ans(temperatures.size(),0);
+        int n = temperatures.size();
+        for (int i = n - 2; i >= 0; i--){
+            int next = i + 1;
+            while ( next < n && temperatures[next] <= temperatures[i]){
+                if (ans[next] == 0) {   //* 当前下标next之后没有更大的值了
+                    next = n;
+                }
+                else {                  //* next切换到右边第一个值大于自己的下标
+                    next += ans[next];
+                }
+            }
+            if (next < n) ans[i] = next - i;
+        }
+        return ans;
     }
 };
 // @lc code=end

@@ -26,17 +26,13 @@ public:
             }
             //* 右括号，看栈顶的左括号是否匹配
             else {
-                char x;
-                if (!sta.empty()) {
-                    x = sta.top();
-                }
-                else {
+                if (sta.empty()) {
                     return false;
                 }
+                char x = sta.top();
                 if ((s[i] == ')' && x == '(') ||
                     (s[i] == ']' && x == '[') ||
-                    (s[i] == '}' && x == '{')) 
-                {
+                    (s[i] == '}' && x == '{')) {
                     sta.pop();
                     continue;
                 }
