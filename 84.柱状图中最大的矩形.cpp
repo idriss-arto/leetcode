@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=84 lang=cpp
  * 单调栈
- * [84] 柱状图中最大的矩形
+ ! [84] 柱状图中最大的矩形
  */
 
 /*
@@ -67,11 +67,13 @@ public:
         int size = heights.size();
 
         //* 记录每个柱子 左边第一个小于该柱子的下标
-        minLeftIndex[0] = -1;   //! 注意这里初始化，防止下面while死循环
+        minLeftIndex[0] = -1;               //! 注意这里初始化，防止下面while死循环
         for (int i = 1; i < size; i++) {
             int t = i - 1;
             //* 这里不是用if，而是不断向左寻找的过程
-            while (t >= 0 && heights[t] >= heights[i]) t = minLeftIndex[t];
+            while (t >= 0 && heights[t] >= heights[i]) {
+                t = minLeftIndex[t];
+            }
             minLeftIndex[i] = t;
         }
 
@@ -80,7 +82,9 @@ public:
         for (int i = size - 2; i >= 0; i--) {
             int t = i + 1;
             //* 这里不是用if，而是不断向右寻找的过程
-            while (t < size && heights[t] >= heights[i]) t = minRightIndex[t];
+            while (t < size && heights[t] >= heights[i]) {
+                t = minRightIndex[t];
+            }
             minRightIndex[i] = t;
         }
 
