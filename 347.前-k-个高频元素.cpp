@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=347 lang=cpp
- * 小顶堆
+ * 小顶堆（优先队列）
  ! [347] 前 K 个高频元素
  */
 
@@ -53,13 +53,13 @@ public:
 };
 
 //* 题解解法，用priority_queue（小顶堆）只保存出现频率最高的k个
-class Solution2 {
+class Solution {
 public:
     //* 小顶堆的比较函数
     class mycomparison {
     public:
         bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
-            //* 注意这里是大于
+            //! 注意这里是大于
             return lhs.second > rhs.second;
         }
     };
@@ -73,7 +73,7 @@ public:
 
         //* 对频率排序
         //* 定义一个小顶堆，大小为k
-        //? 给的比较器函数是大于，但是是小顶堆，即堆顶是最小值
+        //! 给的比较器函数是大于，但是是小顶堆，即堆顶是最小值
         priority_queue<pair<int, int>, vector<pair<int, int>>, mycomparison> pri_que;
 
         //* 用固定大小为k的小顶堆，扫描所有频率的数值

@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=215 lang=cpp
- * 变种快排，小顶堆
+ * 变种快排，小顶堆（优先队列）
  ! [215] 数组中的第K个最大元素
  */
 
@@ -8,6 +8,7 @@
 #include <vector>
 #include <functional>
 #include <set>
+#include <queue>
 using namespace std;
 
 //* multiset排序
@@ -163,6 +164,19 @@ public:
             }
         }
         return nums[0];
+    }
+};
+
+//* 小顶堆（优先队列实现）
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> que;
+        for (const int& num : nums) {
+            que.push(num);
+            if (que.size() > k) que.pop();
+        }
+        return que.top();
     }
 };
 // @lc code=end
