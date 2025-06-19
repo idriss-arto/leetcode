@@ -25,9 +25,9 @@ using namespace std;
 /*
  * 我的贪心
  * 思路：
- * 记录剩余跳动次数，即当前还能跳多少次，然后一步一步跳
- * 在剩余跳动次数变为0之前，都能往后跳
- * 如果当前位置的数大于剩余跳动次数，就把剩余跳动次数更新为当前位置的数 
+ * 记录剩余跳动次数，即当前还能跳多少次，然后一步一步跳。
+ * 在剩余跳动次数变为0之前，都能往后跳。
+ * 如果当前位置的数大于剩余跳动次数，就把剩余跳动次数更新为当前位置的数。 
 */
 class Solution {
 public:
@@ -53,6 +53,8 @@ public:
 class Solution {
 public:  
     bool canJump(vector<int>& nums) {
+        //* 最好cover初始化为0，下面i从0开始遍历
+        //* 如果cover初始化为nums[0]，下面i从1开始遍历，特殊情况[0]会判断错
         int cover = 0;
         if (nums.size() == 1) return true;  //* 只有一个元素，就是能达到
         for (int i = 0; i <= cover; i++) {  //* 注意这里是小于等于cover

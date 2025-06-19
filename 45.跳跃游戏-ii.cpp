@@ -66,7 +66,7 @@ public:
  * 一步一步走，同时更新下一跳覆盖范围为最大值。
  * 当走到当前覆盖范围边界的时候，步数加一，将覆盖范围换成下一跳覆盖范围
  * 注意：
- * 第一次走之前，在下标0的时候，是第一次走到覆盖范围边界
+ ! 第一次走之前，在下标0的时候，是第一次走到覆盖范围边界
  * 覆盖范围更新后如果大于等于数组最后一个下标，即可退出
 */
 class Solution {
@@ -77,7 +77,7 @@ public:
         int ans = 0;                //* 记录走的最大步数
         int nextDistance = 0;       //* 下一跳覆盖最远距离下标
         for (int i = 0; i < nums.size(); i++) {
-            nextDistance = max(i + nums[i], nextDistance);      //* 更新下一跳覆盖最远距离下标
+            nextDistance = max(i + nums[i], nextDistance);      //* 先更新下一跳覆盖最远距离下标
             if (i == curDistance) {                             //* 遇到当前覆盖最远距离下标
                 ans++;                                          //* 需要下一跳，到下一个覆盖范围
                 curDistance = nextDistance;                     //* 更新当前覆盖最远距离下标（相当于加油了）

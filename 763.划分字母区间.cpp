@@ -42,6 +42,7 @@ public:
                 left = i + 1;
             }
         }
+        
         return result;
     }
 };
