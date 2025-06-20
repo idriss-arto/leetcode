@@ -35,6 +35,7 @@ public:
     bool wordBreak(string s, vector<string>& wordDict) {
         vector<bool> dp(s.length() + 1, false);
 
+        //* 初始化
         dp[0] = true;
 
         for (int i = 1; i <= s.length(); i++) {

@@ -130,7 +130,9 @@ public:
     int rob(TreeNode* root) {
         if (root == NULL) return 0;
         if (root->left == NULL && root->right == NULL) return root->val;
-        if (umap[root]) return umap[root];  //* 如果umap里已经有记录则直接返回
+        if (umap[root]) {                   //* 如果umap里已经有记录则直接返回
+            return umap[root];
+        }
         //* 偷父节点
         int val1 = root->val;
         if (root->left) val1 += rob(root->left->left) + rob(root->left->right);     //* 跳过root->left
@@ -138,7 +140,7 @@ public:
         //* 不偷父节点
         int val2 = rob(root->left) + rob(root->right);  //* 考虑root的左右孩子
         umap[root] = max(val1, val2);                   //* umap记录一下结果
-        return max(val1, val2);
+        return umap[root];
     }
 };
 // @lc code=end

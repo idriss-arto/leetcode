@@ -21,6 +21,7 @@
 #include <vector>
 #include <math.h>
 using namespace std;
+
 //* 题解解法
 //* 遍历j * j <= i，使得dp[i] = min(dp[i - j * j] + 1, dp[i]);即可
 class Solution {
@@ -39,7 +40,7 @@ public:
 
 //* 我的解法
 //* 遍历所有j <= n / 2，使得dp[i] = min(dp[i], dp[i - j] + dp[j]);
-//* 超时
+//! 超时
 class Solution {
 //* dp[i]表示数字i由完全平方数组成所需的最少数字
 public:
