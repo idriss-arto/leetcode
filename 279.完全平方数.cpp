@@ -51,7 +51,7 @@ public:
 
         for (int i = 2; i <= n; i++) {                  //* 遍历背包
             int x = sqrt(i);
-            if (x == i / x && i % x == 0) dp[i] = 1;
+            if (x == i / x && i % x == 0) dp[i] = 1;    //* 自己就是平方数
             else {
                 for (int j = 1; j <= n / 2; j++) {      //* 遍历物品
                     if (dp[j] != __INT_MAX__ && dp[i-j] != __INT_MAX__) {

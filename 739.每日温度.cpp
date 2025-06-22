@@ -83,7 +83,7 @@ public:
         int n = temperatures.size();
         for (int i = n - 2; i >= 0; i--){
             int next = i + 1;
-            while ( next < n && temperatures[next] <= temperatures[i]){
+            while (next < n && temperatures[next] <= temperatures[i]){
                 if (ans[next] == 0) {   //* 当前下标next之后没有更大的值了
                     next = n;
                 }

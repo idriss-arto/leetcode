@@ -8,7 +8,7 @@
  ! 只能买卖一次
  * 思路：
  * 
- * 我的思路：贪心，记录每一个位置往左侧看的最小值
+ * 我的思路：贪心，记录每一个位置往左侧看的最小值。
  * 
  * 
  * 题解思路：动态规划
@@ -93,7 +93,7 @@ public:
         int max = 0;
         for (int i = 1; i < prices.size(); i++) {
             int profit = prices[i] - leftmin;
-            if (profit < 0) leftmin = prices[i];
+            if (profit < 0) leftmin = prices[i];    //* 更新左侧最小值
             else if (profit > max) max = profit;
         }
 

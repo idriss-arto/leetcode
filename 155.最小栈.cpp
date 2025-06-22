@@ -31,7 +31,9 @@ public:
     void pop() {
         int x = sta.top();
         sta.pop();
-        if (!minSta.empty() && x == minSta.top()) minSta.pop();
+        if (!minSta.empty() && x == minSta.top()) {
+            minSta.pop();
+        }
     }
     
     int top() {

@@ -35,17 +35,43 @@ public:
     int quickselect(vector<int> &nums, int left, int right, int k) {
         if (left == right)
             return nums[k];
-        //* 注意这里i和j的初始化
+
+        int privot = nums[(left + right) >> 1];
+        
+        //! 注意这里i和j的初始化
         int i = left - 1;
         int j = right + 1;
-        int privot = nums[(left + right) >> 1];
         while (i < j) {
-            //* 注意这里是do-while循环
+            //! 注意这里是do-while循环
             do i++; while (nums[i] < privot);
             do j--; while (nums[j] > privot);
             if (i < j)
                 swap(nums[i], nums[j]);
         }
+
+        /*
+         * do-while循环等价于以下代码
+        int i = left;
+        int j = right;
+        while (i < j) {
+            while (nums[i] < privot) {
+                i++;
+            } 
+            while (nums[j] > privot) {
+                j--;
+            }
+            if (i < j) {
+                if (nums[i] == nums[j]) {
+                    i++;
+                    j--;
+                }
+                else swap(nums[i], nums[j]);
+                
+            }
+                
+        }
+        */
+
         if (k <= j) {
             return quickselect(nums, left, j, k);
         }
@@ -68,12 +94,12 @@ public:
         if (left == right) {
             return nums[k];
         }
-        //* 注意这里i和j的初始化
+        //! 注意这里i和j的初始化
         int i = left - 1;
         int j = right + 1;
         int privot = nums[(left + right) >> 1];
         while (i < j) {
-            //* 注意这里是do-while循环
+            //! 注意这里是do-while循环
             do i++; while (nums[i] > privot);
             do j--; while (nums[j] < privot);
             if (i < j) {
@@ -128,7 +154,7 @@ public:
     }
 };
 
-//* 小顶堆
+//* 大小为k的小顶堆
 //* 时间复杂度O(K + (N-K)logK)，空间复杂度O(logK)
 class Solution {
 public:

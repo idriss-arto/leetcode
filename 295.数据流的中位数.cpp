@@ -40,16 +40,17 @@ public:
  * 初始有序集合为空时，我们直接让左右指针指向 num 所在的位置。
  * 
  * 2.
- * 有序集合为中元素为奇数时，left 和 right 同时指向中位数。如果 num 小于等于中位数，那么只要让 left 左移，否则让 right 右移即可。
+ * 插入前有序集合元素为奇数时，left 和 right 同时指向中位数。
+ * 此时如果插入的 num 小于等于中位数，那么只要让 left 左移，否则让 right 右移即可。
  * 
  * 3.
- * 有序集合为中元素为偶数时，left 和 right 分别指向构成中位数的两个数。
+ * 插入前有序集合元素为偶数时，left 和 right 分别指向构成中位数的两个数。此时，
  * a. 
- * 当 num 成为新的唯一的中位数，那么我们让 left 右移，right 左移，这样它们即可指向 num 所在的位置；
+ * 当插入的 num 成为新的唯一的中位数，那么我们让 left 右移，right 左移，这样它们即可指向 num 所在的位置；
  * b.
- * 当 num 大于等于 right，那么我们让 left 右移即可；
+ * 当插入的 num 大于等于 right，那么我们让 left 右移即可；
  * c.
- * 当 num 小于 right 指向的值，那么我们让 right 左移，
+ * 当插入的 num 小于 right 指向的值，那么我们让 right 左移，
  * 注意到如果 num 恰等于 left 指向的值，那么 num 将被插入到 left 右侧，使得 left 和 right 间距增大，
  * 所以我们还需要额外让 left 指向移动后的 right。
 */
@@ -138,10 +139,13 @@ private:
         leftMaxHeap.push_back(num);
         adjustUpLeft(leftMaxHeap.size() - 1);
         if (leftMaxHeap.size() - rightMinHeap.size() > 1) {
+            int tmp = leftMaxHeap[0];
+
             swap(leftMaxHeap[0], leftMaxHeap[leftMaxHeap.size() - 1]);
-            int tmp = leftMaxHeap[leftMaxHeap.size() - 1];
             leftMaxHeap.pop_back();
             adjustDownLeft(0);
+
+            //* 调整完左边再加入右边，否则容易出错
             addNodeRight(tmp);
         }
     }
@@ -178,10 +182,13 @@ private:
         rightMinHeap.push_back(num);
         adjustUpRight(rightMinHeap.size() - 1);
         if (rightMinHeap.size() - leftMaxHeap.size() > 1) {
+            int tmp = rightMinHeap[0];
+
             swap(rightMinHeap[0], rightMinHeap[rightMinHeap.size() - 1]);
-            int tmp = rightMinHeap[rightMinHeap.size() - 1];
             rightMinHeap.pop_back();
             adjustDownRight(0);
+
+            //* 调整完右边再加入左边，否则容易出错
             addNodeLeft(tmp);       
         }
     }

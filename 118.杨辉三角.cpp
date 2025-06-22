@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=118 lang=cpp
  * 动态规划
- * [118] 杨辉三角
+ * [118] 杨辉三角 
  */
 
 // @lc code=start

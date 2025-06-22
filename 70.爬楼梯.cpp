@@ -13,17 +13,17 @@ class Solution {
 public:
     int climbStairs(int n) {
         if (n <= 2) return n;       //* 注意特殊情况处理
-        vector<int> result(n+1);
+        vector<int> dp(n+1);
 
-        result[1] = 1;
-        result[2] = 2;
+        dp[1] = 1;
+        dp[2] = 2;
 
         //* 注意这里从3开始
-        for (int i = 3; i < result.size(); i++) {
-            result[i] = result[i-2] + result[i-1];
+        for (int i = 3; i < dp.size(); i++) {
+            dp[i] = dp[i-2] + dp[i-1];
         }
 
-        return result[n];
+        return dp[n];
     }
 };
 

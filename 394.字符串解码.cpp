@@ -94,11 +94,11 @@ public:
         while (ptr < s.size()) {
             char cur = s[ptr];
             if (isdigit(cur)) {
-                // 获取一个数字并进栈
+                //* 获取一个数字并进栈
                 string digits = getDigits(s, ptr);
                 stk.push_back(digits);
             } else if (isalpha(cur) || cur == '[') {
-                // 获取一个字母并进栈
+                //* 获取一个字母并进栈
                 stk.push_back(string(1, s[ptr++])); 
             } else {
                 ++ptr;
@@ -108,15 +108,15 @@ public:
                     stk.pop_back();
                 }
                 reverse(sub.begin(), sub.end());
-                // 左括号出栈
+                //* 左括号出栈
                 stk.pop_back();
-                // 此时栈顶为当前 sub 对应的字符串应该出现的次数
+                //* 此时栈顶为当前 sub 对应的字符串应该出现的次数
                 int repTime = stoi(stk.back()); 
                 stk.pop_back();
                 string t, o = getString(sub);
-                // 构造字符串
+                //* 构造字符串
                 while (repTime--) t += o; 
-                // 将构造好的字符串入栈
+                //* 将构造好的字符串入栈
                 stk.push_back(t);
             }
         }

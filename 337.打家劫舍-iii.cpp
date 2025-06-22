@@ -22,10 +22,6 @@ struct TreeNode {
 //* 题解解法
 class Solution {
 public:
-    int rob(TreeNode* root) {
-        vector<int> result = robTree(root);
-        return max(result[0], result[1]);
-    }
     //* 长度为2的数组，考虑当前节点为根节点的子树
     //* 下标0：不偷此节点时能获得的最大金额，
     //* 下标1：偷此节点时能获得的最大金额
@@ -41,6 +37,11 @@ public:
         int val2 = max(left[0], left[1]) + max(right[0], right[1]);
 
         return {val2, val1};
+    }
+
+    int rob(TreeNode* root) {
+        vector<int> result = robTree(root);
+        return max(result[0], result[1]);
     }
 };
 
@@ -127,6 +128,7 @@ public:
 class Solution {
 public:
     unordered_map<TreeNode*, int> umap;     //* 记录计算过的结果
+
     int rob(TreeNode* root) {
         if (root == NULL) return 0;
         if (root->left == NULL && root->right == NULL) return root->val;

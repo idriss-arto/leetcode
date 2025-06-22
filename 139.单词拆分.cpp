@@ -21,7 +21,7 @@
 #include <unordered_set>
 using namespace std;
 
-//* dp[i]为true表示下标i之前的字母组成的字符串可以拆分为字典中单词的累积
+//* dp[i]为true表示以第i个字母结尾的子串可以拆分为字典中单词的累积
 //! 此题隐含求排列数，遍历时背包必须在外层
 class Solution {
 public:
@@ -39,11 +39,11 @@ public:
         dp[0] = true;
 
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = i-1; j >= 0; j--) {
-                //* 先判断下标j之前的字符串能不能拆分
-                if (dp[j] == true) {
-                    //* 再判断下标j到i能不能匹配字典中任一单词
-                    dp[i] = cmp(s.substr(j, i-j), wordDict);
+            for (int j = i; j >= 1; j--) {
+                //* 先判断第j个字母之前的字符串能不能拆分
+                if (dp[j-1] == true) {
+                    //* 再判断第j个字母到第i个字母能不能匹配字典中任一单词
+                    dp[i] = cmp(s.substr(j-1, i-j+1), wordDict);
                     if (dp[i]) break;
                 }
             }
@@ -64,10 +64,11 @@ public:
         dp[0] = true;
 
         for (int i = 1; i <= s.size(); i++) {       //* 遍历背包
-            for (int j = 0; j < i; j++) {           //* 遍历物品
-                string word = s.substr(j, i - j);   //* substr(起始位置，截取的个数)
-                if (dp[j] && wordSet.find(word) != wordSet.end()) {
+            for (int j = 1; j <= i; j++) {           //* 遍历物品
+                string word = s.substr(j - 1, i - j + 1);   //* substr(起始位置，截取的个数)
+                if (dp[j - 1] && wordSet.find(word) != wordSet.end()) {
                     dp[i] = true;
+                    break;
                 }
             }
         }

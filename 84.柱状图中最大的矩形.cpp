@@ -119,7 +119,7 @@ public:
                 st.pop();   //* 这个可以加，可以不加，结果一样，思路不同
                 st.push(i);
             } 
-            else {          //* 情况三
+            else {                                          //* 情况三
                 while (!st.empty() && heights[i] < heights[st.top()]) {     //! 注意是while
                     int mid = st.top();
                     st.pop();
