@@ -69,6 +69,7 @@ public:
                 dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);
             }
         }
+        
         //* 集合中的元素正好可以凑成总和target
         if (dp[target] == target) return true;
         return false;

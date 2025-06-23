@@ -62,7 +62,7 @@ public:
  * 对输入数组nums中的每个元素，
  * 利用二分查找在tails中找到合适位置进行更新，
  * tails数组的有效长度即为原数组nums最长递增子序列的长度。
- * 时间复杂度O（N）
+ * 时间复杂度O（N * logN）
 */
 class Solution {
 public:
