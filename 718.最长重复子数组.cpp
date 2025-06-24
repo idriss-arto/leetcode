@@ -45,6 +45,7 @@ public:
                 if (nums1[i - 1] == nums2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 }
+
                 if (dp[i][j] > result) result = dp[i][j];
             }
         }
@@ -87,6 +88,7 @@ public:
         
         int maxCnt = 0;
 
+        //* 初始化第一行和第一列
         for (int i = 0; i < nums1.size(); i++) {
             if (nums1[i] == nums2[0]) {
                 dp[i][0] = 1;

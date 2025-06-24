@@ -30,7 +30,7 @@
  * 
  * 
  * 
- * 初始化：
+ ! 初始化：
  * dp[i][0] ：以下标i-1为结尾的字符串word1，和空字符串word2，最近编辑距离为dp[i][0]。
  * 那么dp[i][0]就应该是i，也就是word1里的元素全部做删除操作，即：dp[i][0] = i;
  * 同理dp[0][j] = j;
@@ -46,6 +46,7 @@ public:
     int minDistance(string word1, string word2) {
         vector<vector<int>> dp(word1.size() + 1, vector<int>(word2.size() + 1, 0));
 
+        //! 别忘了初始化
         for (int i = 0; i <= word1.size(); i++) dp[i][0] = i;
         for (int j = 0; j <= word2.size(); j++) dp[0][j] = j;
 
@@ -56,6 +57,7 @@ public:
                 }
                 else {
                     //* 注意这里min函数的用法，现将多个元素拼成一个初始化列表，再传入min函数
+                    //* 这种用法需引入<algorithm>头文件
                     dp[i][j] = min({dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]}) + 1;
                 }
             }

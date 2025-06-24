@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=63 lang=cpp
- * 动态规划
+ * 多维动态规划
  * [63] 不同路径 II
  */
 
@@ -59,7 +59,7 @@ public:
                 dp[j] = dp[j-1];
 
         for (int i = 1; i < obstacleGrid.size(); ++i)
-            for (int j = 0; j < dp.size(); ++j){
+            for (int j = 0; j < dp.size(); ++j){        //* 注意这里j是从0开始遍历，因为可能有第i行开头就是障碍的情况
                 if (obstacleGrid[i][j] == 1)
                     dp[j] = 0;
                 else if (j != 0)

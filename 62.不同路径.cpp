@@ -16,11 +16,11 @@ public:
         for (int i = 1; i <= m; i++) {
             result[i][1] = 1;
         }
-        for (int j = 1; j <= n ; j++) {
+        for (int j = 1; j <= n; j++) {
             result[1][j] = 1;
         }
 
-        for (int i = 2; i <= m ; i++) {
+        for (int i = 2; i <= m; i++) {
             for (int j = 2; j <= n; j++) {
                 result[i][j] = result[i-1][j] + result[i][j-1];
             }
