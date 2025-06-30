@@ -13,11 +13,11 @@
  * 
  ! dp[i]必须表示 “以nums[i]结尾的最长递增子序列” ，
  * 因为我们在做递增比较的时候，如果比较 nums[j] 和 nums[i] 的大小，
- * 那么两个递增子序列一定分别以nums[j]为结尾 和 nums[i]为结尾，
+ * 那么两个递增子序列一定分别以 nums[j] 为结尾 和 nums[i] 为结尾，
  * 要不然这个比较就没有意义了
  * 
  * 
- * 思路二：动态规划+二分查找
+ * 思路二：贪心+二分查找
  * 通过维护一个tails数组，
  * 对输入数组nums中的每个元素，
  * 利用二分查找在tails中找到合适位置进行更新，
@@ -56,37 +56,45 @@ public:
 
 /*
  * 题解
- * 动态规划+二分查找
- * 思路：
+ * 贪心+二分查找，思路：
  * 通过维护一个tails数组，
  * 对输入数组nums中的每个元素，
- * 利用二分查找在tails中找到合适位置进行更新，
+ * 利用二分查找在tails中找到合适位置（第一个大于自己的下标）进行更新，
  * tails数组的有效长度即为原数组nums最长递增子序列的长度。
  * 时间复杂度O（N * logN）
 */
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        vector<int> tails(nums.size(), 0);
-        tails[0] = nums[0];
-        //* k为当前tail数组末尾元素的下标
-        int k = 0;
+        int n = nums.size();
+        if (n == 0) {
+            return 0;
+        }
+
+        //* len为当前tail数组有效长度
+        int len = 1;
+        vector<int> tails(n + 1, 0);
+        tails[len] = nums[0];
 
         for (int i = 1; i < nums.size(); i++) {
             //! 如果当前数字大于tail数组尾部，则直接插入尾部
-            if (nums[i] > tails[k]) {
-                k++;
-                tails[k] = nums[i];
+            if (nums[i] > tails[len]) {
+                len++;
+                tails[len] = nums[i];
             }
             //! 否则，在tail数组中找到第一个大于等于这个数字的位置
             else {
-                int left = 0, right = k;
+                int left = 0, right = len;
                 int middle;
                 //! 想清楚二分查找要找啥，这里是找第一个大于等于nums[i]的位置
                 while (left <= right) {
                     middle = (left + right) / 2;
-                    if (tails[middle] < nums[i]) left = middle + 1;
-                    else if (tails[middle] >= nums[i]) right = middle - 1;
+                    if (tails[middle] < nums[i]) {
+                        left = middle + 1;
+                    }
+                    else {              //* tails[middle] >= nums[i]
+                        right = middle - 1;
+                    }
             
                 }
                 tails[left] = nums[i];
@@ -108,7 +116,7 @@ public:
             }
         }
 
-        return k+1;
+        return len;
     }
 };
 // @lc code=end

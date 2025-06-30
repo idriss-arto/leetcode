@@ -21,6 +21,33 @@
 #include <unordered_set>
 using namespace std;
 
+//* 题解解法
+//* dp[i]为true表示以第i个字母结尾的子串可以拆分为字典中单词的累积
+//* 用unordered_set重新装wordDict，提高对比速度
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        //* 用unordered_set替代比较函数，不用再一个个比，直接用find
+        unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
+
+        vector<bool> dp(s.size() + 1, false);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.size(); i++) {       //* 遍历背包
+            for (int j = i - 1; j >= 0; j--) {      //* 遍历物品
+                string word = s.substr(j, i - j);   //* substr(起始位置，截取的个数)
+                if (dp[j] && wordSet.find(word) != wordSet.end()) {
+                    //* 也可以用 wordSet.count(word)
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[s.size()];
+    }
+};
+
 //* dp[i]为true表示以第i个字母结尾的子串可以拆分为字典中单词的累积
 //! 此题隐含求排列数，遍历时背包必须在外层
 class Solution {
@@ -39,41 +66,17 @@ public:
         dp[0] = true;
 
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = i; j >= 1; j--) {
+            for (int j = i - 1; j >= 0; j--) {
                 //* 先判断第j个字母之前的字符串能不能拆分
-                if (dp[j-1] == true) {
+                if (dp[j] == true) {
                     //* 再判断第j个字母到第i个字母能不能匹配字典中任一单词
-                    dp[i] = cmp(s.substr(j-1, i-j+1), wordDict);
+                    dp[i] = cmp(s.substr(j, i-j), wordDict);
                     if (dp[i]) break;
                 }
             }
         }
 
         return dp[s.length()];
-    }
-};
-
-//* 题解解法，用unordered_set重新装wordDict，提高对比速度
-class Solution {
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-        //* 用unordered_set替代比较函数，不用再一个个比，直接用find
-        unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
-
-        vector<bool> dp(s.size() + 1, false);
-        dp[0] = true;
-
-        for (int i = 1; i <= s.size(); i++) {       //* 遍历背包
-            for (int j = 1; j <= i; j++) {           //* 遍历物品
-                string word = s.substr(j - 1, i - j + 1);   //* substr(起始位置，截取的个数)
-                if (dp[j - 1] && wordSet.find(word) != wordSet.end()) {
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-
-        return dp[s.size()];
     }
 };
 // @lc code=end

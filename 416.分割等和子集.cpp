@@ -36,7 +36,7 @@ public:
 
         vector<bool> dp(sum/2 + 1, false);
         for (int i = 0; i < nums.size(); i++) {
-            for (int j = sum/2; j >= nums[i]; j--) {
+            for (int j = sum/2; j >= nums[i]; j--) {    //* 每一个元素一定是不可重复放入，所以从大到小遍历
                 if (j == nums[i] || dp[j-nums[i]] == true) dp[j] = true;
             }
         }
