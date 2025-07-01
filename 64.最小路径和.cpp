@@ -16,6 +16,7 @@ public:
         int n = grid[0].size();
         vector<vector<int>> dp(m, vector(n, 0));
 
+        //* 初始化第一行和第一列
         dp[0][0] = grid[0][0];
         for (int j = 1; j < n; j++) {
             dp[0][j] = dp[0][j-1] + grid[0][j];

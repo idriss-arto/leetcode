@@ -53,17 +53,21 @@ public:
         //* 初始化第一行
         dp[0] = 1;
         for (int j = 1; j < dp.size(); ++j)
-            if (obstacleGrid[0][j] == 1)
+            if (obstacleGrid[0][j] == 1) {
                 dp[j] = 0;
-            else
+            }  
+            else {
                 dp[j] = dp[j-1];
+            } 
 
         for (int i = 1; i < obstacleGrid.size(); ++i)
             for (int j = 0; j < dp.size(); ++j){        //* 注意这里j是从0开始遍历，因为可能有第i行开头就是障碍的情况
-                if (obstacleGrid[i][j] == 1)
+                if (obstacleGrid[i][j] == 1) {
                     dp[j] = 0;
-                else if (j != 0)
+                }
+                else if (j != 0) {
                     dp[j] = dp[j] + dp[j-1];
+                }
             }
         return dp.back();
     }

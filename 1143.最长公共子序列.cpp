@@ -38,7 +38,7 @@ public:
         
         for (int i = 1; i <= text1.size(); i++) {
             for (int j = 1; j <= text2.size(); j++) {
-                if (text1[i - 1] == text2[j - 1]) {
+                if (text1[i - 1] == text2[j - 1]) {     //* 注意这里比较的是 text1[i - 1] 和 text2[j - 1]
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 } 
                 //! 和718.最长重复连续子序列不一样的地方
