@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 
+//* 二分查找
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
@@ -30,6 +31,7 @@ public:
     }
 };
 
+//* 快慢指针寻找环入口
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {

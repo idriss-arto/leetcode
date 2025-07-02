@@ -4,6 +4,11 @@
  * [136] 只出现一次的数字
  */
 
+/*
+ * 相同的数异或为0
+ * 0和任何数x异或结果为x
+ */
+
 // @lc code=start
 #include <vector>
 using namespace std;

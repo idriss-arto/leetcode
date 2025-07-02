@@ -9,6 +9,7 @@
 #include <unordered_map>
 using namespace std;
 
+//* 用哈希表记录元素出现频率
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
@@ -29,17 +30,17 @@ public:
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        int result = -1;
-        int count = 0;
-        for (int& num : nums) {
-            if (num == result) {
-                count++;
+        int result = nums[0];
+        int cnt = 1;
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] == result) {
+                cnt++;
             }
             else {
-                count--;
-                if (count < 0) {
-                    result = num;
-                    count = 0;
+                cnt--;
+                if (cnt <= 0) {
+                    result = nums[i];
+                    cnt = 1;
                 }
             }
         }
