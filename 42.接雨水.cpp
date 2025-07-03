@@ -100,16 +100,18 @@ public:
             //* 情况三
             else {
                 while (!st.empty() && height[i] > height[st.top()]) {   //* 注意这里是while，还有先判断stack非空
+                    int right = i;
                     int mid = st.top();
                     st.pop();
                     if (!st.empty()) {              //! 注意这里需要判断栈stack是否为空
-                        int h = min(height[st.top()], height[i]) - height[mid];
-                        int w = i - st.top() - 1;   //! 注意减一，只求中间宽度
+                        int left = st.top();
+                        int h = min(height[left], height[right]) - height[mid];
+                        int w = right - left - 1;   //! 注意减一，只求中间宽度
                         sum += h * w;
                     }
                 }
 
-                //! while循环完了别忘了还有push
+                //! 情况三while循环完了别忘了还有push
                 st.push(i);
             }
         }

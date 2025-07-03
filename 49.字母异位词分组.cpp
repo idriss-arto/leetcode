@@ -6,8 +6,8 @@
 
 /*
  * 思路：
- * 法一：排序后的string作为unordered_map的key，原string作为value
- * 法二：用对string中字母出现次数的计次结果作为unordered_map的key
+ * 法一：排序后的string作为unordered_map的key，原string作为value。
+ * 法二：用对string中字母出现次数的计次结果作为unordered_map的key。
 */
 
 // @lc code=start

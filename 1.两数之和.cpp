@@ -63,9 +63,9 @@ public:
 
         /* 
          * 这样写i不是下标，是元素
-         * for (int i : nums) {
-         *     place[nums[i]] = i;
-         * }
+        for (int i : nums) {
+            place[nums[i]] = i;
+        }
         */
 
         for (int i = 0; i < nums.size(); i++) {
