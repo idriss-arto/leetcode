@@ -101,6 +101,7 @@ public:
         //* 存第一个最大值
         vector<int> ans = {q.top().first};
         for (int i = k; i < n; ++i) {
+            //! 必须先插入再删除，否则下面的删除可能删到q为空
             q.emplace(nums[i], i);
             //! 删除已经离开滑动窗口范围的值
             while (q.top().second <= i - k) {

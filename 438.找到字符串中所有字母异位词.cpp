@@ -6,7 +6,8 @@
 
 /*
  * 思路:
- * 滑动窗口加哈希(因为确定只用小写字母作为key，所以直接用数组模拟hash即可，不用unordered_map)
+ * 滑动窗口加哈希
+ ! (因为确定只用小写字母作为key，所以直接用数组模拟hash即可，不用unordered_map)
  * 滑动窗口移动时，左边出界的字母对应计数减一，右边新入界的字母对应计数加一
  ! 注意，两个vector可以直接用"=="来判断是否相等
  * 但效率不高，更进一步的优化思路是引入diff避免对两个数组的对比，详见下方代码
@@ -59,6 +60,7 @@ public:
     }
 };
 
+//* 常规解法，滑动窗口加哈希
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {

@@ -20,28 +20,6 @@
 #include <unordered_map>
 using namespace std;
 
-//* left指向子串的开头，right指向子串的结尾
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        //* map的key为字符，value为该字符在子串中出现的次数
-        unordered_map<char, int> map;
-        int res =0;
-        for (int left = 0, right = 0; right<s.size(); right++ ){
-            map[s[right]]++;
-            while (map[s[right]] > 1) {
-                //* 这里不会导致map[s[left]]小于0
-                map[s[left]]--;
-                left++;
-            }
-            res = max(res, right - left + 1);
-
-        }
-        return res;
-        
-    }
-};
-
 //* left指向子串开头，right指向下一步要加入子串的位置
 class Solution {
 public:
@@ -68,6 +46,28 @@ public:
         }
 
         return ans;
+    }
+};
+
+//* left指向子串的开头，right指向子串的结尾
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        //* map的key为字符，value为该字符在子串中出现的次数
+        unordered_map<char, int> map;
+        int res = 0;
+        for (int left = 0, right = 0; right < s.size(); right++){
+            map[s[right]]++;
+            while (map[s[right]] > 1) {
+                //* 这里不会导致map[s[left]]小于0
+                map[s[left]]--;
+                left++;
+            }
+            res = max(res, right - left + 1);
+
+        }
+        return res;
+        
     }
 };
 // @lc code=end

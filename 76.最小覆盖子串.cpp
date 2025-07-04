@@ -5,7 +5,8 @@
  */
 
 // @lc code=start
-#include<string>
+#include <string>
+#include <vector>
 #include <unordered_map>
 using namespace std;
 
@@ -46,6 +47,59 @@ public:
 
 /*
  * 思路：
+ * 用count记录两个字符串中出现字符数量的差值
+ * right先往右走，直到满足s从left到right的字符能覆盖t，
+ * 再尝试left往右走，缩减s子串长度
+ * 
+ * 比下面那个方法好的地方在于，可以节约比较能否覆盖的时间
+*/
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string result = "";
+        if (s.size() < t.size()) return result;
+        
+        int left = 0, right = 0;
+        vector<int> count(128, 0);
+        while (right < t.size()) {
+            ++count[s[right]];
+            --count[t[right]];
+            right++;
+        }
+        
+        int diff = 0;
+        for (auto& num : count) {
+            if (num < 0) diff++;
+        }
+        if (diff == 0) return s.substr(0, t.size());
+
+        while (right < s.size()) {
+            count[s[right]]++;
+            if (count[s[right]] == 0) {
+                diff--;
+            }
+            right++;
+
+            if (diff == 0) {
+                while (left < right && count[s[left]] > 0) {
+                    count[s[left]]--;
+                    left++;
+                }
+                string tmp = s.substr(left, right-left);
+                if (result == "" || result.size() > tmp.size()) {
+                    result = tmp;
+                }
+                count[s[left]]--;
+                left++;
+                diff++;
+            }
+        }
+        return result;
+    }
+};
+
+/*
+ * 思路：
  * 用unordered_map记录两个字符串中出现字符数量
  * right先往右走，直到满足s从left到right的字符能覆盖t，
  * 再尝试left往右走，缩减s子串长度
@@ -60,7 +114,6 @@ public:
             if(cnt1[it->first] < it->second) {
                 return false;
             }
-            it++;
         }
         return true;
         /*
