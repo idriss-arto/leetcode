@@ -72,20 +72,22 @@ public:
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> answer(nums.size(), 1);
-        //* 左指针和右指针
-        int left = 0, right = nums.size() - 1;
+        vector<int> result(nums.size(), 1);
+
+        //* 左指针和右指针分别从两端开始遍历
+        int left = 1, right = 1;
         //* 前缀乘积和后缀乘积
-        int lp = 1, rp = 1;
+        int leftIdx = 0, rightIdx = nums.size() - 1;
+        while (leftIdx < nums.size()) {
+            result[leftIdx] *= left;
+            left *= nums[leftIdx];
+            leftIdx++;
 
-        while (right >= 0 && left < nums.size()) {
-            answer[right] *= rp;
-            answer[left] *= lp;
-            lp *= nums[left++];
-            rp *= nums[right--];
+            result[rightIdx] *= right;
+            right *= nums[rightIdx];
+            rightIdx--;
         }
-
-        return answer;
+        return result;
     }
 };
 // @lc code=end

@@ -54,7 +54,9 @@ public:
 
         for (int i = 1; i < nums.size(); i++) {
             dp[i] = max(dp[i - 1] + nums[i], nums[i]);  //* 状态转移公式
-            if (dp[i] > result) result = dp[i];         //* result 保存dp[i]的最大值
+            if (dp[i] > result) {                       //* result 保存dp[i]的最大值
+                result = dp[i];
+            }
         }
         return result;
     }

@@ -77,6 +77,8 @@ public:
 
         //* 步骤2.遍历数组，将绝对值小于等于N的元素的对应位置变为负数
         for (int i = 0; i < n; ++i) {
+            //! 注意，这里必须取绝对值
+            //* 因为前面的遍历可能把当前位置变为负数
             int num = abs(nums[i]);
             if (num <= n) {
                 nums[num - 1] = -abs(nums[num - 1]);

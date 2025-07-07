@@ -11,6 +11,7 @@ using namespace std;
 //* 法一：数组翻转
 class Solution {
 public:
+    //* 左闭右闭的翻转函数
     void reverse(vector<int>& nums, int start, int end) {
         while (start < end) {
             swap(nums[start], nums[end]);
@@ -24,6 +25,14 @@ public:
         reverse(nums, 0, nums.size() - 1 - k);
         reverse(nums, nums.size() - k, nums.size() - 1);
         reverse(nums, 0, nums.size() - 1);
+        /*
+         * 上面是调用的自己写的翻转函数，但标准库里有reverse函数，
+         * 但标准库里的reverse函数是左闭右开区间，所以需要调整参数。
+         * 如下：
+         * reverse(nums.begin(), nums.end() - k);   //* 翻转前n-k个元素
+         * reverse(nums.end() - k, nums.end());     //* 翻转后k个元素
+         * reverse(nums.begin(), nums.end());       //* 翻转整个数组
+        */
     }
 };
 
