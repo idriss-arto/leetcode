@@ -19,7 +19,7 @@ using namespace std;
  * 
  * 可能的情况有三种：
  * 1.
- * 如果 matrix[x,y]=target，说明搜索完成
+ * 如果 matrix[x,y]==target，说明搜索完成
  * 
  * 2.
  * 如果 matrix[x,y]>target，由于每一列的元素都是升序排列的，

@@ -32,11 +32,12 @@ public:
 
         int row = 0, column = 0;
         int directionIndex = 0;
-        for (int i = 0; i < total; i++) {
-            order[i] = matrix[row][column];
+        for (int cnt = 0; cnt < total; cnt++) {
+            order[cnt] = matrix[row][column];
             visited[row][column] = true;
             //* 根据directions数组获取循环方向，求得下一个位置
-            int nextRow = row + directions[directionIndex][0], nextColumn = column + directions[directionIndex][1];
+            int nextRow = row + directions[directionIndex][0];
+            int nextColumn = column + directions[directionIndex][1];
             //* 下一个位置超界或已被访问
             if (nextRow < 0 || nextRow >= rows || nextColumn < 0 || nextColumn >= columns || visited[nextRow][nextColumn]) {
                 //* 利用directions数组改变循环方向

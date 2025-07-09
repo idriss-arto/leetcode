@@ -75,6 +75,7 @@ public:
         }
 
         //* 2.用其他行与列去处理第一行与第一列
+        //* 注意这里i和j都是从1开始
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
@@ -85,6 +86,7 @@ public:
         }
 
         //* 3.反过来使用第一行与第一列去更新其他行与列
+        //* 注意这里i和j都是从1开始
         for (int i = 1; i < m; i++) {
             if (matrix[i][0] == 0) {
                 for (int j = 1; j < n; j++) {
@@ -101,6 +103,7 @@ public:
         }
 
         //* 4.使用两个标记变量更新第一行与第一列
+        //* 注意这里i和j都是从0开始
         if (row0_zero) {
             for (int j = 0; j < n; j++) {
                 matrix[0][j] = 0;
