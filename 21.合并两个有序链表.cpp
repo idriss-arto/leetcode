@@ -20,7 +20,7 @@ struct ListNode {
 };
 
 //* 迭代法
-//* 时间复杂度O（m+n），空间复杂度O（1）
+//* 时间复杂度O(m+n)，空间复杂度O(1)
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
@@ -48,12 +48,14 @@ public:
             prev->next = list2;
         }
 
-        return dummyHead->next;
+        ListNode* result = dummyHead->next;
+        delete dummyHead;   //* 释放虚拟头结点
+        return result;
     }
 };
 
 //* 递归法
-//* 时间复杂度O（m+n），空间复杂度O（m+n）
+//* 时间复杂度O(m+n)，空间复杂度O(m+n)
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {

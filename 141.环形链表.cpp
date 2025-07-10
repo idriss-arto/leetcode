@@ -26,8 +26,27 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
 };
  
-//* 思路一：使用哈希表记录走过的节点
-//* 时间复杂度O（n），空间复杂度O（n）
+//* 我的思路：快慢指针
+//* 时间复杂度O(N)，空间复杂度O(1)
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (!head || !head->next) return false;
+        ListNode* slow = head->next;
+        ListNode* fast = head->next->next;
+        
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (fast == slow) return true;
+        }
+
+        return false;
+    }
+};
+
+//* 题解思路：使用哈希表记录走过的节点
+//* 时间复杂度O(N)，空间复杂度O(N)
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
@@ -38,29 +57,6 @@ public:
             else {
                 set.insert(head);
                 head = head->next;
-            }
-        }
-
-        return false;
-    }
-};
-
-//* 思路二：快慢指针
-//* 时间复杂度O（n），空间复杂度O（1）
-class Solution {
-public:
-    bool hasCycle(ListNode *head) {
-        if (!head || !head->next) return false;
-        ListNode* slow = head->next;
-        ListNode* fast = head->next->next;
-        
-        while (fast && slow) {
-            if (fast == slow) return true;
-            else {
-                //* 注意此处判断
-                if (!fast->next) return false;
-                slow = slow->next;
-                fast = fast->next->next;
             }
         }
 

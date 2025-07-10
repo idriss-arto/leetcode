@@ -33,7 +33,7 @@ struct ListNode {
 };
 
 //* 思路一：快慢指针加数学
-//* 时间复杂度O（n），空间复杂度O（1）
+//* 时间复杂度O(N)，空间复杂度O(1)
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
@@ -60,7 +60,7 @@ public:
 };
 
 //* 思路二：使用哈希表记录走过的节点
-//* 时间复杂度O（n），空间复杂度O（n）
+//* 时间复杂度O(N)，空间复杂度O(N)
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {

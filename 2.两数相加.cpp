@@ -36,7 +36,10 @@ public:
             if(l1) l1 = l1->next;
             if(l2) l2 = l2->next;
         }
-        return dummy->next;
+
+        ListNode* result = dummy->next;
+        delete dummy;   //* 释放虚拟头结点
+        return result;
     }
 };
 
@@ -93,7 +96,9 @@ public:
             if (carrybit != 0) prev->next = new ListNode(1);
         }
 
-        return dummyHead->next;
+        ListNode* result = dummyHead->next;
+        delete dummyHead;   //* 释放虚拟头结点
+        return result;
     }
 };
 // @lc code=end

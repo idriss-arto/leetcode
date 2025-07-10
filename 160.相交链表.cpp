@@ -152,7 +152,9 @@ public:
         }
 
         while (curA && curB) {
-            if (curA == curB) return curA;
+            if (curA == curB) {
+                return curA;
+            }
             else {
                 curA = curA->next;
                 curB = curB->next;
