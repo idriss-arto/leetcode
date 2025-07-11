@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=2 lang=cpp
  * 链表
- * [2] 两数相加
+ ! [2] 两数相加
  */
 
 /*

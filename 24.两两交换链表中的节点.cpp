@@ -59,6 +59,7 @@ public:
 //* 官方解法二：递归
 class Solution {
 public:
+    //* 传入的head是两两相交的第一个节点 
     ListNode* swapPairs(ListNode* head) {
         if (head == nullptr || head->next == nullptr) {
             return head;

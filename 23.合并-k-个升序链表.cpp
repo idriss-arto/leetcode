@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=23 lang=cpp
- * 链表
+ * 链表，优先队列，归并排序
  ! [23] 合并 K 个升序链表
  */
 
@@ -16,6 +16,46 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+/*
+ * 官方解法二，优先队列：
+ * 和我的解法大致思路相同，但使用优先队列优化了时间复杂度。
+ * 每次比较完k个链表的表头后，其实k-1个链表的表头是不会变的，
+ * 如果又从头比较k个链表，浪费了时间，所以用优先队列优化了这个过程。
+ * 
+ * 时间复杂度：
+ * 考虑优先队列中的元素不超过 k 个，那么插入和删除的时间代价为 O(logk)，
+ * 这里最多有 kn 个点，对于每个点都被插入删除各一次，故总的时间代价即渐进时间复杂度为 O(kn×logk)。
+ * 
+ * 空间复杂度：
+ * 这里用了优先队列，优先队列中的元素不超过 k 个，故渐进空间复杂度为 O(k)。
+*/
+class Solution {
+public:
+    struct comp {
+        bool operator()(ListNode* a, ListNode* b) {
+            return a->val > b->val;
+        }
+    };
+
+    priority_queue<ListNode*, vector<ListNode*>, comp> q;
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        for (auto node: lists) {
+            if (node) q.push(node);
+        }
+        ListNode* dummyHead = new ListNode();
+        ListNode* tail = dummyHead;
+        while (!q.empty()) {
+            ListNode* node = q.top();
+            q.pop();
+            tail->next = node; 
+            tail = tail->next;
+            if (node->next) q.push(node->next);
+        }
+        return dummyHead->next;
+    }
 };
 
 /*
@@ -58,46 +98,6 @@ public:
 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         return merge(lists, 0, lists.size() - 1);
-    }
-};
-
-/*
- * 官方解法二，优先队列：
- * 和我的解法大致思路相同，但使用优先队列优化了时间复杂度。
- * 每次比较完k个链表的表头后，其实k-1个链表的表头是不会变的，
- * 如果又从头比较k个链表，浪费了时间，所以用优先队列优化了这个过程。
- * 
- * 时间复杂度：
- * 考虑优先队列中的元素不超过 k 个，那么插入和删除的时间代价为 O(logk)，
- * 这里最多有 kn 个点，对于每个点都被插入删除各一次，故总的时间代价即渐进时间复杂度为 O(kn×logk)。
- * 
- * 空间复杂度：
- * 这里用了优先队列，优先队列中的元素不超过 k 个，故渐进空间复杂度为 O(k)。
-*/
-class Solution {
-public:
-    struct comp {
-        bool operator()(ListNode* a, ListNode* b) {
-            return a->val > b->val;
-        }
-    };
-
-    priority_queue<ListNode*, vector<ListNode*>, comp> q;
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        for (auto node: lists) {
-            if (node) q.push(node);
-        }
-        ListNode* dummyHead = new ListNode();
-        ListNode* tail = dummyHead;
-        while (!q.empty()) {
-            ListNode* node = q.top();
-            q.pop();
-            tail->next = node; 
-            tail = tail->next;
-            if (node->next) q.push(node->next);
-        }
-        return dummyHead->next;
     }
 };
 

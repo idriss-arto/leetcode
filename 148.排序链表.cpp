@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=148 lang=cpp
- * 链表
+ * 链表，归并排序
  ! [148] 排序链表
  */
 
@@ -36,6 +36,98 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+/*
+ * 官方题解，归并排序（自底向上）
+ * 时间复杂度：O(nlogn)，其中 n 是链表的长度。
+ * 空间复杂度：O(1)。
+*/
+class Solution {
+    //* 获取链表长度
+    int getListLength(ListNode* head) {
+        int length = 0;
+        while (head) {
+            length++;
+            head = head->next;
+        }
+        return length;
+    }
+
+    //* 分割链表
+    //* 如果链表长度 <= size，不做任何操作，返回空节点
+    //* 如果链表长度 > size，把链表的前 size 个节点分割出来（断开连接），并返回剩余链表的头节点
+    ListNode* splitList(ListNode* head, int size) {
+        //* 先找到 next_head 的前一个节点
+        ListNode* cur = head;
+        for (int i = 0; i < size - 1 && cur; i++) {
+            cur = cur->next;
+        }
+
+        //* 如果链表长度 <= size
+        if (cur == nullptr || cur->next == nullptr) {
+            return nullptr; //* 不做任何操作，返回空节点
+        }
+
+        ListNode* next_head = cur->next;
+        cur->next = nullptr; //* 断开 next_head 的前一个节点和 next_head 的连接
+        return next_head;
+    }
+
+    //* 21. 合并两个有序链表（双指针）
+    //* 返回合并后的链表的头节点和尾节点
+    pair<ListNode*, ListNode*> mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode dummy;             //* 用哨兵节点简化代码逻辑
+        ListNode* cur = &dummy;     //* cur 指向新链表的末尾
+
+        while (list1 && list2) {
+            if (list1->val < list2->val) {
+                cur->next = list1;  //* 把 list1 加到新链表中
+                list1 = list1->next;
+            }
+            //* 注：相等的情况加哪个节点都是可以的
+            else { 
+                cur->next = list2;  //* 把 list2 加到新链表中
+                list2 = list2->next;
+            }
+            cur = cur->next;        //* 别忘了cur也要移动
+        }
+
+        cur->next = list1 ? list1 : list2;  //* 拼接剩余链表
+
+        //* 移动cur到合并后链表的尾节点
+        while (cur->next) {
+            cur = cur->next;
+        }
+        //* 循环结束后，cur 是合并后的链表的尾节点
+        return {dummy.next, cur};
+    }
+
+public:
+    ListNode* sortList(ListNode* head) {
+        int length = getListLength(head);   //* 获取链表长度
+        ListNode dummy(0, head);            //* 用哨兵节点简化代码逻辑
+
+        //* step 为步长，即参与合并的链表长度
+        for (int step = 1; step < length; step *= 2) {
+            ListNode* new_list_tail = &dummy;   //* 新链表的末尾
+            ListNode* cur = dummy.next;         //* 每轮循环的起始节点
+            while (cur) {
+                //* 从 cur 开始，分割出两段长为 step 的链表，头节点分别为 head1 和 head2
+                ListNode* head1 = cur;
+                ListNode* head2 = splitList(head1, step);
+                cur = splitList(head2, step);   //* 下一轮循环的起始节点
+
+                //* 合并两段长为 step 的链表
+                auto [head, tail] = mergeTwoLists(head1, head2);
+                //* 合并后的头节点 head，插到 new_list_tail 的后面
+                new_list_tail->next = head;
+                new_list_tail = tail;   //* tail 现在是新链表的末尾
+            }
+        }
+        
+        return dummy.next;
+    }
 };
 
 /*
@@ -95,97 +187,7 @@ public:
     }
 };
 
-/*
- * 官方题解，归并排序（自底向上）
- * 时间复杂度：O(nlogn)，其中 n 是链表的长度。
- * 空间复杂度：O(1)。
-*/
-class Solution {
-    //* 获取链表长度
-    int getListLength(ListNode* head) {
-        int length = 0;
-        while (head) {
-            length++;
-            head = head->next;
-        }
-        return length;
-    }
-
-    //* 分割链表
-    //* 如果链表长度 <= size，不做任何操作，返回空节点
-    //* 如果链表长度 > size，把链表的前 size 个节点分割出来（断开连接），并返回剩余链表的头节点
-    ListNode* splitList(ListNode* head, int size) {
-        //* 先找到 next_head 的前一个节点
-        ListNode* cur = head;
-        for (int i = 0; i < size - 1 && cur; i++) {
-            cur = cur->next;
-        }
-
-        //* 如果链表长度 <= size
-        if (cur == nullptr || cur->next == nullptr) {
-            return nullptr; //* 不做任何操作，返回空节点
-        }
-
-        ListNode* next_head = cur->next;
-        cur->next = nullptr; //* 断开 next_head 的前一个节点和 next_head 的连接
-        return next_head;
-    }
-
-    //* 21. 合并两个有序链表（双指针）
-    //* 返回合并后的链表的头节点和尾节点
-    pair<ListNode*, ListNode*> mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode dummy;             //* 用哨兵节点简化代码逻辑
-        ListNode* cur = &dummy;     //* cur 指向新链表的末尾
-        while (list1 && list2) {
-            if (list1->val < list2->val) {
-                cur->next = list1;  //* 把 list1 加到新链表中
-                list1 = list1->next;
-            }
-            //* 注：相等的情况加哪个节点都是可以的
-            else { 
-                cur->next = list2;  //* 把 list2 加到新链表中
-                list2 = list2->next;
-            }
-            cur = cur->next;
-        }
-        cur->next = list1 ? list1 : list2;  //* 拼接剩余链表
-        while (cur->next) {
-            cur = cur->next;
-        }
-        //* 循环结束后，cur 是合并后的链表的尾节点
-        return {dummy.next, cur};
-    }
-
-public:
-    ListNode* sortList(ListNode* head) {
-        int length = getListLength(head);   //* 获取链表长度
-        ListNode dummy(0, head);            //* 用哨兵节点简化代码逻辑
-
-        //* step 为步长，即参与合并的链表长度
-        for (int step = 1; step < length; step *= 2) {
-            ListNode* new_list_tail = &dummy;   //* 新链表的末尾
-            ListNode* cur = dummy.next;         //* 每轮循环的起始节点
-            while (cur) {
-                //* 从 cur 开始，分割出两段长为 step 的链表，头节点分别为 head1 和 head2
-                ListNode* head1 = cur;
-                ListNode* head2 = splitList(head1, step);
-                cur = splitList(head2, step);   //* 下一轮循环的起始节点
-
-                //* 合并两段长为 step 的链表
-                ListNode* head;
-                ListNode* tail;
-                pair<ListNode*, ListNode*>(head, tail) = mergeTwoLists(head1, head2);
-                //* 合并后的头节点 head，插到 new_list_tail 的后面
-                new_list_tail->next = head;
-                new_list_tail = tail;   //* tail 现在是新链表的末尾
-            }
-        }
-        
-        return dummy.next;
-    }
-};
-
-//* 思路一，将链表转换为数组，排序后再转换回链表
+//* 我的思路一，将链表转换为数组，排序后再转换回链表
 //* 时间复杂度O（N*log(N)），空间复杂度O（N）
 class Solution {
 public:

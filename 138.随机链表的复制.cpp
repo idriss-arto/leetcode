@@ -47,25 +47,25 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        unordered_map<Node *, Node *> mp;
+        unordered_map<Node *, Node *> umap;
 
         //* 第一次遍历，将原节点和对应的复制节点插入哈希表
-        Node *p = head;
-        while (p) {
-            Node *temp = new Node(p->val);
-            //* 注意这里insert的是{p, temp}
-            mp.insert({p, temp});
-            p = p->next;
+        Node *cur = head;
+        while (cur) {
+            Node *temp = new Node(cur->val);
+            //* 注意这里insert的是{cur, temp}
+            umap.insert({cur, temp});
+            cur = cur->next;
         }
 
         //* 第二次遍历，设置复制节点的next和random
-        p = head;
-        while (p) {
-            mp[p]->next = mp[p->next];
-            mp[p]->random = mp[p->random];
-            p = p->next;
+        cur = head;
+        while (cur) {
+            umap[cur]->next = umap[cur->next];
+            umap[cur]->random = umap[cur->random];
+            cur = cur->next;
         }
-        return mp[head];
+        return umap[head];
     }
 };
 
@@ -95,6 +95,7 @@ public:
         //* 第二次遍历，处理拷贝节点的随机指针
         for (Node* node = head; node != nullptr; node = node->next->next) {
             Node* nodeNew = node->next;
+            //* 注意考虑原节点的随机指针是否指向nullptr
             nodeNew->random = (node->random != nullptr) ? node->random->next : nullptr;
         }
         //* 第三次遍历，将拷贝节点从原链表中拆出，同时处理拷贝节点的next指针
@@ -102,6 +103,7 @@ public:
         for (Node* node = head; node != nullptr; node = node->next) {
             Node* nodeNew = node->next;
             node->next = node->next->next;
+            //* 注意考虑原节点的next指针是否指向nullptr
             nodeNew->next = (nodeNew->next != nullptr) ? nodeNew->next->next : nullptr;
         }
         return headNew;

@@ -105,6 +105,8 @@ public:
             addToHead(node);
             //* 添加进哈希表
             cache[key] = node;
+
+            //* 判断是否超容
             if (size > capacity) {
                 //* 如果超出容量，删除双向链表的尾部节点
                 DLinkedNode* removedNode = removeTailNode();

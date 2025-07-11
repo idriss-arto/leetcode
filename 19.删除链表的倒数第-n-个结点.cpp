@@ -41,9 +41,8 @@ struct ListNode {
 //* 使用虚拟头结点，无需处理特殊情况
 class Solution {
 public:
-    //* 使用虚拟头结点
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* dummyHead = new ListNode(0);
+        ListNode* dummyHead = new ListNode(0);  //* 使用虚拟头结点
         dummyHead->next = head;
         ListNode* slow = dummyHead;
         ListNode* fast = dummyHead;
@@ -60,7 +59,9 @@ public:
         slow->next = tmp->next;
         delete tmp;
         
-        return dummyHead->next;
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+        return result;
     }
 };
 
