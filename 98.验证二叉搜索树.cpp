@@ -6,9 +6,9 @@
 
 /*
  * 陷阱一
- * 不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了，而是左子树都小于中间节点，右子树都大于中间节点。
+ ! 不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了，而是左子树都小于中间节点，右子树都大于中间节点。
  * 陷阱二
- * 在一个有序序列求最值的时候，不要定义一个全局变量，然后遍历序列更新全局变量求最值。因为最值可能就是int 或者 longlong的最小值。
+ ! 在一个有序序列求最值的时候，尽量不要定义一个全局变量，然后遍历序列更新全局变量求最值。因为最值可能就是int 或者 longlong的最小值。
 */
 
 /*
@@ -31,6 +31,24 @@ struct TreeNode {
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+//* 递归法推荐写法，避免节点值可以取到LONG_MIN
+class Solution {
+public:
+    TreeNode* pre = nullptr;            //* 用来记录前一个节点
+    bool isValidBST(TreeNode* root) {
+        if (root == nullptr) return true;
+
+        bool left = isValidBST(root->left);
+
+        if (pre != nullptr && pre->val >= root->val) return false;
+        pre = root;                     //* 记录前一个节点
+
+        bool right = isValidBST(root->right);
+
+        return left && right;
+    }
 };
 
 //* 递归法
@@ -56,7 +74,7 @@ public:
     }
 };
 
-//* 递归法
+//* 递归法（不推荐）
 //* 按中序遍历的顺序递归，递归过程中直接比较
 class Solution {
 public:
@@ -77,25 +95,7 @@ public:
     }
 };
 
-//* 递归法直接比较第二种写法，避免节点值可以取到LONG_MIN
-class Solution {
-public:
-    TreeNode* pre = nullptr;            //* 用来记录前一个节点
-    bool isValidBST(TreeNode* root) {
-        if (root == nullptr) return true;
-
-        bool left = isValidBST(root->left);
-
-        if (pre != nullptr && pre->val >= root->val) return false;
-        pre = root;                     //* 记录前一个节点
-
-        bool right = isValidBST(root->right);
-
-        return left && right;
-    }
-};
-
-//* 迭代法
+//* 迭代法，null标记版
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
@@ -120,6 +120,10 @@ public:
             else {
                 cur = sta.top();
                 sta.pop();
+                /*
+                if (pre != nullptr && pre->val >= cur->val) return false;
+                pre = cur;
+                */
                 if (pre == nullptr) {
                     pre = cur;
                     continue;
@@ -138,18 +142,18 @@ public:
 //* 下面这个方法是直接判断左子树的值都小于当前值，右子树的值都大于当前值
 class Solution {
 public:
-    bool helper(TreeNode* root, long long lower, long long upper) {
+    bool traversal(TreeNode* root, long long lower, long long upper) {
         if (root == nullptr) {
             return true;
         }
         if (root -> val <= lower || root -> val >= upper) {
             return false;
         }
-        return helper(root -> left, lower, root -> val) && helper(root -> right, root -> val, upper);
+        return traversal(root -> left, lower, root -> val) && traversal(root -> right, root -> val, upper);
     }
     bool isValidBST(TreeNode* root) {
         //* 因为后台测试数据中有int最小值，所以用LONG_MIN
-        return helper(root, LONG_MIN, LONG_MAX);
+        return traversal(root, LONG_MIN, LONG_MAX);
     }
 };
 // @lc code=end

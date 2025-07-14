@@ -1,6 +1,6 @@
 /*
  * @lc app=leetcode.cn id=437 lang=cpp
- * 二叉树
+ * 二叉树，前缀和
  ! [437] 路径总和 III
  */
 
@@ -108,14 +108,14 @@ public:
         ret += dfs(node->left, curr, targetSum);
         ret += dfs(node->right, curr, targetSum);
 
-        //! 回溯
+        //! 关键一步，回溯
         prefix[curr]--;
 
         return ret;
     }
 
     int pathSum(TreeNode* root, int targetSum) {
-        //* 对于空路径我们也需要保存预先处理一下，
+        //! 对于空路径我们也需要保存预先处理一下，
         //* 此时因为空路径不经过任何节点，因此它的前缀和为 0。
         prefix[0] = 1;
         return dfs(root, 0, targetSum);

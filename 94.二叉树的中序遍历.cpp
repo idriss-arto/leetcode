@@ -28,21 +28,23 @@ struct TreeNode {
 };
 
 //* 递归法
-class Solution {
-public:
-    void traversal(TreeNode* cur, vector<int>& vec) {
+class Solution { 
+private:
+    vector<int> result;
+
+    void traversal(TreeNode* cur) {
         if (cur == nullptr) return;
-        traversal(cur->left, vec);
-        vec.push_back(cur->val);
-        traversal(cur->right, vec);
+        traversal(cur->left);
+        result.push_back(cur->val);
+        traversal(cur->right);
     }
 
+public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> result;
         if (root == nullptr) return result;
-        traversal(root->left, result);
+        traversal(root->left);
         result.push_back(root->val);
-        traversal(root->right, result);
+        traversal(root->right);
         return result;
     }
 };
@@ -79,7 +81,7 @@ public:
         if (root != nullptr) st.push(root);
         while (!st.empty()) {
             TreeNode* node = st.top();
-            if (node != nullptr) {
+            if (node != nullptr) {          //! 注意这里插入栈的顺序，是左中右的逆序
                 st.pop();                               //* 将该节点弹出，避免重复操作，下面再将右中左节点添加到栈中
                 if (node->right) st.push(node->right);  //* 添加右节点（空节点不入栈）
 

@@ -36,8 +36,12 @@ public:
                 TreeNode* node = que.front();
                 que.pop();
                 vec.push_back(node->val);
-                if (node->left) que.push(node->left);
-                if (node->right) que.push(node->right);
+                if (node->left) {
+                    que.push(node->left);
+                }
+                if (node->right) {
+                    que.push(node->right);
+                }
             }
             //* 将当前层的节点放入答案
             result.push_back(vec);

@@ -1,4 +1,4 @@
-/*
+  /*
  * @lc app=leetcode.cn id=105 lang=cpp
  * 二叉树
  * [105] 从前序与中序遍历序列构造二叉树
@@ -97,12 +97,15 @@ private:
         int rootValue = preorder[preorderBegin];    //* 注意用preorderBegin 不要用0
         TreeNode* root = new TreeNode(rootValue);
 
+        //* 叶子节点
         if (preorderEnd - preorderBegin == 1) return root;
 
+        //* 找到中序遍历的切割点
         int delimiterIndex;
         for (delimiterIndex = inorderBegin; delimiterIndex < inorderEnd; delimiterIndex++) {
             if (inorder[delimiterIndex] == rootValue) break;
         }
+        
         //* 切割中序数组
         //! 中序左区间，左闭右开[leftInorderBegin, leftInorderEnd)
         int leftInorderBegin = inorderBegin;

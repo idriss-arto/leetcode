@@ -89,7 +89,7 @@ public:
     }
 };
 
-//* 思路三，寻找前驱节点
+//* 思路三，寻找前驱节点（麻烦）
 class Solution {
 public:
     void flatten(TreeNode* root) {
@@ -105,9 +105,10 @@ public:
                 //* 将cur节点的右孩子赋给前驱节点的右孩子
                 predecessor->right = cur->right;
                 //* 然后将cur的左孩子赋给cur的右孩子
+                cur->right = cur->left;
+                //* 然后将cur的左孩子设为空
                 cur->left = nullptr;
-                //* 并将cur的左孩子设为空
-                cur->right = next;
+                
             }
             //* 对当前节点处理结束后，继续处理链表中的下一个节点
             cur = cur->right;

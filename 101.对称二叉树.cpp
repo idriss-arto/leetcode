@@ -47,6 +47,12 @@ public:
         bool isSame = outside && inside;                    //* 左子树：中、 右子树：中 （逻辑处理）
         return isSame;
 
+        /*
+        if (!left && !right) return true;
+        else if (!left || !right) return false;
+        else if (left->val != right->val) return false;
+        else return compare(left->left, right->right) && compare(left->right, right->left);
+        */
     }
 
     bool isSymmetric(TreeNode* root) {

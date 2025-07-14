@@ -27,7 +27,7 @@ struct TreeNode {
 //* 全局维护一个变量来记录当前最大直径，递归函数只返回自己能做的贡献
 //* 递归函数内部判断更简单
 class Solution {
-    int ans;
+    int ans = 0;
 
     //* 获取rt节点的高度，叶子节点的高度为0
     int getHeight(TreeNode* rt){
@@ -42,9 +42,8 @@ class Solution {
 
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        ans = 1;
         getHeight(root);
-        return ans - 1;
+        return ans;
     }
 };
 

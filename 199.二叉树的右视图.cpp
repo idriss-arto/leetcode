@@ -35,7 +35,9 @@ public:
             for (int i = 0; i < size; i++) {
                 TreeNode* node = que.front();
                 que.pop();
-                if (i == size - 1) result.push_back(node->val);     //! 判断是否是某一层最后一个值
+                if (i == size - 1) {        //! 判断是否是某一层最后一个值
+                    result.push_back(node->val);     
+                }
                 if (node->left) que.push(node->left);
                 if (node->right) que.push(node->right);
             }
