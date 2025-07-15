@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=994 lang=cpp
  * 图论
- * [994] 腐烂的橘子
+ ! [994] 腐烂的橘子
  */
 
 // @lc code=start
@@ -34,7 +34,7 @@ public:
         }
 
         int round = 0;          //* 表示腐烂的轮数，或者说分钟数
-        while (!Q.empty() && cnt_good > 0) {
+        while (!Q.empty() && cnt_good > 0) {    //! 注意这里的判断条件
             round++;
             //* 只遍历这一轮开始时就有的腐烂橙子，后面加进来的留到下一轮遍历
             int n = Q.size();

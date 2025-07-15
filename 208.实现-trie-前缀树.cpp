@@ -93,7 +93,7 @@ public:
  * 后续检查字符串是否存在时，用unordered_set。
  * 检查前缀是否存在时，用unordered_map。
  * 
- * 简单易懂，但速度慢
+ * 简单易懂，但速度非常慢
 */
 class Trie {
 private:

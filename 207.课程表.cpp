@@ -4,14 +4,40 @@
  * [207] 课程表
  */
 
+/*
+ * 思路：
+ * 1. 将课程看成图的节点，先修课程看成边。
+ * 2. 如果图中存在环，则无法完成所有课程。
+ * 
+ * 有dfs和bfs两种解法
+ * dfs解法：没有指向其他节点的边后，当前节点入栈
+ * 1. 使用visited数组标记节点的状态，0为未搜索，1为搜索中，2为已搜索。
+ * 2. 对于每个未搜索的节点，进行深度优先搜索。
+ * 3. 在搜索过程中，如果遇到正在搜索中的节点，则说明存在环，返回false。
+ * 4. 如果搜索完成，则将节点标记为已搜索。
+ * 5. 如果所有节点都搜索完成，则返回true。
+ *
+ * bfs解法：没有其他节点指向自己后，当前节点入队列
+ * 1. 使用入度数组indeg记录每个节点的入度。
+ * 2. 将入度为0的节点加入队列。
+ * 3. 每次从队列中取出一个节点，减少其邻接节点的入度。
+ * 4. 如果邻接节点的入度变为0，则将其加入队列。
+ * 5. 如果所有节点都被访问过，则返回true，否则返回false。
+*/
+
 // @lc code=start
 #include <vector>
 #include <set>
+#include <queue>
 #include <unordered_map>
 #include <unordered_set>
 using namespace std;
 
-//* 题解解法
+/*
+ * 题解解法一，dfs
+ * 时间复杂度: O(n+m)，n为节点数，m为边数
+ * 空间复杂度: O(n+m)
+*/
 class Solution {
 private:
     vector<vector<int>> edges;
@@ -48,6 +74,49 @@ public:
             }
         }
         return valid;
+    }
+};
+
+/*
+ * 题解解法二，bfs
+ * 时间复杂度: O(n+m)，n为节点数，m为边数
+ * 空间复杂度: O(n+m)
+*/
+class Solution {
+private:
+    vector<vector<int>> edges;
+    vector<int> indeg;
+
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        edges.resize(numCourses);
+        indeg.resize(numCourses);
+        for (const auto& info: prerequisites) {
+            edges[info[1]].push_back(info[0]);
+            ++indeg[info[0]];
+        }
+
+        queue<int> q;
+        for (int i = 0; i < numCourses; ++i) {
+            if (indeg[i] == 0) {
+                q.push(i);
+            }
+        }
+
+        int visited = 0;
+        while (!q.empty()) {
+            ++visited;
+            int u = q.front();
+            q.pop();
+            for (int v: edges[u]) {
+                --indeg[v];
+                if (indeg[v] == 0) {
+                    q.push(v);
+                }
+            }
+        }
+
+        return visited == numCourses;
     }
 };
 
