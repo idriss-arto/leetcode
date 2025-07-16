@@ -24,7 +24,7 @@ private:
             return false;
         }
 
-        if (index == word.size()) {
+        if (index == word.size() - 1) {
             return true;
         }
 

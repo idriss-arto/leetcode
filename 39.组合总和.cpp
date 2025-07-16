@@ -51,7 +51,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         result.clear();
         path.clear();
-        sort(candidates.begin(), candidates.end());     //* 剪枝需要排序
+        sort(candidates.begin(), candidates.end());     //* 剪枝和去重需要排序
         backtracking(candidates, target, 0);
         return result;
     }

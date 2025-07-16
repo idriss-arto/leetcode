@@ -21,34 +21,6 @@
 #include <vector>
 using namespace std;
 
-//* 我的解法
-class Solution {
-private:
-    vector<vector<int>> result;
-    vector<int> path;
-
-    void backtracking(vector<int>& nums, int cnt, int index) {
-        if (cnt == 0) result.push_back(path);
-        if (index >= nums.size()) return;
-        for (int i = index; i < nums.size(); i++) {
-            path.push_back(nums[i]);
-            backtracking(nums, cnt - 1, i + 1);
-            path.pop_back();
-        }
-    }
-
-public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        result.push_back(nums);
-        for (int i = 0; i <= nums.size() - 1; i++) {
-            path.clear();
-            //* 传入的i表示求大小为i的子集，传入的0表示从下标0开始
-            backtracking(nums, i, 0);
-        }
-        return result;
-    }
-};
-
 //* Carl解法
 class Solution {
 private:
@@ -73,6 +45,34 @@ public:
         path.clear();
 
         backtracking(nums, 0);
+        return result;
+    }
+};
+
+//* 我的解法
+class Solution {
+private:
+    vector<vector<int>> result;
+    vector<int> path;
+
+    void backtracking(vector<int>& nums, int cnt, int index) {
+        if (cnt == 0) result.push_back(path);
+        if (index >= nums.size()) return;
+        for (int i = index; i < nums.size(); i++) {
+            path.push_back(nums[i]);
+            backtracking(nums, cnt - 1, i + 1);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        result.push_back(nums);
+        for (int i = 0; i <= nums.size() - 1; i++) {
+            path.clear();
+            //* 传入的i表示求大小为i的子集，传入的0表示从下标0开始
+            backtracking(nums, i, 0);
+        }
         return result;
     }
 };

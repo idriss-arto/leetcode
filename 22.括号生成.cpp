@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=22 lang=cpp
  * 回溯
- * [22] 括号生成
+ ! [22] 括号生成
  */
 
 /*
@@ -84,7 +84,7 @@ public:
             auto result = shared_ptr<vector<string>>(new vector<string>);
             for (int i = 0; i != n; ++i) {
                 auto lefts = generate(i);
-                auto rights = generate(n - i - 1);
+                auto rights = generate(n - 1 - i);
                 //* 注意这里范围for遍历的是*lefts和*rights
                 for (const string& left : *lefts)
                     for (const string& right : *rights)

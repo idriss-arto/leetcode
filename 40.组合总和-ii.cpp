@@ -55,7 +55,7 @@ private:
             if (i > startIndex && candidates[i] == candidates[i - 1]) {
                 continue;
             }
-             * 还有一种写法见491
+             * 还有一种写法见90
             */
 
             sum += candidates[i];

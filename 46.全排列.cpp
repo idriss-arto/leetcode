@@ -20,7 +20,7 @@ class Solution {
 private:
     vector<vector<int>> result;
     vector<int> path;
-    vector<int> used;
+    vector<bool> used;
 
     void backtracking(const vector<int>& nums) {
         if (path.size() == nums.size()) {
@@ -29,13 +29,13 @@ private:
         }
         for (int i = 0; i < nums.size(); i++) {
             //* 当前树枝已经用过此元素了则跳过
-            if ((used[i])) {
+            if (used[i]) {
                 continue;
             }
-            used[i] = 1;      //* 记录这个元素在本枝用过了，本枝后面不能再用了
+            used[i] = true;      //* 记录这个元素在本枝用过了，本枝后面不能再用了
             path.push_back(nums[i]);
             backtracking(nums);
-            used[i] = 0;
+            used[i] = false;
             path.pop_back();
         }
     }
@@ -43,7 +43,7 @@ public:
     vector<vector<int>> permute(vector<int>& nums) {
         //* 在类的成员变量中声明，再在方法函数中重新定义大小。
         //* 避免每次回溯递归时传参
-        used.resize(nums.size(), 0);
+        used.resize(nums.size(), false);
         backtracking(nums);
         return result;
     }
