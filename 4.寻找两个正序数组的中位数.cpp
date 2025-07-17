@@ -19,7 +19,7 @@ using namespace std;
  * 这样 pivot 本身最大也只能是第 k-1 小的元素
  * 如果 pivot = pivot1，那么 nums1[0 .. k/2-1] 都不可能是第 k 小的元素。把这些元素全部 "删除"，剩下的作为新的 nums1 数组
  * 如果 pivot = pivot2，那么 nums2[0 .. k/2-1] 都不可能是第 k 小的元素。把这些元素全部 "删除"，剩下的作为新的 nums2 数组
- * 由于我们 "删除" 了一些元素（这些元素都比第 k 小的元素要小），因此需要修改 k 的值，减去删除的数的个数
+ ! 由于我们 "删除" 了一些元素（这些元素都比第 k 小的元素要小），因此需要修改 k 的值，减去删除的数的个数
 */
 class Solution {
 public:
@@ -30,7 +30,7 @@ public:
         int index1 = 0, index2 = 0;
 
         while (true) {
-            //* 边界情况
+            //! 边界情况
             if (index1 == m) {
                 return nums2[index2 + k - 1];
             }
@@ -42,7 +42,7 @@ public:
             }
 
             //* 正常情况
-            int newIndex1 = min(index1 + k / 2 - 1, m - 1);
+            int newIndex1 = min(index1 + k / 2 - 1, m - 1);     //* 注意这里有判断是否越界
             int newIndex2 = min(index2 + k / 2 - 1, n - 1);
             int pivot1 = nums1[newIndex1];
             int pivot2 = nums2[newIndex2];

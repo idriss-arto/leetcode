@@ -9,6 +9,50 @@
 using namespace std;
 
 /*
+ * 官方题解
+ * 思路：
+ ! 当前 mid 为分割位置分割出来的两个部分 [l, mid] 和 [mid + 1, r] 时，一定有一部分的数组是有序的。
+ * 可根据有序的那个部分确定该如何改变二分查找的上下界，因为能够根据有序的那部分判断出 target 在不在这个部分：
+ * 如果 [l, mid - 1] 是有序数组，且 target 的大小满足 [nums[l],nums[mid])，则应该将搜索范围缩小至 [l, mid - 1]，否则在 [mid + 1, r] 中寻找。
+ * 如果 [mid, r] 是有序数组，且 target 的大小满足 (nums[mid+1],nums[r]]，则应该将搜索范围缩小至 [mid + 1, r]，否则在 [l, mid - 1] 中寻找。
+*/
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            //* 如果找到目标，直接返回
+            if (nums[mid] == target) {
+                return mid;
+            }
+            //* 左半部分有序
+            else if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            } 
+            //* 右半部分有序
+            else {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                }
+                else {
+                    right = mid - 1;
+                }
+            }
+        }
+        
+        return -1;
+    }
+};
+
+/*
  * 我的题解
  * 思路：
  * 当前区间[left, right]，
@@ -51,51 +95,6 @@ public:
 
     int search(vector<int>& nums, int target) {
         return searchBinary(nums, 0, nums.size()-1, target);
-    }
-};
-
-/*
- * 官方题解
- * 思路：
- * 当前 mid 为分割位置分割出来的两个部分 [l, mid] 和 [mid + 1, r] 时，一定有一部分的数组是有序的。
- * 可根据有序的那个部分确定该如何改变二分查找的上下界，因为能够根据有序的那部分判断出 target 在不在这个部分：
- * 如果 [l, mid - 1] 是有序数组，且 target 的大小满足 [nums[l],nums[mid])，则应该将搜索范围缩小至 [l, mid - 1]，否则在 [mid + 1, r] 中寻找。
- * 如果 [mid, r] 是有序数组，且 target 的大小满足 (nums[mid+1],nums[r]]，则应该将搜索范围缩小至 [mid + 1, r]，否则在 [l, mid - 1] 中寻找。
-*/
-class Solution {
-public:
-    bool search(vector<int>& nums, int target) {
-        int left = 0, right = nums.size() - 1;
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            
-            //* 如果找到目标，直接返回
-            if (nums[mid] == target) {
-                return true;
-            }
-            
-            //* 左半部分有序
-            else if (nums[left] <= nums[mid]) {
-                if (nums[left] <= target && target < nums[mid]) {
-                    right = mid - 1;
-                }
-                else {
-                    left = mid + 1;
-                }
-            } 
-            //* 右半部分有序
-            else {
-                if (nums[mid] < target && target <= nums[right]) {
-                    left = mid + 1;
-                }
-                else {
-                    right = mid - 1;
-                }
-            }
-        }
-        
-        return false;
     }
 };
 // @lc code=end

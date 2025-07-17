@@ -5,7 +5,8 @@
  */
 
 /*
- * 最小值为x的话，旋转后x左边的值大于nums[right]，x及x右边的值小于等于nums[right]。
+ ! 最小值为x的话，旋转后x左边的值大于nums[right]，x及x右边的值小于等于nums[right]。
+ ! 只能和nums[right]比，不能和nums[left]比。
  * 当前 mid 为分割位置分割出来的两个部分 [l, mid] 和 [mid + 1, r] 时，
  * 如果nums[mid] > nums[r]，则应该将搜索范围缩小至 [mid + 1, r]。
  * 如果nums[mid] <= nums[r]，则应该将搜索范围缩小至 [l, mid]。
@@ -31,12 +32,7 @@ public:
                 right = middle;
             }
         }
-        return left;
-        /*
-        或者
-        middle = left + (right - left) / 2;
-        return middle；
-        */
+        return nums[left];
     }
 };
 // @lc code=end

@@ -22,9 +22,9 @@ public:
         int rightBorder = searchRightBorder(nums, target);
         //* 情况一 数组整体小于或整体大于 target
         if (rightBorder == 0 || leftBorder == nums.size() - 1) return {-1, -1};
-        //* 情况三 target 在数组范围中，且数组中存在target
+        //* 情况三 target 在数组范围中，且数组中存在 target
         if (rightBorder - leftBorder > 1) return {leftBorder + 1, rightBorder - 1};
-        //* 情况二 在数组范围中，且数组中不存在target
+        //* 情况二 在数组范围中，且数组中不存在 target
         return {-1, -1};
     }
 
