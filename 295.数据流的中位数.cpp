@@ -11,7 +11,7 @@
 using namespace std;
 
 //* 我的解法一，直接multiset排序
-//* 最后一个用例超时
+//! 最后一个用例超时
 class MedianFinder {
 private:
     multiset<double> uset;
@@ -41,7 +41,8 @@ public:
  * 
  * 2.
  * 插入前有序集合元素为奇数时，left 和 right 同时指向中位数。
- * 此时如果插入的 num 小于等于中位数，那么只要让 left 左移，否则让 right 右移即可。
+ * 此时如果插入的 num 小于等于中位数，那么只要让 left 左移，
+ * 否则，即插入的 num 大于中位数，让 right 右移即可。
  * 
  * 3.
  * 插入前有序集合元素为偶数时，left 和 right 分别指向构成中位数的两个数。此时，
@@ -264,7 +265,9 @@ public:
             leftMaxHeap.push(rightMinHeap.top());
             rightMinHeap.pop();
         }
-
+    }
+    
+    double findMedian() {
         //* 计算中位数
         int totalSize = leftMaxHeap.size() + rightMinHeap.size();
         if (totalSize % 2 == 1) {
@@ -276,9 +279,7 @@ public:
             //* 偶数个元素，中位数为两堆堆顶的平均值
             medianNum = (leftMaxHeap.top() + rightMinHeap.top()) / 2.0;
         }
-    }
-    
-    double findMedian() {
+
         return medianNum;
     }
 };

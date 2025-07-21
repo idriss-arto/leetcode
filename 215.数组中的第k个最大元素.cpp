@@ -28,7 +28,7 @@ public:
     }
 };
 
-//* 变种快排一，升序找第 n-k 小
+//* 变种快排一，升序找排序后下标为 n-k 的元素
 //* 时间复杂度O(N)，空间复杂度O(logN)
 class Solution {
 public:
@@ -86,7 +86,7 @@ public:
     }
 };
 
-//* 变种快排二，降序找第 k-1 大
+//* 变种快排二，降序找排序后下标为 k-1 的元素
 //* 时间复杂度O(N)，空间复杂度O(logN)
 class Solution {
 public:
@@ -117,7 +117,8 @@ public:
 };
 
 //* 大顶堆+（k-1）次删除
-//* 时间复杂度O(N+K*logN)，空间复杂度O(logN)
+//* 时间复杂度：O(N+K*logN)（可优化为O(N+K*logN)），空间复杂度O(logN)
+//* n远远大于k时，可用下一个解法
 class Solution {
 public:
     //* 节点向下调整的函数
@@ -155,6 +156,7 @@ public:
 };
 
 //* 大小为k的小顶堆
+//* 针对n远远大于k的情况
 //* 时间复杂度O(K + (N-K)logK)，空间复杂度O(logK)
 class Solution {
 public:

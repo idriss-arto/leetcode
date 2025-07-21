@@ -106,8 +106,10 @@ public:
     int largestRectangleArea(vector<int>& heights) {
         int result = 0;
         stack<int> st;
+
         heights.insert(heights.begin(), 0); //! 数组头部加入元素0
         heights.push_back(0);               //! 数组尾部加入元素0
+
         st.push(0);
 
         //* 第一个元素已经入栈，从下标1开始
@@ -123,7 +125,7 @@ public:
                 while (!st.empty() && heights[i] < heights[st.top()]) {     //! 注意是while
                     int mid = st.top();
                     st.pop();
-                    if (!st.empty()) {
+                    if (!st.empty()) {              //* 找左边第一个小于自己的下标时先判断栈不为空
                         int left = st.top();
                         int right = i;
                         int w = right - left - 1;

@@ -21,6 +21,7 @@ public:
         
     }
     
+    //* 压栈时，如果当前值小于等于辅助栈的栈顶，则压入辅助栈
     void push(int val) {
         sta.push(val);
         if (minSta.empty() || val <= minSta.top()) {
@@ -28,6 +29,7 @@ public:
         }    
     }
     
+    //* 弹栈时，如果弹出的值等于辅助栈的栈顶，则辅助栈也弹出
     void pop() {
         int x = sta.top();
         sta.pop();

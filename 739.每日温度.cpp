@@ -26,6 +26,27 @@
 #include <stack>
 using namespace std;
 
+//* 单调栈，简略写法
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& T) {
+        //* 递增栈
+        stack<int> st;
+        vector<int> result(T.size(), 0);
+        st.push(0);
+        for (int i = 1; i < T.size(); i++) {
+            //* 三种情况合并写法
+            while (!st.empty() && T[i] > T[st.top()]) { //! 注意判断栈不为空
+                result[st.top()] = i - st.top();
+                st.pop();
+            }
+            //* 别忘了处理完之前的下标后将当前下标入栈
+            st.push(i);
+        }
+        return result;
+    }
+};
+
 //* 单调栈，完整写法
 class Solution {
 public:
@@ -49,27 +70,6 @@ public:
                 }
                 st.push(i);
             }
-        }
-        return result;
-    }
-};
-
-//* 单调栈，简略写法
-class Solution {
-public:
-    vector<int> dailyTemperatures(vector<int>& T) {
-        //* 递增栈
-        stack<int> st;
-        vector<int> result(T.size(), 0);
-        st.push(0);
-        for (int i = 1; i < T.size(); i++) {
-            //* 三种情况合并写法
-            while (!st.empty() && T[i] > T[st.top()]) {
-                result[st.top()] = i - st.top();
-                st.pop();
-            }
-            //* 别忘了处理完之前的下标后将当前下标入栈
-            st.push(i);
         }
         return result;
     }

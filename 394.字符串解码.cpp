@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=394 lang=cpp
  * 栈
- * [394] 字符串解码
+ ! [394] 字符串解码
  */
 
 // @lc code=start
@@ -82,7 +82,7 @@ public:
     string getString(vector <string> &v) {
         string ret;
         for (const auto &s: v) {
-            ret += s;
+            ret = ret + s;
         }
         return ret;
     }
@@ -100,7 +100,7 @@ public:
             } else if (isalpha(cur) || cur == '[') {
                 //* 获取一个字母并进栈
                 stk.push_back(string(1, s[ptr++])); 
-            } else {
+            } else {        //* 识别到右括号
                 ++ptr;
                 vector <string> sub;
                 while (stk.back() != "[") {
