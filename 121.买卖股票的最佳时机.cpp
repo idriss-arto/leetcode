@@ -95,6 +95,10 @@ public:
             int profit = prices[i] - leftmin;
             if (profit < 0) leftmin = prices[i];    //* 更新左侧最小值
             else if (profit > max) max = profit;
+            /*
+            leftmin = min(leftmin, prices[i]);
+            max = max(max, prices[i] - leftmin);
+            */
         }
 
         return max;

@@ -23,27 +23,6 @@
 using namespace std;
 
 /*
- * 我的贪心
- * 思路：
- * 记录剩余跳动次数，即当前还能跳多少次，然后一步一步跳。
- * 在剩余跳动次数变为0之前，都能往后跳。
- * 如果当前位置的数大于剩余跳动次数，就把剩余跳动次数更新为当前位置的数。 
-*/
-class Solution {
-public:
-    bool CanJump(vector<int>& nums) {
-        int cnt = nums[0];
-        int i = 1;
-        for (; cnt > 0 && i < nums.size(); i++) {
-            cnt--;
-            if (nums[i] > cnt) cnt = nums[i];
-        }
-        if (i == nums.size()) return true;
-        else return false;
-    }
-};
-
-/*
  * Carl贪心
  * 思路：
  * 也是一步一步跳，但是是在覆盖范围里一步一步跳，
@@ -62,6 +41,27 @@ public:
             if (cover >= nums.size() - 1) return true;  //* 说明可以覆盖到终点了
         }
         return false;
+    }
+};
+
+/*
+ * 我的贪心
+ * 思路：
+ * 记录剩余跳动次数，即当前还能跳多少次，然后一步一步跳。
+ * 在剩余跳动次数变为0之前，都能往后跳。
+ * 如果当前位置的数大于剩余跳动次数，就把剩余跳动次数更新为当前位置的数。 
+*/
+class Solution {
+public:
+    bool CanJump(vector<int>& nums) {
+        int cnt = nums[0];
+        int i = 1;
+        for (; cnt > 0 && i < nums.size(); i++) {
+            cnt--;
+            if (nums[i] > cnt) cnt = nums[i];
+        }
+        if (i == nums.size()) return true;
+        else return false;
     }
 };
 // @lc code=end

@@ -21,6 +21,7 @@ public:
             vector<int>& pre = result.back();
             vector<int> now;
 
+            //* 每一层的首尾元素特殊处理
             now.push_back(1);
             for (int j = 1; j < i - 1; j++) {
                 now.push_back(pre[j-1] + pre[j]);
