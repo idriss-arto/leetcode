@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=416 lang=cpp
  * 动态规划
- * [416] 分割等和子集
+ ! [416] 分割等和子集
  */
 
 /*
@@ -15,6 +15,10 @@
  * Carl题解思路：
  * dp[j]表示容量为j的背包最多能放下的物品。
  * 按正常01背包过程计算，最后检查dp[target]是否为target
+ * 
+ ! 注意
+ ! 因为每个元素只能放入一次，所以必须外层遍历物品，内层遍历空间。
+ ! 且内层遍历空间时必须从大到小遍历，防止重复放入同一个物品。
 */
 
 //! 背包问题，不仅可以求背包能被的最大价值，还可以求这个背包是否可以装满。
@@ -34,10 +38,12 @@ public:
         }
         if (sum % 2 != 0) return false;
 
-        vector<bool> dp(sum/2 + 1, false);
+        int target = sum / 2;
+        vector<bool> dp(target + 1, false);
+        dp[0] = true;
         for (int i = 0; i < nums.size(); i++) {
-            for (int j = sum/2; j >= nums[i]; j--) {    //* 每一个元素一定是不可重复放入，所以从大到小遍历
-                if (j == nums[i] || dp[j-nums[i]] == true) dp[j] = true;
+            for (int j = target; j >= nums[i]; j--) {    //! 每一个元素一定是不可重复放入，所以从大到小遍历
+                if (dp[j-nums[i]] == true) dp[j] = true;
             }
         }
 
@@ -65,7 +71,7 @@ public:
 
         //* 开始 01背包
         for(int i = 0; i < nums.size(); i++) {
-            for(int j = target; j >= nums[i]; j--) { //* 每一个元素一定是不可重复放入，所以从大到小遍历
+            for(int j = target; j >= nums[i]; j--) { //! 每一个元素一定是不可重复放入，所以从大到小遍历
                 dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);
             }
         }

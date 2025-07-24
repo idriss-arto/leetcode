@@ -34,9 +34,9 @@ public:
         //* 偷cur，那么就不能偷左右节点。
         int val1 = cur->val + left[0] + right[0];
         //! 不偷cur，那么可以偷也可以不偷左右节点，则取较大的情况
-        int val2 = max(left[0], left[1]) + max(right[0], right[1]);
+        int val0 = max(left[0], left[1]) + max(right[0], right[1]);
 
-        return {val2, val1};
+        return {val0, val1};
     }
 
     int rob(TreeNode* root) {

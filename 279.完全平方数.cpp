@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=279 lang=cpp
  * 动态规划（完全背包）
- * [279] 完全平方数
+ ! [279] 完全平方数
  */
 
 /*
@@ -38,9 +38,9 @@ public:
     }
 };
 
+//! 超时
 //* 我的解法
 //* 遍历所有j <= n / 2，使得dp[i] = min(dp[i], dp[i - j] + dp[j]);
-//! 超时
 class Solution {
 //* dp[i]表示数字i由完全平方数组成所需的最少数字
 public:

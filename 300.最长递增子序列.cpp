@@ -15,6 +15,7 @@
  * 因为我们在做递增比较的时候，如果比较 nums[j] 和 nums[i] 的大小，
  * 那么两个递增子序列一定分别以 nums[j] 为结尾 和 nums[i] 为结尾，
  * 要不然这个比较就没有意义了
+ * 时间复杂度：O(n^2)。空间复杂度O(N)
  * 
  * 
  * 思路二：贪心+二分查找
@@ -22,6 +23,7 @@
  * 对输入数组nums中的每个元素，
  * 利用二分查找在tails中找到合适位置进行更新，
  * tails数组的有效长度即为原数组nums最长递增子序列的长度。
+ * 时间复杂度：O(N*logN)。空间复杂度O(N)
 */
 
 // @lc code=start
@@ -66,57 +68,32 @@ public:
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        if (n == 0) {
-            return 0;
-        }
-
-        //* len为当前tail数组有效长度
-        int len = 1;
-        vector<int> tails(n + 1, 0);
-        tails[len] = nums[0];
-
-        for (int i = 1; i < nums.size(); i++) {
+        vector<int> tail;
+        tail.push_back(nums[0]);
+        for (const int& num : nums) {
             //! 如果当前数字大于tail数组尾部，则直接插入尾部
-            if (nums[i] > tails[len]) {
-                len++;
-                tails[len] = nums[i];
+            if (num > tail.back()) {
+                tail.push_back(num);
             }
             //! 否则，在tail数组中找到第一个大于等于这个数字的位置
             else {
-                int left = 0, right = len;
-                int middle;
+                int left = 0;
+                int right = tail.size() - 1;
+                int mid;
                 //! 想清楚二分查找要找啥，这里是找第一个大于等于nums[i]的位置
                 while (left <= right) {
-                    middle = (left + right) / 2;
-                    if (tails[middle] < nums[i]) {
-                        left = middle + 1;
+                    mid = left + (right - left) / 2;
+                    if (tail[mid] < num) {
+                        left = mid + 1;
                     }
-                    else {              //* tails[middle] >= nums[i]
-                        right = middle - 1;
-                    }
-            
-                }
-                tails[left] = nums[i];
-
-                /*
-                 * 这个写法有问题，找到的不一定是第一个大于等于nums[i]的位置
-                 * 如在{5，5，5，5，5}中找5
-                while (left < right) {
-                    middle = (left + right) / 2;
-                    if (tails[middle] < nums[i]) left = middle + 1;
-                    else if (tails[middle] > nums[i]) right = middle;
-                    else {
-                        left = middle;
-                        break;
+                    else {          //* tails[middle] >= nums[i]
+                        right = mid - 1;
                     }
                 }
-                tails[left] = nums[i];
-                */
+                tail[left] = num;
             }
         }
-
-        return len;
+        return tail.size();
     }
 };
 // @lc code=end
