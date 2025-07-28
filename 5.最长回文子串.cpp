@@ -144,6 +144,8 @@ public:
         }
         s = t;
 
+        //* 这里的臂长没包括中心元素
+        //* 如aba，臂长为1。
         vector<int> arm_len;
         int right = -1, j = -1;
         for (int i = 0; i < s.size(); ++i) {
@@ -152,10 +154,13 @@ public:
                 int i_sym = j * 2 - i;
                 int min_arm_len = min(arm_len[i_sym], right - i);
                 cur_arm_len = expand(s, i - min_arm_len, i + min_arm_len);
-            } else {
+            }
+            else {
                 cur_arm_len = expand(s, i, i);
             }
+            
             arm_len.push_back(cur_arm_len);
+            
             if (i + cur_arm_len > right) {
                 j = i;
                 right = i + cur_arm_len;

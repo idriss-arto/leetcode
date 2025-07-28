@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=31 lang=cpp
  * 技巧
- * [31] 下一个排列
+ ! [31] 下一个排列
  */
 
 // @lc code=start
@@ -49,6 +49,7 @@ public:
             }
             swap(nums[i], nums[j]);
         }
+        //* 如果nums为严格降序的话，i为-1，这里就是翻转整个nums
         reverse(nums.begin() + i + 1, nums.end());
     }
 };

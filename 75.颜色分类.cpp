@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=75 lang=cpp
  * 双指针
- * [75] 颜色分类
+ ! [75] 颜色分类
  */
 
 // @lc code=start

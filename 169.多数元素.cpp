@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=169 lang=cpp
  * 哈希，技巧
- * [169] 多数元素
+ ! [169] 多数元素
  */
 
 // @lc code=start
@@ -27,6 +27,7 @@ public:
     }
 };
 
+//* 技巧
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {

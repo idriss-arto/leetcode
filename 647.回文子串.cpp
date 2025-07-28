@@ -130,8 +130,12 @@ public:
             //* f[i]表示在 t 中以 i 为中心的最大回文半径，
             //* 即从 i 到边界的元素个数（算上 i 和边界）。
             f[i] = (i <= rMax) ? min(rMax - i + 1, f[2 * iMax - i]) : 1;
+
             //* 中心拓展
-            while (t[i + f[i]] == t[i - f[i]]) ++f[i];
+            while (t[i + f[i]] == t[i - f[i]]) {
+                ++f[i];
+            }
+
             //* 动态维护 iMax 和 rMax
             if (i + f[i] - 1 > rMax) {
                 iMax = i;
