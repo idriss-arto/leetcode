@@ -5,7 +5,14 @@
  */
 
 /*
- * 滑动窗口，思路：
+ * 滑动窗口，思路一：
+ * 不断加入right指向的字母，每次加入后判断该字母是否个数为一，
+ * 个数不为一的话，循环减去left指向的字母，直到right指向的字母个数为一。
+ * 个数为一的话，不做操作。
+ * 计算当前子串长度，更新最长子串。
+ * 进入下一个循环加入right指向的字母。
+ *
+ * 滑动窗口，思路二：
  * 如果我们依次递增地枚举子串的起始位置，那么子串的结束位置也是递增的！
  * 这里的原因在于，假设我们选择字符串中的第 k 个字符作为起始位置，
  * 并且得到了不包含重复字符的最长子串的结束位置为 r_k。
@@ -19,35 +26,6 @@
 #include <unordered_set>
 #include <unordered_map>
 using namespace std;
-
-//* left指向子串开头，right指向下一步要加入子串的位置
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        //* 哈希集合，记录每个字符是否出现过
-        unordered_set<char> set;
-        int n = s.size();
-
-        //* 右指针，初始值为 0，相当于我们在字符串的左边界，还没有开始移动
-        int right = 0, ans = 0;
-        //* 枚举左指针的位置
-        for (int left = 0; left < n; ++left) {
-            if (left != 0) {
-                //* 左指针向右移动一格，移除一个字符
-                set.erase(s[left - 1]);
-            }
-            while (right < n && !set.count(s[right])) {
-                //* 不断地移动右指针
-                set.insert(s[right]);
-                ++right;
-            }
-            //* 从下标 left 开始的无重复字符子串最长到right前一个字符
-            ans = max(ans, right - left);
-        }
-
-        return ans;
-    }
-};
 
 //* left指向子串的开头，right指向子串的结尾
 class Solution {
@@ -68,6 +46,35 @@ public:
         }
         return res;
         
+    }
+};
+
+//* left指向子串开头，right指向下一步要加入子串的位置
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        //* 哈希集合，记录每个字符是否出现过
+        unordered_set<char> set;
+        int n = s.size();
+
+        //* 右指针，初始值为 0，相当于我们在字符串的左边界，还没有开始移动
+        int right = 0, ans = 0;
+        //* 枚举左指针的位置
+        for (int left = 0; left < n; ++left) {
+            if (left != 0) {
+                //* 左指针向右移动一格，移除一个字符
+                set.erase(s[left - 1]);
+            }
+            while (right < n && !set.count(s[right])) {     //* 注意判断right不越界
+                //* 不断地移动右指针
+                set.insert(s[right]);
+                ++right;
+            }
+            //* 从下标 left 开始的无重复字符子串最长到right前一个字符
+            ans = max(ans, right - left);
+        }
+
+        return ans;
     }
 };
 // @lc code=end

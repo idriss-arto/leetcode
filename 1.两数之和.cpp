@@ -54,7 +54,8 @@ public:
     }
 };
 
-//* 我的方案，插完再搜，有误
+//! 有误
+//* 我的方案，插完再搜
 class Solution {
 public:
     vector<int> myTwoSum(vector<int>& nums, int target) {

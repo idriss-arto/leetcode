@@ -8,6 +8,9 @@
  * 不难，注意下连续进位的情况和最后首位进一的情况
 */
 
+#include <algorithm>
+using namespace std;
+
 // @lc code=start
 //* Definition for singly-linked list.
 struct ListNode {
@@ -43,61 +46,52 @@ public:
     }
 };
 
-//* 我的解法，模拟
-//* 直接在原来的list1上操作的，思路简单，代码稍显冗余
+//* 灵茶的解法，原地修改
+class Solution {
+public:
+    //* l1 和 l2 为当前遍历的节点，carry 为进位
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2, int carry = 0) {
+        if (l1 == nullptr && l2 == nullptr) {   //* 递归边界
+            return carry ? new ListNode(carry) : nullptr;   //* 如果进位了，就额外创建一个节点
+        }
+        if (l1 == nullptr) {    //* 如果 l1 是空的，那么此时 l2 一定不是空节点
+            swap(l1, l2);       //* 交换 l1 与 l2，保证 l1 非空，从而简化代码
+        }
+        int sum = carry + l1->val + (l2 ? l2->val : 0);     //* 节点值和进位加在一起
+        l1->val = sum % 10;     //* 每个节点保存一个数位（直接修改原链表）
+        l1->next = addTwoNumbers(l1->next, (l2 ? l2->next : nullptr), sum / 10); //* 处理下一位
+        return l1;
+    }
+};
+
+//* 原地修改，迭代写法
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int carrybit = 0;
-        ListNode* dummyHead = new ListNode();
-        ListNode* prev = dummyHead;
-        while (l1 && l2) {
+        ListNode* dummy = new ListNode();
+        dummy->next = l1;
+        ListNode* prev = dummy;
+        int carry = 0;
+        while(l1 || l2 || carry) {
+            if (!l1 && !l2) {
+                prev->next = new ListNode(carry);
+                break;
+            }
+
+            if (!l1) swap(l1, l2);
+
+            int sum = l1->val + carry + (l2 ? l2->val : 0);
+            carry = sum >= 10 ? 1 : 0;
+            
+            l1->val = sum % 10;
             prev->next = l1;
             prev = l1;
-            if (l1->val + l2->val + carrybit >= 10) {
-                l1->val = (l1->val + l2->val + carrybit) % 10;
-                carrybit = 1;
-            }
-            else {
-                l1->val = l1->val + l2->val + carrybit;
-                carrybit = 0;
-            }
-            l1 = l1->next;
-            l2 = l2->next;
-        }
-        
-        //* list1还没遍历完，list2遍历完了
-        if (l1) {
-            //* 这里加完进位可能搞好等于10，所以需要下一步处理
-            l1->val += carrybit;
-            while (l1->val >= 10) {
-                l1->val %= 10;
-                //* 可能最后首位进1
-                if (!l1->next) l1->next = new ListNode(0);
-                l1 = l1->next;
-                l1->val += 1;
-            }
-        }
-        //* list2还没遍历完，list1遍历完了
-        else if (l2){
-            prev->next = l2;
-            //* 这里加完进位可能搞好等于10，所以需要下一步处理
-            l2->val += carrybit;
-            while (l2->val >= 10) {
-                l2->val %= 10;
-                //* 可能最后首位进1
-                if (!l2->next) l2->next = new ListNode(0);
-                l2 = l2->next;
-                l2->val += 1;
-            }
-        }
-        //! 剩余情况是两个链表同时到结尾，只用管进位不为0的情况
-        else {
-            if (carrybit != 0) prev->next = new ListNode(1);
+            if(l1) l1 = l1->next;
+            if(l2) l2 = l2->next;
         }
 
-        ListNode* result = dummyHead->next;
-        delete dummyHead;   //* 释放虚拟头结点
+        ListNode* result = dummy->next;
+        delete dummy;   //* 释放虚拟头结点
         return result;
     }
 };

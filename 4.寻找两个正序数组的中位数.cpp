@@ -42,17 +42,17 @@ public:
             }
 
             //* 正常情况
-            int newIndex1 = min(index1 + k / 2 - 1, m - 1);     //* 注意这里有判断是否越界
+            int newIndex1 = min(index1 + k / 2 - 1, m - 1);     //! 注意这里有判断是否越界
             int newIndex2 = min(index2 + k / 2 - 1, n - 1);
             int pivot1 = nums1[newIndex1];
             int pivot2 = nums2[newIndex2];
             if (pivot1 <= pivot2) {
-                //* nums1中[index1, newIndex1]都可以排除
+                //! nums1中[index1, newIndex1]都可以排除
                 k -= newIndex1 - index1 + 1;
                 index1 = newIndex1 + 1;
             }
             else {
-                //* nums2中[index2, newIndex2]都可以排除
+                //! nums2中[index2, newIndex2]都可以排除
                 k -= newIndex2 - index2 + 1;
                 index2 = newIndex2 + 1;
             }
