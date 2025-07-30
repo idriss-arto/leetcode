@@ -33,13 +33,13 @@ struct ListNode {
 */
 class Solution {
 public:
-    struct comp {
+    struct cmp {
         bool operator()(ListNode* a, ListNode* b) {
             return a->val > b->val;
         }
     };
 
-    priority_queue<ListNode*, vector<ListNode*>, comp> q;
+    priority_queue<ListNode*, vector<ListNode*>, cmp> q;
 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         for (auto node: lists) {
@@ -54,7 +54,10 @@ public:
             tail = tail->next;
             if (node->next) q.push(node->next);
         }
-        return dummyHead->next;
+
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+        return result;
     }
 };
 

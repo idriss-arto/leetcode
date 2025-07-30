@@ -11,6 +11,59 @@
 using namespace std;
 
 /*
+ * 利用两个计数器 left 和 right
+ * 首先，我们从左到右遍历字符串，
+ * 对于遇到的每个 '('，我们增加 left 计数器，对于遇到的每个 ')' ，我们增加 right 计数器。
+ * 每当 left 计数器与 right 计数器相等时，我们计算当前有效字符串的长度，并且记录目前为止找到的最长子字符串。
+ * 当 right 计数器比 left 计数器大时，我们将 left 和 right 计数器同时变回 0。
+ * 
+ ! 贪心地考虑了以当前字符下标结尾的有效括号长度，每次当右括号数量多于左括号数量的时候之前的字符我们都扔掉不再考虑，
+ ! 重新从下一个字符开始计算，但这样会漏掉一种情况，就是遍历的时候左括号的数量始终大于右括号的数量，即 (() ，这种时候最长有效括号是求不出来的
+ * 
+ * 所以，增加一次从右到左的遍历：
+ * 对于遇到的每个 '('，我们增加 left 计数器，对于遇到的每个 ')' ，我们增加 right 计数器。
+ * 每当 right 计数器与 left 计数器相等时，我们计算当前有效字符串的长度，并且记录目前为止找到的最长子字符串。
+ * 当 left 计数器比 right 计数器大时，我们将 left 和 right 计数器同时变回 0。
+ */
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int left = 0, right = 0, maxlength = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                left++;
+            }
+            else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = max(maxlength, 2 * right);
+            }
+            else if (right > left) {
+                left = right = 0;
+            }
+        }
+
+        left = right = 0;
+        for (int i = (int)s.length() - 1; i >= 0; i--) {
+            if (s[i] == '(') {
+                left++;
+            }
+            else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = max(maxlength, 2 * left);
+            }
+            else if (left > right) {
+                left = right = 0;
+            }
+        }
+        return maxlength;
+    }
+};
+
+/*
  * 定义 dp[i] 表示以下标 i 字符结尾的最长有效括号的长度
  * 1.
  * s[i]=')' 且 s[i−1]='('，也就是字符串形如 "……()"，我们可以推出：dp[i]=dp[i−2]+2
@@ -77,59 +130,6 @@ public:
             }
         }
         return maxans;
-    }
-};
-
-/*
- * 利用两个计数器 left 和 right
- * 首先，我们从左到右遍历字符串，
- * 对于遇到的每个 '('，我们增加 left 计数器，对于遇到的每个 ')' ，我们增加 right 计数器。
- * 每当 left 计数器与 right 计数器相等时，我们计算当前有效字符串的长度，并且记录目前为止找到的最长子字符串。
- * 当 right 计数器比 left 计数器大时，我们将 left 和 right 计数器同时变回 0。
- * 
- ! 贪心地考虑了以当前字符下标结尾的有效括号长度，每次当右括号数量多于左括号数量的时候之前的字符我们都扔掉不再考虑，
- ! 重新从下一个字符开始计算，但这样会漏掉一种情况，就是遍历的时候左括号的数量始终大于右括号的数量，即 (() ，这种时候最长有效括号是求不出来的
- * 
- * 所以，增加一次从右到左的遍历：
- * 对于遇到的每个 '('，我们增加 left 计数器，对于遇到的每个 ')' ，我们增加 right 计数器。
- * 每当 right 计数器与 left 计数器相等时，我们计算当前有效字符串的长度，并且记录目前为止找到的最长子字符串。
- * 当 left 计数器比 right 计数器大时，我们将 left 和 right 计数器同时变回 0。
- */
-class Solution {
-public:
-    int longestValidParentheses(string s) {
-        int left = 0, right = 0, maxlength = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == '(') {
-                left++;
-            }
-            else {
-                right++;
-            }
-            if (left == right) {
-                maxlength = max(maxlength, 2 * right);
-            }
-            else if (right > left) {
-                left = right = 0;
-            }
-        }
-
-        left = right = 0;
-        for (int i = (int)s.length() - 1; i >= 0; i--) {
-            if (s[i] == '(') {
-                left++;
-            }
-            else {
-                right++;
-            }
-            if (left == right) {
-                maxlength = max(maxlength, 2 * left);
-            }
-            else if (left > right) {
-                left = right = 0;
-            }
-        }
-        return maxlength;
     }
 };
 // @lc code=end

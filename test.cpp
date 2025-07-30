@@ -5,65 +5,82 @@
 #include <stdio.h>
 using namespace std;
 
-void myprint(vector<vector<int>>& matrix) {
-    int n = matrix.size();
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << setw(2) << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Solution {
 public:
-    void rotate(vector<vector<int>>& matrix) {
-        int n = matrix.size();
+    ListNode* rotate(ListNode* preTail, int k) {
+        if (!preTail->next) return nullptr;
 
-        // cout << "n = " << n << endl;
+        ListNode* dummyHead = preTail;
+        ListNode* tail = dummyHead->next;
 
-        int offset = 0;
-
-        while (n - 2 * offset >= 2) {
-            int cnt = n - 2 * offset - 1;
-            // cout << "offset = " << offset << endl;
-            // cout << "cnt = " << cnt << endl;
-            while (cnt) {
-                int nowi = offset;
-                int nowj = offset + cnt - 1;
-                int nexti = nowj;
-                int nextj = n - 1 - nowi;
-
-                int now = matrix[nowi][nowj];
-                int tmp;
-
-                for (int i = 1; i <= 4; i++) {
-                    tmp = matrix[nexti][nextj];
-                    matrix[nexti][nextj] = now;
-                    now = tmp;
-                    nowi = nexti;
-                    nowj = nextj;
-                    nexti = nowj;
-                    nextj = n - 1 - nowi;
-
-                    cout << "offset = " << offset << " cnt = " << cnt << " i = " << i << endl;
-                    myprint(matrix);
-                }
-
-                cnt--;
-            } 
-
-            offset++;
+        while (--k && tail->next) {
+            ListNode* cur = tail->next;
+            tail->next = cur->next;
+            cur->next = dummyHead->next;
+            dummyHead->next = cur;
         }
+
+        ListNode* cur = preTail->next;
+        while (cur) {
+            printf("%d ", cur->val);
+            cur = cur->next;
+        }
+        printf("\n");
+        printf("k = %d, tail = %d", k, tail->val);
+        printf("\n");
+
+        if (k != 0) return nullptr;
+        else return tail;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* dummyHead = new ListNode(0, head);
+        ListNode* cur = dummyHead;
+        while (cur) {
+            ListNode* node = rotate(cur, k);
+            if (!node) {
+                rotate(cur, k);
+            }
+            cur = node;
+        }
+
+        ListNode* result = dummyHead->next;
+        delete dummyHead;
+
+        cur = result;
+        while (cur) {
+            printf("%d ", cur->val);
+            cur = cur->next;
+        }
+
+        return result;
     }
 };
 
 int main() {
     Solution a;
-    vector<vector<int>> nums = {{5,1,9,11}, {2,4,8,10}, {13,3,6,7}, {15,14,12,16}};
-    myprint(nums);
-    a.rotate(nums);
-    myprint(nums);
+    ListNode* node5 = new ListNode(5);
+    ListNode* node4 = new ListNode(4, node5);
+    ListNode* node3 = new ListNode(3, node4);
+    ListNode* node2 = new ListNode(2, node3);
+    ListNode* node1 = new ListNode(1, node2);
+
+    a.reverseKGroup(node1, 2);
+
+    delete node1;
+    delete node2;
+    delete node3;
+    delete node4;
+    delete node5;
+
     return 0;
 }
 // @lc code=end

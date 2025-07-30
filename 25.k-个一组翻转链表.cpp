@@ -55,18 +55,18 @@ public:
 
     //* 传入的第一个参数是要翻转的k个节点之前的最后一个节点，
     //* 第二个参数是要翻转的节点数k。
-    ListNode* rotate(ListNode* pre, int k) {
-        ListNode* tail = pre->next;         //* tail是本次翻转里已经翻转部分的尾节点
+    ListNode* rotate(ListNode* preTail, int k) {
+        ListNode* tail = preTail->next;         //* tail是本次翻转里已经翻转部分的尾节点
+        if (!tail) return nullptr;              //! tail为nullptr说明链表节点数刚好是k的倍数且之前已经将整个链表翻转完了
        
         int i = 1;
-        //! tail为nullptr说明链表节点数刚好是k的倍数
         //* tail->next为nullptr说明此次翻转节点数不足k
-        //* 最后一次循环，i=k-1，tail->next此时是此次翻转范围里的原最后一个节点
+        //* 不被打断的话，循环一共执行 k-1 次
         for (; i < k && tail != nullptr && tail->next != nullptr; i++) {
-            ListNode* cur = tail->next;     //* cur是要从未翻转部分挪到翻转部分的节点
+            ListNode* cur = tail->next;         //* cur是要从未翻转部分挪到翻转部分的节点
             tail->next = cur->next;
-            cur->next = pre->next;          //* cur插入pre和当前已翻转部分头结点之间，成为新的头结点
-            pre->next = cur;
+            cur->next = preTail->next;          //* cur插入pre和当前已翻转部分头结点之间，成为新的头结点
+            preTail->next = cur;
         }
 
         //* 如果i < k，说明此次翻转节点数不足k，无法翻转
