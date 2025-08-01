@@ -72,7 +72,8 @@ public:
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        if (nums.size() == 1) return 0;
+        if (nums.size() == 1) return 0;     //* 特殊情况处理
+
         int curDistance = 0;        //* 当前覆盖最远距离下标
         int ans = 0;                //* 记录走的最大步数
         int nextDistance = 0;       //* 下一跳覆盖最远距离下标

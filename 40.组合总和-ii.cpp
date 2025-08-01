@@ -5,7 +5,7 @@
  */
 
 /*
- * 这里candidates是有重复元素的，所以需要考虑去重
+ * 这里candidates是有重复元素的，所以需要考虑去重。
  * 因为每个数字只能选取一次，所以递归调用回溯函数时，startIndex为i+1
  * 
  * 因为一个组合里，可以有重复元素，但是不能有重复的组合，所以这是树层去重，
@@ -39,6 +39,7 @@ private:
             result.push_back(path);
             return;
         }
+
         for (int i = startIndex; i < candidates.size(); i++) {
             //* 去重
             if (sum + candidates[i] > target) break;

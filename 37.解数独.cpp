@@ -16,10 +16,63 @@
 #include <string.h>
 using namespace std;
 
+//* Carl题解写法，二维遍历，我是把二维拼成一个一维
+//* 这里是 先判断再放，比我解法中 先放再判断 要简单一点
+class Solution {
+private:
+bool backtracking(vector<vector<char>>& board) {
+    for (int i = 0; i < board.size(); i++) {        //* 遍历行
+        for (int j = 0; j < board[0].size(); j++) { //* 遍历列
+            if (board[i][j] == '.') {
+                for (char k = '1'; k <= '9'; k++) {     //* (i, j) 这个位置放k是否合适
+                    if (isValid(i, j, k, board)) {
+                        board[i][j] = k;                //* 放置k
+                        if (backtracking(board)) return true;   //* 如果找到合适一组立刻返回
+                        board[i][j] = '.';              //* 回溯，撤销k
+                    }
+                }
+                //! 注意这个return false;的位置
+                return false;  //* 9个数都试完了，都不行，那么就返回false
+            }
+        }
+    }
+    return true;    //* 遍历完没有返回false，说明找到了合适棋盘位置了
+}
+
+bool isValid(int row, int col, char val, vector<vector<char>>& board) {
+    for (int i = 0; i < 9; i++) {   //* 判断行里是否重复
+        if (board[row][i] == val) {
+            return false;
+        }
+    }
+    for (int j = 0; j < 9; j++) {   //* 判断列里是否重复
+        if (board[j][col] == val) {
+            return false;
+        }
+    }
+    int startRow = (row / 3) * 3;
+    int startCol = (col / 3) * 3;
+    for (int i = startRow; i < startRow + 3; i++) {     //* 判断9方格里是否重复
+        for (int j = startCol; j < startCol + 3; j++) {
+            if (board[i][j] == val ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        backtracking(board);
+    }
+};
+
 //* 我的解法
 class Solution {
 private:
     bool isOK(vector<vector<char>>& board, int row, int column) {
+        //! 因为先放的
         char now = board[row][column];
         //* 检查同一行和同一列
         for (int i = 0; i < 9; i++) {
@@ -43,6 +96,8 @@ private:
 
     bool backtracking(vector<vector<char>>& board, int row, int column) {
         if (row == 9) return true;
+        
+        //* 已经有数字的情况
         if (board[row][column] != '.') {
             if (column == 8) {
                 if (backtracking(board, row + 1, 0)) return true;
@@ -51,6 +106,7 @@ private:
                 if (backtracking(board, row, column + 1)) return true;
             }
         }
+        //* 需要填数字的情况
         else {
             for (int i = 1; i <= 9; i++) {
                 board[row][column] = i + '0';
@@ -73,55 +129,6 @@ public:
     }
 };
 
-//* Carl题解写法，二维遍历，我是把二维拼成一个一维
-class Solution {
-private:
-bool backtracking(vector<vector<char>>& board) {
-    for (int i = 0; i < board.size(); i++) {        //* 遍历行
-        for (int j = 0; j < board[0].size(); j++) { //* 遍历列
-            if (board[i][j] == '.') {
-                for (char k = '1'; k <= '9'; k++) {     //* (i, j) 这个位置放k是否合适
-                    if (isValid(i, j, k, board)) {
-                        board[i][j] = k;                //* 放置k
-                        if (backtracking(board)) return true;   //* 如果找到合适一组立刻返回
-                        board[i][j] = '.';              //* 回溯，撤销k
-                    }
-                }
-                //! 注意这个return false;的位置
-                return false;  //* 9个数都试完了，都不行，那么就返回false
-            }
-        }
-    }
-    return true;    //* 遍历完没有返回false，说明找到了合适棋盘位置了
-}
-bool isValid(int row, int col, char val, vector<vector<char>>& board) {
-    for (int i = 0; i < 9; i++) {   //* 判断行里是否重复
-        if (board[row][i] == val) {
-            return false;
-        }
-    }
-    for (int j = 0; j < 9; j++) {   //* 判断列里是否重复
-        if (board[j][col] == val) {
-            return false;
-        }
-    }
-    int startRow = (row / 3) * 3;
-    int startCol = (col / 3) * 3;
-    for (int i = startRow; i < startRow + 3; i++) {     //* 判断9方格里是否重复
-        for (int j = startCol; j < startCol + 3; j++) {
-            if (board[i][j] == val ) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-public:
-    void solveSudoku(vector<vector<char>>& board) {
-        backtracking(board);
-    }
-};
-
 //* 官方题解，位运算+剪枝
 class Solution {
 private:
@@ -137,6 +144,7 @@ private:
     vector<pair<int, int>> spaces;
 
 public:
+    //! 此函数只负责更新和撤回，相关判断在调用该函数之前已完成
     void flip(int i, int j, int digit) {
         //* ^代表异或，只有1个1的时候才为1。比如0011^1001=1010
         //* <<代表左移，比如 1<<2=4被加入到下面的三个数组中，
@@ -171,7 +179,7 @@ public:
             int digit = __builtin_ctz(digitMask);
             //* 更新行，列，宫
             flip(i, j, digit);
-            //* 把该数填入板中
+            //* 把该数填入板中，注意这里有额外加一，因为digit数值范围为0-8
             board[i][j] = digit + '0' + 1;
             //* 继续搜索 
             dfs(board, pos + 1);
@@ -190,8 +198,7 @@ public:
         //* 遍历所有位置
         for (int i = 0; i < 9; ++i) {
             for (int j = 0; j < 9; ++j) {
-                if (board[i][j] != '.') {
-                //* 不为空则把该数字分别纳入对应的行，列，3*3宫中
+                if (board[i][j] != '.') {       //* 不为空则把该数字分别纳入对应的行，列，3*3宫中
                     int digit = board[i][j] - '0' - 1;
                     flip(i, j, digit);
                 }
@@ -206,10 +213,10 @@ public:
             for (int i = 0; i < 9; ++i) {
                 for (int j = 0; j < 9; ++j) {
                     if (board[i][j] == '.') {
-                    //* |为or，通过3个或运算我们可以得到一个9位的二进制数字，
-                    //* 从右到左分别代表1-9这个9个数是否可以填入该空格(某位为0时说明对应数字还未使用)，
-                    //* 通过~运算（取反），我们用1表示该位对应数字是一个可填入的选项（即该数字还未使用），
-                    //* 0x1ff为十六进制 ，等同于111111111）
+                        //* |为or，通过3个或运算我们可以得到一个9位的二进制数字，
+                        //* 从右到左分别代表1-9这个9个数是否可以填入该空格(某位为0时说明对应数字还未使用)，
+                        //* 通过~运算（取反），我们用1表示该位对应数字是一个可填入的选项（即该数字还未使用），
+                        //* 0x1ff为十六进制 ，等同于111111111）
                         int mask = ~(line[i] | column[j] | block[i / 3][j / 3]) & 0x1ff;
                         //* mask & (mask - 1)把mask最低位的1变为0，如果这个值为0说明当前空只有一个值可以填
                         if (!(mask & (mask - 1))) {

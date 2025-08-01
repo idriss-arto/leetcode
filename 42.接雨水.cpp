@@ -9,6 +9,44 @@
 #include <stack>
 using namespace std;
 
+/*
+ * 双指针，列方向记录雨水量
+ * 下标 i 处能接的雨水量由 leftMax[i] 和 rightMax[i] 中的最小值决定。
+ * 由于数组 leftMax 是从左往右计算，数组 rightMax 是从右往左计算，因此可以使用双指针和两个变量代替两个数组。
+ * 比较left和right指向的值，并移动其中值较小的指针，
+ * 这个操作保证了left和right中至少有一个指向局部的最大值，也就是说，
+ * 比较大的指针指向的height位置就一定是当前的局部（左指针及其左侧位置，右指针及其右侧位置）的最大值。
+ * 
+ * 例如：5 7 ？ ？ ？ 4 6
+ * 一开始left指向5，right指向6，leftMax是5，rightMax是6，ans += 0
+ * 下一步left指向7，right指向6，leftMax是7，rightMax是6，ans += 0
+ * 下一步left指向7，right指向4，leftMax是7，rightMax是6，ans += 2
+ *      此时，对于4来说，不管中间的几个？是什么值，这一列可以接的雨水量已经确定为2了
+*/
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int left = 0, right = height.size() - 1;
+        int leftMax = 0, rightMax = 0;
+
+        while (left < right) {
+            leftMax = max(leftMax, height[left]);
+            rightMax = max(rightMax, height[right]);
+            if (leftMax < rightMax) {
+                ans += min(leftMax, rightMax) - height[left];
+                left++;
+            }
+            else {
+                ans += min(leftMax, rightMax) - height[right];
+                right--;
+            }
+        }
+        
+        return ans;
+    }
+};
+
 //* 暴力解法，列方向记录雨水量
 //* 时间复杂度O（n^2）
 class Solution {
@@ -116,44 +154,6 @@ public:
             }
         }
         return sum;
-    }
-};
-
-/*
- * 双指针，列方向记录雨水量
- * 下标 i 处能接的雨水量由 leftMax[i] 和 rightMax[i] 中的最小值决定。
- * 由于数组 leftMax 是从左往右计算，数组 rightMax 是从右往左计算，因此可以使用双指针和两个变量代替两个数组。
- * 比较left和right指向的值，并移动其中值较小的指针，
- * 这个操作保证了left和right中至少有一个指向局部的最大值，也就是说，
- * 比较大的指针指向的height位置就一定是当前的局部（左指针及其左侧位置，右指针及其右侧位置）的最大值。
- * 
- * 例如：5 7 ？ ？ ？ 4 6
- * 一开始left指向5，right指向6，leftMax是5，rightMax是6，ans += 0
- * 下一步left指向7，right指向6，leftMax是7，rightMax是6，ans += 0
- * 下一步left指向7，right指向4，leftMax是7，rightMax是6，ans += 2
- *      此时，对于4来说，不管中间的几个？是什么值，这一列可以接的雨水量已经确定为2了
-*/
-class Solution {
-public:
-    int trap(vector<int>& height) {
-        int ans = 0;
-        int left = 0, right = height.size() - 1;
-        int leftMax = 0, rightMax = 0;
-
-        while (left < right) {
-            leftMax = max(leftMax, height[left]);
-            rightMax = max(rightMax, height[right]);
-            if (leftMax < rightMax) {
-                ans += min(leftMax, rightMax) - height[left];
-                left++;
-            }
-            else {
-                ans += min(leftMax, rightMax) - height[right];
-                right--;
-            }
-        }
-        
-        return ans;
     }
 };
 // @lc code=end

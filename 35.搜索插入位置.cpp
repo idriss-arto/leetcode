@@ -44,8 +44,8 @@ public:
             //! 此时在对比大小后，right一定指向数组中刚好小于target那一个下标
             //! left一定指向数组中刚好大于target那一个下标
         //* 目标值在数组所有元素之后的情况 [nums.size() - 1, nums.size()]
-        return right + 1;
-        //! return left;   也可以
+        return left;
+        //! return right + 1;   也可以
     }
 };
 // @lc code=end
