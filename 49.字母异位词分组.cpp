@@ -46,7 +46,7 @@ public:
 /*
  * 用对string中字母出现次数的计次结果作为unordered_map的key
  * 假设有n个字符串，每个字符串长度为m，时间复杂度为O(m*n)
- * 实际效果不好，因为得把计数结果转为string
+ * 实际效果不好，因为得把计数结果转为string，下面的方法针对这个问题进行了优化
  * 要发挥这个方案优势，需要手写vector<int>到string的hash函数
 */
 class Solution {

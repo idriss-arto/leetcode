@@ -27,6 +27,7 @@ private:
         // for (int i = 0; i < n; i++) {
         //     if (result[row][i] == 'Q' || result[i][column] == 'Q') return false;
         // }
+        //* 列
         for (int i = 0; i < row; i++) {
             if (board[i][column] == 'Q') return false;
         }
