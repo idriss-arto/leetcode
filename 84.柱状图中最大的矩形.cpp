@@ -114,6 +114,19 @@ public:
 
         //* 第一个元素已经入栈，从下标1开始
         for (int i = 1; i < heights.size(); i++) {
+            while (!st.empty() && heights[i] < heights[st.top()]) {
+                int mid = st.top();
+                st.pop();
+                if (!st.empty()) {
+                    int left = st.top();
+                    int right = i;
+                    int w = right - left - 1;
+                    int h = heights[mid];
+                    result = max(result, w * h);
+                }
+            }
+            st.push(i);                     //! 关键一步，不要忘了
+/*
             if (heights[i] > heights[st.top()]) {           //* 情况一
                 st.push(i);
             } 
@@ -134,7 +147,8 @@ public:
                     }
                 }
                 st.push(i);
-            }
+        }
+*/
         }
         return result;
     }

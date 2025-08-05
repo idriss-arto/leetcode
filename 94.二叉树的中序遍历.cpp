@@ -41,10 +41,7 @@ private:
 
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        if (root == nullptr) return result;
-        traversal(root->left);
-        result.push_back(root->val);
-        traversal(root->right);
+        traversal(root);
         return result;
     }
 };

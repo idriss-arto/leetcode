@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=98 lang=cpp
  * 二叉搜索树
- * [98] 验证二叉搜索树
+ ! [98] 验证二叉搜索树
  */
 
 /*
@@ -67,8 +67,9 @@ public:
         vec.clear();                //* 不加这句在leetcode上也可以过，但最好加上
         traversal(root);
         for (int i = 1; i < vec.size(); i++) {
-            //* 注意要小于等于，搜索树里不能有相同元素
-            if (vec[i] <= vec[i - 1]) return false;
+            //* 注意要严格大于，搜索树里不能有相同元素
+            if (vec[i] > vec[i - 1]) continue;
+            else return false;
         }
         return true;
     }
@@ -86,7 +87,8 @@ public:
 
         bool left = isValidBST(root->left);
 
-        if (maxVal < root->val) maxVal = root->val;
+        //* 判断当前节点是否大于已遍历节点
+        if (root->val > maxVal) maxVal = root->val;
         else return false;
 
         bool right = isValidBST(root->right);
@@ -128,9 +130,11 @@ public:
                     pre = cur;
                     continue;
                 }
-                else if (cur->val <= pre->val) return false;
-                else {
+                else if (cur->val > pre->val)  {    //* 必须严格大于
                     pre = cur;
+                }
+                else {
+                   return false;
                 }
             }
         }

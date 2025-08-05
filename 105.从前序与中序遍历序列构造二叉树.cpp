@@ -34,6 +34,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+//* 基础版本，下面有优化版本
 class Solution {
 private:
     TreeNode* traversal (vector<int>& preorder, vector<int>& inorder) {
@@ -87,7 +88,7 @@ public:
 };
 
 //* 以上代码每层递归定义了新的vector（就是子数组），既耗时又耗空间
-//* 下标索引版本
+//* 下标索引版本，左闭右开
 class Solution {
 private:
 private:
@@ -134,6 +135,55 @@ public:
 
         //* 参数坚持左闭右开的原则
         return traversal(inorder, 0, inorder.size(), preorder, 0, preorder.size());
+    }
+};
+
+//* 下标索引版本，左闭右闭
+class Solution {
+public:
+    TreeNode* traversal(vector<int>& preorder, int preorderBegin, int preorderEnd,
+                        vector<int>& inorder, int inorderBegin, int inorderEnd) {
+        if (preorderBegin > preorderEnd) return nullptr;
+
+        TreeNode* node = new TreeNode(preorder[preorderBegin]);
+
+        int index = 0;
+        for (int i = inorderBegin; i <= inorderEnd; i++) {
+            if (inorder[i] == node->val) {
+                index = i;
+                break;
+            }
+        }
+
+        int leftSize = index - inorderBegin;
+        int rightSize = inorderEnd - index;
+
+        //* 切割中序数组
+        //! 中序左区间，左闭右开[leftInorderBegin, leftInorderEnd]
+        int leftInorderBegin = inorderBegin;
+        int leftInorderEnd = index - 1;
+        //! 中序右区间，左闭右开[rightInorderBegin, rightInorderEnd]
+        int rightInorderBegin = index + 1;
+        int rightInorderEnd = inorderEnd;
+
+        //* 切割前序数组
+        //! 前序左区间，左闭右开[leftPreorderBegin, leftPreorderEnd]
+        int leftPreorderBegin =  preorderBegin + 1;
+        int leftPreorderEnd = preorderBegin + leftSize;    //* 终止位置是起始位置加上中序左区间的大小size
+        //! 前序右区间, 左闭右开[rightPreorderBegin, rightPreorderEnd]
+        int rightPreorderBegin = preorderBegin + leftSize + 1;
+        int rightPreorderEnd = preorderEnd;
+
+        node->left = traversal(preorder, leftPreorderBegin, leftPreorderEnd,
+                                inorder, leftInorderBegin, leftInorderEnd);
+        node->right = traversal(preorder, rightPreorderBegin, rightPreorderEnd,
+                                inorder, rightInorderBegin, rightInorderEnd);
+
+        return node;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return traversal(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
     }
 };
 // @lc code=end

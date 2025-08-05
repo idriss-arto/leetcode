@@ -27,7 +27,7 @@ public:
         for (auto c : t) t_cnt[c] ++;
 
         for (int right = 0, left = 0; right < s.size(); right++){
-            s_cnt[s[right]]++;
+            s_cnt[s[right]]++;              //! 注意这里是s_cnt[s[right]]， 不是s_cnt[right]
             if (s_cnt[s[right]] <= t_cnt[s[right]]) count++;
             //* 不是看子串是否覆盖t，而是看left所指向字母的个数是否大于所需
             while (s_cnt[s[left]] > t_cnt[s[left]]) {

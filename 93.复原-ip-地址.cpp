@@ -33,7 +33,7 @@ public:
         }
         for (int i = index; i <= s.length() - 1 && i <= index + 2; i++) {
             string cur = s.substr(index, i - index + 1);
-            if (cur.size() > 1 && cur[0] == '0') return;
+            if (cur.size() > 1 && cur[0] == '0') return;        //* 有效IP地址中，整数不能有前导0
             int num = stoi(cur);
             if (num >= 0 && num <= 255) {
                 path.push_back(num);
