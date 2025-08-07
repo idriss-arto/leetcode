@@ -7,6 +7,7 @@
 // @lc code=start
 #include <string>
 #include <vector>
+#include <cstdint>
 using namespace std;
 
 /* 

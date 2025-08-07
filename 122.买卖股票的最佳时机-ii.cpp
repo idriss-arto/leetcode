@@ -44,7 +44,7 @@ public:
         int sell = 0, buy = -prices[0];
         for (int i = 1; i < len; i++) {
             //* 不能用pair(sell, buy)
-            tie(sell, buy) = make_pair(max(sell, buy + prices[i]), max(buy, -prices[i]));
+            tie(sell, buy) = make_pair(max(sell, buy + prices[i]), max(buy, sell - prices[i]));
         }
 
         return sell;
