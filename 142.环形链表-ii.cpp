@@ -43,7 +43,7 @@ public:
         while(fast != nullptr && fast->next != nullptr) {
             slow = slow->next;
             fast = fast->next->next;
-            //* 快慢指针相遇，此时从head 和 相遇点，同时查找直至相遇
+            //* 快慢指针相遇，此时从 head 和 相遇点，同时查找直至相遇
             if (slow == fast) {
                 ListNode* index1 = fast;
                 ListNode* index2 = head;

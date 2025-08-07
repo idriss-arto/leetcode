@@ -12,7 +12,7 @@
  * 需要遍历j从0到i-1，判断dp[j]是否为true，以及从j到i-1（左闭右闭）的子串是否在字典中。
  * 
  * 我的思路是写一个比较函数cmp，每次要判断子串是否在字典中时传入子串，和字典中的字符串一个个比
- * 题解的思路是用unordered_set重新装字典，这样要判断时直接用find即可，不用再在比较函数里一个个比
+ * 题解的思路是用unordered_set重新装字典，这样要判断时直接用find或者count即可，不用再在比较函数里一个个比
 */
 
 // @lc code=start
@@ -23,7 +23,7 @@ using namespace std;
 
 //* 题解解法
 //* dp[i]为true表示s中前i个字母组成的子串（下标从0到i-1）可以拆分为字典中单词的累积
-//* 用unordered_set重新装wordDict，提高对比速度
+//! 用unordered_set重新装wordDict，提高对比速度
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
