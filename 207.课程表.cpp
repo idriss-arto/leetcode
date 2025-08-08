@@ -48,6 +48,7 @@ public:
     void dfs(int u) {
         visited[u] = 1;
         for (int v: edges[u]) {
+            //* 注意这里if-else必须判断是否为0或者1，因为还有2
             if (visited[v] == 0) {
                 dfs(v);
                 if (!valid) {

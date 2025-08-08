@@ -137,6 +137,8 @@ public:
         }
     }
 
+    //* find函数查找位置i的根结点
+    //* 调用find函数的i可以保证parent[i]不为-1
     int find(int i) {
         if (parent[i] != i) {
             parent[i] = find(parent[i]);
@@ -144,6 +146,8 @@ public:
         return parent[i];
     }
 
+    //* unite函数使得位置x的根节点和位置y的根节点连接
+    //* 即使得x和y拥有相同的根节点
     void unite(int x, int y) {
         int rootx = find(x);
         int rooty = find(y);

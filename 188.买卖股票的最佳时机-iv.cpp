@@ -32,6 +32,7 @@ class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
         vector<vector<int>> dp(prices.size(), vector<int>(2*k+1, 0));
+        
         //* 注意这里的初始化
         for (int i = 1; i < 2*k; i += 2) {
             dp[0][i] = -prices[0];

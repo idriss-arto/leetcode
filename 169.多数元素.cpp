@@ -4,6 +4,11 @@
  ! [169] 多数元素
  */
 
+/*
+ * 题解思路一：用哈希表记录元素出现频率
+ * 题解思路二：技巧，用cnt记录当前元素出现次数，若遇到不同元素则cnt--，当cnt小于0时更新result为当前元素，重新计数cnt。
+*/
+
 // @lc code=start
 #include <vector>
 #include <unordered_map>

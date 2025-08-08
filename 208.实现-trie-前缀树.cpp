@@ -62,6 +62,7 @@ public:
     //* 注意这里的初始化
     Trie() : children(26), isEnd(false) {}
 
+    //* 插入字符串word
     void insert(string word) {
         //* 搜索和插入的一开始都要使指针指向根节点
         Trie* node = this;
@@ -72,6 +73,7 @@ public:
             }
             node = node->children[ch];
         }
+        //* word插入后，最后一个节点的isEnd要设置为true
         node->isEnd = true;
     }
 

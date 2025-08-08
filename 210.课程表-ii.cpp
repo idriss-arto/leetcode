@@ -66,7 +66,6 @@ private:
 
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> result;
         edges.resize(numCourses);
         visited.resize(numCourses, 0);
 
@@ -85,7 +84,7 @@ public:
         }
 
         //* 如果没有环，那么就有拓扑排序
-        //* 注意下标 0 为栈底，因此需要将数组反序输出
+        //! 注意下标 0 为栈底，因此需要将数组反序输出
         reverse(result.begin(), result.end());
 
         return result;

@@ -27,8 +27,8 @@ public:
             }
             else {
             //* nums[middle] <= nums[right]，此时x在[left, middle]
-            //* 不能写为right = middle - 1，因为middle位置可能是最小值
-            //* 这也导致while判断不能写为left <= right，否则可能会死循环
+            //! 不能写为right = middle - 1，因为middle位置可能是最小值
+            //! 这也导致while判断不能写为left <= right，否则可能会死循环
                 right = middle;
             }
         }
