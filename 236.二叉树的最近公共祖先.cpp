@@ -41,14 +41,15 @@ struct TreeNode {
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        //* 当当前节点是给定的两个节点之一或空节点时，返回自己
         if (root == p || root == q || !root) return root;
 
         TreeNode* left = lowestCommonAncestor(root->left, p ,q);
         TreeNode* right = lowestCommonAncestor(root->right, p ,q);
         
-        if (left != nullptr && right != nullptr) return root;
-        else if (left == nullptr && right) return right;
-        else if (right == nullptr && left) return left;
+        if (left != nullptr && right != nullptr) return root;   //* 当给定的两个节点分别在自己左子树和右子树上时，返回自己
+        else if (left == nullptr && right) return right;        //* 当给定的两个节点同时在自己的右子树上时，返回右子树返回的值
+        else if (right == nullptr && left) return left;         //* 当给定的两个节点同时在自己的左子树上时，返回左子树返回的值
         else return nullptr;
     }
 };

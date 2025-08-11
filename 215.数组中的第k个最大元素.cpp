@@ -32,6 +32,7 @@ public:
 //* 时间复杂度O(N)，空间复杂度O(logN)
 class Solution {
 public:
+    //* 这个函数寻找下标为k的元素
     int quickselect(vector<int> &nums, int left, int right, int k) {
         if (left == right)
             return nums[k];
@@ -72,6 +73,7 @@ public:
         }
         */
 
+        //! 不能增加判断(j == k) return nums[k]; 因为有重复元素会影响判断
         if (k <= j) {
             return quickselect(nums, left, j, k);
         }
@@ -82,6 +84,7 @@ public:
 
     int findKthLargest(vector<int> &nums, int k) {
         int n = nums.size();
+        //! 注意这里最后一个参数传入的值
         return quickselect(nums, 0, n - 1, n - k);
     }
 };
@@ -90,10 +93,12 @@ public:
 //* 时间复杂度O(N)，空间复杂度O(logN)
 class Solution {
 public:
+    //* 这个函数寻找下标为k的元素
     int qsort(vector<int>& nums, int left, int right, int k) {
         if (left == right) {
             return nums[k];
         }
+
         //! 注意这里i和j的初始化
         int i = left - 1;
         int j = right + 1;
@@ -106,12 +111,15 @@ public:
                 swap(nums[i], nums[j]);
             }
         }
+
+        //! 不能增加判断(j == k) return nums[k]; 因为有重复元素会影响判断
         if (j >= k) return qsort(nums, left, j, k);
         else return qsort(nums, j+1, right, k);
     }
 
     int findKthLargest(vector<int>& nums, int k) {
         int n = nums.size();
+        //! 注意这里最后一个参数传入的值
         return qsort(nums, 0, n-1, k-1);
     }
 };
