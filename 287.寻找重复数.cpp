@@ -13,6 +13,7 @@ using namespace std;
  * 定义 cnt[i] 表示 nums 数组中小于等于 i 的数有多少个，假设我们重复的数是 target，
  * 那么 [1,target−1]里的所有数满足 cnt[i]≤i，
  * [target,n] 里的所有数满足 cnt[i]>i，具有单调性。
+ * 此时问题转换为找到第一个满足 cnt[i]>i 的 i 值，其就为目标值target。
  * 
  * 以[1,3,4,2,2]为例，我们列出每个数字的 cnt 值：
  * nums	    1	2	3	4

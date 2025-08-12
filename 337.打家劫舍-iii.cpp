@@ -24,6 +24,7 @@ class Solution {
 public:
     //* 长度为2的数组，考虑当前节点为根节点的子树
     //* 下标0：不偷此节点时能获得的最大金额，
+    //! 注意，不偷此节点，那么可以偷也可以不偷左右节点，需要取较大的情况
     //* 下标1：偷此节点时能获得的最大金额
     vector<int> robTree(TreeNode* cur) {
         if (cur == NULL) return vector<int>{0, 0};
