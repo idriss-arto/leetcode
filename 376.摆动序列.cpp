@@ -58,6 +58,83 @@ public:
     }
 };
 
+/*
+ * 题解动态规划，
+ * up[i] 表示以前 i 个元素中的某一个为结尾的最长的「上升摆动序列」的长度。
+ * down[i] 表示以前 i 个元素中的某一个为结尾的最长的「下降摆动序列」的长度。
+ * 状态转移方程如下：
+ *         {    up[i−1],                    nums[i]≤nums[i−1]
+ * up[i] = { 
+ *         {    max(up[i−1], down[i−1]+1),  nums[i]>nums[i−1]
+ * 
+ *         {    down[i−1],                  nums[i]≥nums[i−1] 
+ * ​down[i]={
+ *         {    max(up[i−1]+1, down[i−1]),  nums[i]<nums[i−1]
+*/
+class Solution {
+public:
+    int wiggleMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 2) {
+            return n;
+        }
+        int up = 1, down = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i - 1]) {
+                up = max(up, down + 1);
+            }
+            else if (nums[i] < nums[i - 1]) {
+                down = max(up + 1, down);
+            }
+        }
+        return max(up, down);
+    }
+};
+
+/*
+ * Carl动态规划
+ * 思路：
+ * 对于数组中的某个元素，如果只考虑数组头到它，
+ * 它要么是作为山峰（即 nums[i] > nums[j]），要么是作为山谷（即 nums[i] < nums[j]），其中0 < j < i
+ *
+ * 设 dp 状态dp[i][0]，表示考虑到下标i，下标i作为山峰的摆动子序列的最长长度
+ * 设 dp 状态dp[i][1]，表示考虑到下标i，下标i作为山谷的摆动子序列的最长长度
+ *
+ * 则转移方程为：
+ * dp[i][0] = max(dp[i][0], dp[j][1] + 1)，
+ * 其中0 <= j < i且nums[j] < nums[i]，表示将 nums[i]接到前面某个山谷后面，作为山峰。
+ * dp[i][1] = max(dp[i][1], dp[j][0] + 1)，
+ * 其中0 <= j < i且nums[j] > nums[i]，表示将 nums[i]接到前面某个山峰后面，作为山谷。
+ *
+ * 初始状态：
+ * 由于一个数可以接到前面的某个数后面，也可以以自身为子序列的起点，所以初始状态为：dp[0][0] = dp[0][1] = 1。
+ * 
+ * 时间复杂度：O(n^2)
+ * 空间复杂度：O(n)
+*/
+class Solution {
+public:
+    int dp[1005][2];
+    int wiggleMaxLength(vector<int>& nums) {
+        memset(dp, 0, sizeof dp);
+        dp[0][0] = dp[0][1] = 1;
+        for (int i = 1; i < nums.size(); ++i) {
+            dp[i][0] = dp[i][1] = 1;
+
+            //* 考虑作为波谷
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] > nums[i]) dp[i][1] = max(dp[i][1], dp[j][0] + 1);
+            }
+
+            //* 考虑作为波峰
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] < nums[i]) dp[i][0] = max(dp[i][0], dp[j][1] + 1);
+            }
+        }
+        return max(dp[nums.size() - 1][0], dp[nums.size() - 1][1]);
+    }
+};
+
 //* 我的贪心
 class Solution {
 public:
@@ -150,50 +227,6 @@ public:
             }
         }
         return result;
-    }
-};
-
-/*
- * Carl动态规划
- * 思路：
- * 对于数组中的某个元素，如果只考虑数组头到它，
- * 它要么是作为山峰（即 nums[i] > nums[j]），要么是作为山谷（即 nums[i] < nums[j]），其中0 < j < i
- *
- * 设 dp 状态dp[i][0]，表示考虑到下标i，下标i作为山峰的摆动子序列的最长长度
- * 设 dp 状态dp[i][1]，表示考虑到下标i，下标i作为山谷的摆动子序列的最长长度
- *
- * 则转移方程为：
- * dp[i][0] = max(dp[i][0], dp[j][1] + 1)，
- * 其中0 <= j < i且nums[j] < nums[i]，表示将 nums[i]接到前面某个山谷后面，作为山峰。
- * dp[i][1] = max(dp[i][1], dp[j][0] + 1)，
- * 其中0 <= j < i且nums[j] > nums[i]，表示将 nums[i]接到前面某个山峰后面，作为山谷。
- *
- * 初始状态：
- * 由于一个数可以接到前面的某个数后面，也可以以自身为子序列的起点，所以初始状态为：dp[0][0] = dp[0][1] = 1。
- * 
- * 时间复杂度：O(n^2)
- * 空间复杂度：O(n)
-*/
-class Solution {
-public:
-    int dp[1005][2];
-    int wiggleMaxLength(vector<int>& nums) {
-        memset(dp, 0, sizeof dp);
-        dp[0][0] = dp[0][1] = 1;
-        for (int i = 1; i < nums.size(); ++i) {
-            dp[i][0] = dp[i][1] = 1;
-
-            //* 考虑作为波谷
-            for (int j = 0; j < i; ++j) {
-                if (nums[j] > nums[i]) dp[i][1] = max(dp[i][1], dp[j][0] + 1);
-            }
-
-            //* 考虑作为波峰
-            for (int j = 0; j < i; ++j) {
-                if (nums[j] < nums[i]) dp[i][0] = max(dp[i][0], dp[j][1] + 1);
-            }
-        }
-        return max(dp[nums.size() - 1][0], dp[nums.size() - 1][1]);
     }
 };
 // @lc code=end

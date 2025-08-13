@@ -13,6 +13,7 @@
 using namespace std;
 
 //* 滚动数组版本
+//* dp[i] 表示用nums数组中的数字可以组成的和为i的排列数（同样的组合，数字顺序不同算作不同的排列）
 class Solution {
 public:
     int combinationSum4(vector<int>& nums, int target) {
@@ -25,7 +26,7 @@ public:
         for (int j = 1; j <= target; j++) {             //* 外层遍历背包
             for (int i = 0; i < nums.size(); i++) {     //* 内层遍历物品
                 //* 测试用例有两个数相加超过int范围的数据
-                if (j >= nums[i] && dp[i] < INT_MAX - dp[j - nums[i]]) {
+                if (j >= nums[i] && dp[j] <= INT_MAX - dp[j - nums[i]]) {
                     dp[j] += dp[j-nums[i]];
                 }
             }
@@ -60,7 +61,7 @@ public:
             for (int i = 0; i < nums.size(); i++) {     //* 内层遍历物品
                 if (i != 0) dp[i][j] = dp[i-1][j];
                 //* 测试用例有两个数相加超过int范围的数据
-                if (j >= nums[i] && dp[i][j] < INT_MAX - dp[i][j - nums[i]]) {
+                if (j >= nums[i] && dp[i][j] <= INT_MAX - dp[i][j - nums[i]]) {
                     dp[i][j] += dp[i][j-nums[i]];
                 }
             }
@@ -84,7 +85,7 @@ public:
             for (int i = 0; i < nums.size(); i++) {     //* 内层遍历物品
                 if(i != 0) dp[i][j] = dp[i-1][j];
                 //* 测试用例有两个数相加超过int范围的数据
-                if (j >= nums[i] && dp[i][j] < INT_MAX - dp[nums.size()-1][j - nums[i]]) {
+                if (j >= nums[i] && dp[i][j] <= INT_MAX - dp[nums.size()-1][j - nums[i]]) {
                     dp[i][j] += dp[nums.size()-1][j-nums[i]];
                 }
             }

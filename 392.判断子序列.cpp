@@ -122,6 +122,10 @@ public:
 
         //! 预处理
         for (int pos_i = m - 1; pos_i >= 0; pos_i--) {
+            /*
+             * 这里最好不用dp[pos_i][t[pos_i] - 'a'] = pos_i;
+             * 因为还要处理其他字母
+            */
             for (int alp_j = 0; alp_j < 26; alp_j++) {
                 if (t[pos_i] == alp_j + 'a')
                     dp[pos_i][alp_j] = pos_i;

@@ -77,12 +77,21 @@ public:
         priority_queue<pair<int, int>, vector<pair<int, int>>, mycomparison> pri_que;
 
         //* 用固定大小为k的小顶堆，扫描所有频率的数值
-        for (unordered_map<int, int>::iterator it = map.begin(); it != map.end(); it++) {
-            pri_que.push(*it);
+        for (auto it : map) {
+            pri_que.push(it);
             if (pri_que.size() > k) {   //* 如果堆的大小大于了K，则队列弹出，保证堆的大小一直为k
                 pri_que.pop();
             }
         }
+        /*
+         * 也可以用迭代器，但稍显麻烦
+        for (unordered_map<int, int>::iterator it = map.begin(); it != map.end(); it++) {
+            pri_que.push(*it);
+            if (pri_que.size() > k) {   
+                pri_que.pop();
+            }
+        }
+        */
 
         //* 找出前K个高频元素，因为小顶堆先弹出的是最小的，所以倒序来输出到数组
         vector<int> result(k);
