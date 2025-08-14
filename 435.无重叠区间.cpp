@@ -48,6 +48,7 @@ public:
             }
             //* 有重叠
             else {
+                //* end = min(end, intervals[i][1]);
                 //* 这里遇到重叠的不更新右边界是因为用的右边界排序，一开始的右边界确定是最小的
             }
         }
@@ -58,9 +59,11 @@ public:
 
 class Solution {
 public:
+    //* 按照区间左边界排序
     static bool cmp (const vector<int>& a, const vector<int>& b) {
-        return a[0] < b[0];     //* 改为左边界排序
+        return a[0] < b[0];
     }
+
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         if (intervals.size() == 0) return 0;
         sort(intervals.begin(), intervals.end(), cmp);
@@ -68,7 +71,9 @@ public:
         int end = intervals[0][1];  //* 记录区间分割点
         for (int i = 1; i < intervals.size(); i++) {
             //* 无重叠的情况
-            if (intervals[i][0] >= end)  end = intervals[i][1];     
+            if (intervals[i][0] >= end)  {
+                end = intervals[i][1];
+            }   
             //* 重叠情况
             else {                   
                 end = min(end, intervals[i][1]);

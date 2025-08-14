@@ -51,7 +51,7 @@ private:
                     part_result = repeatPart + part_result;
                 }
             }
-            else break;
+            else break;           //* 这里的x是'['，表示当前方括号处理结束
         }
         //* 返回方括号内容解码的结果（内部不再有数字和方括号）
         return part_result;

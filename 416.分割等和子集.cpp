@@ -36,7 +36,7 @@ public:
         for (int& i : nums) {
             sum += i;
         }
-        if (sum % 2 != 0) return false;
+        if (sum % 2 != 0) return false;     //* 数组总和为奇数，直接返回失败
 
         int target = sum / 2;
         vector<bool> dp(target + 1, false);
@@ -47,7 +47,7 @@ public:
             }
         }
 
-        return dp[sum/2];
+        return dp[target];
     }
 };
 
