@@ -56,10 +56,10 @@ public:
     int findMaxForm(vector<string>& strs, int m, int n) {
         int num_of_str = strs.size();
 
-		vector<vector<vector<int>>> dp(num_of_str, vector<vector<int>>(m + 1,vector<int>(n + 1, 0)));
+		vector<vector<vector<int>>> dp(num_of_str+1, vector<vector<int>>(m + 1,vector<int>(n + 1, 0)));
 
 		/* 	
-         * dp[i][j][k]表示从物品0到物品i，在容量为j个0，k个1的情况下，最多能装下的物品数 
+         * dp[i][j][k]表示考虑前i件物品（i下标从1开始），在容量为j个0，k个1的情况下，最多能装下的物品数 
 		 * 用x[i]表示strs[i]中0的个数
 		 * 用y[i]表示strs[i]中1的个数
 		 * 则状态转移方程为
@@ -69,7 +69,9 @@ public:
 		//* num_of_zeros记录每个字符串中0的个数
 		//* num_of_ones记录每个字符串中1的个数
 		vector<int> num_of_zeros;
+		num_of_zeros.push_back(0);
 		vector<int> num_of_ones;
+		num_of_ones.push_back(0);
 		for (auto& str : strs){
 			int count_of_zero = 0;
 			int count_of_one = 0;
@@ -81,20 +83,10 @@ public:
 			num_of_ones.push_back(count_of_one);
 		}
 		
-		//* num_of_zeros[0]表示第一个字符串str[0]中0的个数
-		//* num_of_ones[0]表示第一个字符串str[0]中1的个数
+		//* num_of_zeros[i]表示第i个字符串str[i-1]中0的个数
+		//* num_of_ones[i]表示第i个字符串str[i-1]中1的个数
 
-		//* 初始化dp数组，初始化第一行，即dp[0][j][k]
-		if(num_of_zeros[0] <= m && num_of_ones[0] <= n){
-			//* 两个维度都能放下，才能初始化为1
-			for(int j = num_of_zeros[0]; j <= m; j++){
-				for(int k = num_of_ones[0]; k <= n; k++){
-					dp[0][j][k] = 1;
-				}
-			}
-		}
-
-		for (int i = 1; i < num_of_str; i++){
+		for (int i = 1; i <= num_of_str; i++){
 			int count_of_zeros = num_of_zeros[i];
 			int count_of_ones = num_of_ones[i]; 
 			for (int j = 0; j <= m; j++){
@@ -109,7 +101,7 @@ public:
 			}
 		}
 
-		return dp[num_of_str-1][m][n];
+		return dp[num_of_str][m][n];
 
     }
 };

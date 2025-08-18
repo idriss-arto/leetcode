@@ -23,40 +23,52 @@ using namespace std;
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> res;
-        //* pc 对字符串p中字母计次
-        vector<int> pc(26);
-        //* sc 对s的子串中字母计次
-        vector<int> sc(26);
-        for (int i = 0; i < p.length(); i++) {
-            pc[p[i]-'a']++;
+        vector<int> result;
+        if (s.size() < p.size()) {
+            return result;
+        }
+
+        //* cnt 记录每个字母在 s 和 p 中出现的次数差
+        vector<int> cnt(26, 0);
+        for (int i = 0; i < p.size(); i++) {
+            cnt[s[i] - 'a']++;
+            cnt[p[i] - 'a']--;
+        }
+
+        //* differ 记录 s子串 和 p 中出现频次不同的字母的个数
+        int differ = 0;
+        for (const int & num : cnt) {
+            if (num != 0) differ++;
+        }
+
+        //* differ 为 0 时，说明 s子串 和 p 是异位词
+        if (differ == 0) {
+            result.push_back(0);
         }
         
-        //* diff 记录当前s子串中还有几种字母与p不匹配
-        int diff = 0;
-        for (int i = 0; i < 26; i++) {
-            if (pc[i] > 0) diff++;
-        }
+        for (int i = p.size(); i < s.size(); i++) {
+            if (cnt[s[i-p.size()] - 'a'] == 0) {
+                differ++;
+            }
+            cnt[s[i-p.size()] - 'a']--;     //* 左边出界的字母对应计数减一，减前减后都要进行判断，对应 differ 不同变化
+            if (cnt[s[i-p.size()] - 'a'] == 0) {
+                differ--;
+            }
 
-        //* left 指向子串开头，right 指向子串结尾
-        int left = 0;
-        for (int right = 0; right < s.length(); right++) {
-            
-            sc[s[right]-'a']++;
-            
-            if (sc[s[right]-'a'] == pc[s[right]-'a']) diff--;
+            if (cnt[s[i] - 'a'] == 0) {
+                differ++;
+            }
+            cnt[s[i] - 'a']++;              //* 右边新入界的字母对应计数加一，加前加后都要进行判断，对应 differ 不同变化
+            if (cnt[s[i] - 'a'] == 0) {
+                differ--;
+            }
 
-            if (right - left + 1 == p.length()) {
-                if (diff == 0) res.push_back(left);
-
-                int l = s[left] - 'a';
-                sc[l]--;
-                if (sc[l] == pc[l] - 1) diff++;
-                left++;
+            if (differ == 0) {              //* differ 为 0 时，说明 s子串 和 p 是异位词
+                result.push_back(i - p.size() + 1);
             }
         }
 
-        return res;
+        return result;
     }
 };
 

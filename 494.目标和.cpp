@@ -41,7 +41,7 @@ using namespace std;
  ! 注意：target+sum为奇数时，left不为整数，即无解
  * 则原问题转换为求“取nums中的数（每一个数分为取和不取），使得和为left的取法计数”
  *
- * dp[i][j]表示从下标0到下标i，有多少种取法使得和为j
+ * dp[i][j]表示前i个数(从下标0到下标i-1)，有多少种取法使得和为j
 */
 class Solution {
 public:
@@ -54,10 +54,7 @@ public:
 
         int bagSize = (target + sum) / 2;
         
-        vector<vector<int>> dp(nums.size(), vector<int>(bagSize + 1, 0));
-        
-        //* 初始化最上行
-        if (nums[0] <= bagSize) dp[0][nums[0]] = 1; 
+        vector<vector<int>> dp(nums.size()+1, vector<int>(bagSize + 1, 0));
 
         //* 初始化最左列，最左列其他数值在递推公式中就完成了赋值
         dp[0][0] = 1; 
@@ -67,21 +64,21 @@ public:
          * 但以下代码也可以不加上，结果是一样的，
          * 加上后，下面的遍历里j可以从1开始
         int numZero = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] == 0) numZero++;
+        for (int i = 1; i <= nums.size(); i++) {
+            if (nums[i-1] == 0) numZero++;
             dp[i][0] = (int) pow(2.0, numZero);
         }
         */
         
 
         //* 以下遍历顺序行列可以颠倒
-        for (int i = 1; i < nums.size(); i++) { 
+        for (int i = 1; i <= nums.size(); i++) { 
             for (int j = 0; j <= bagSize; j++) {
-                if (nums[i] > j) dp[i][j] = dp[i - 1][j]; 
-                else dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]];
+                if (nums[i-1] > j) dp[i][j] = dp[i - 1][j]; 
+                else dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i-1]];
             }
         }
-        return dp[nums.size() - 1][bagSize];
+        return dp[nums.size()][bagSize];
     }
 };
 

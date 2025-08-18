@@ -43,13 +43,14 @@ class Solution {
             int used[201] = {0};            //* 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
                                             //! 不能定义为全局变量，因为只记录本层
             for (int i = startIndex; i < nums.size(); i++) {
-                if ((!path.empty() && nums[i] < path.back()) || used[nums[i] + 100] == 1) {
+                if ((!path.empty() && nums[i] < path.back()) || used[nums[i] + 100] == 1) {     //* 当前数字不满足非递减，或者在本层已使用过
                         continue;
                 }
                 used[nums[i] + 100] = 1;    //* 记录这个元素在本层用过了，本层后面不能再用了
                 path.push_back(nums[i]);
                 backtracking(nums, i + 1);
                 path.pop_back();
+                //! 注意这里没有重置 used，因为used是记录本层使用过的元素
             }
         }
     public:

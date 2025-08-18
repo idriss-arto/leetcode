@@ -60,6 +60,7 @@ public:
         }
         
         int ret = rootSum(root, targetSum);
+        
         //! 这里必须对左右孩子都调用pathSum函数，也就是都尝试当做路径第一个节点
         ret += pathSum(root->left, targetSum);
         ret += pathSum(root->right, targetSum);
