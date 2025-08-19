@@ -1,7 +1,7 @@
 /*
  * @lc app=leetcode.cn id=572 lang=cpp
  * 二叉树
- * [572] 另一棵树的子树
+ ! [572] 另一棵树的子树
  */
 
 // @lc code=start
@@ -58,7 +58,7 @@ public:
         getMaxElement(o->right);
     }
 
-    void getDfsOrder(TreeNode *o, vector <int> &tar) {
+    void getDfsOrder(TreeNode *o, vector<int> &order) {
         if (!o) {
             return;
         }
@@ -67,11 +67,11 @@ public:
         while (!sta.empty()) {
             TreeNode* cur = sta.top();
             sta.pop();
-            tar.emplace_back(cur->val);
+            order.emplace_back(cur->val);
             if (cur->left) sta.emplace(cur->left);
-            else tar.emplace_back(lNull);
+            else order.emplace_back(lNull);
             if (cur->right) sta.emplace(cur->right);
-            else tar.emplace_back(rNull);
+            else order.emplace_back(rNull);
         }
     }
 
@@ -79,24 +79,25 @@ public:
         int sLen = sOrder.size(), tLen = tOrder.size();
         vector <int> next(tOrder.size(), -1);
         //* 求子串的next数组
-        for (int i = 1, j = -1; i < tLen; ++i) {
-            while (j != -1 && tOrder[i] != tOrder[j + 1]) {
-                j = next[j];
+        next[0] = 0;
+        for (int i = 1, j = 0; i < tLen; ++i) {
+            while (j != 0 && tOrder[i] != tOrder[j]) {
+                j = next[j - 1];
             }
-            if (tOrder[i] == tOrder[j + 1]) {
+            if (tOrder[i] == tOrder[j]) {
                 ++j;
             }
             next[i] = j;
         }
         //* 判断是否为子串
-        for (int i = 0, j = -1; i < sLen; ++i) {
-            while (j != -1 && sOrder[i] != tOrder[j + 1]) {
-                j = next[j];
+        for (int i = 0, j = 0; i < sLen; ++i) {
+            while (j != 0 && sOrder[i] != tOrder[j]) {
+                j = next[j - 1];
             }
-            if (sOrder[i] == tOrder[j + 1]) {
+            if (sOrder[i] == tOrder[j]) {
                 ++j;
             }
-            if (j == tLen - 1) {
+            if (j == tLen) {
                 return true;
             }
         }

@@ -1,19 +1,16 @@
 /*
  * @lc app=leetcode.cn id=543 lang=cpp
  * 二叉树，树的高度
- * [543] 二叉树的直径
+ ! [543] 二叉树的直径
  */
-
-
 
 // @lc code=start
 
-
-//* Definition for a binary tree node.
 #include <utility>
 #include <algorithm>
 using namespace std;
 
+//* Definition for a binary tree node.
 struct TreeNode {
     int val;
     TreeNode *left;

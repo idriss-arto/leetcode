@@ -35,7 +35,7 @@ public:
         int count = 0, preSum = 0;
         for (auto& x : nums) {
             preSum += x;
-            //* 从map中寻找满足preSum[i]-preSum[j]==k的j有几个
+            //* 从map中寻找满足 preSum[i]-preSum[j]==k 的 j 有几个
             if (mp.find(preSum - k) != mp.end()) {
                 count += mp[preSum - k];
             }

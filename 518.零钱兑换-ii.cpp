@@ -5,6 +5,7 @@
  */
 
 //* 求组合数
+//* 与 [377] 排列总和 Ⅳ 对比
 
 // @lc code=start
 #include <vector>
