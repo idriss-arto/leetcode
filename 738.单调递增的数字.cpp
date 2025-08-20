@@ -17,16 +17,9 @@
 #include <vector>
 #include <string>
 using namespace std;
+
 class Solution {
 public:
-    /*
-     * 题解方法，思路：
-     * 先将输入的数字 N 转换为字符串 strNum ，便于处理。
-     * 一旦出现strNum[i - 1] > strNum[i]的情况（非单调递增），
-     * 首先先让strNum[i - 1]减一，strNum[i]和后面的位赋值9。
-     ! 注意，只能从后往前处理，332->329->299，4436->4399->3999
-     * 从前往后的话，strNum[i - 1]减一后可能小于strNum[i - 2]，之前判断通过的位置现在不行了，如332->329
-     */
     int monotoneIncreasingDigits(int N) {
         //* 转换为字符串更好处理
         string strNum = to_string(N);

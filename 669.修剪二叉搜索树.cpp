@@ -61,7 +61,7 @@ public:
         }
         
         TreeNode *cur = root;
-        //* 此时root已经在[L, R] 范围内，处理左孩子元素小于L的情况
+        //* 此时root已经在[L, R] 范围内，处理左孩子小于L的元素
         while (cur != nullptr) {
             while (cur->left && cur->left->val < L) {
                 cur->left = cur->left->right;
@@ -70,7 +70,7 @@ public:
         }
 
         cur = root;
-        //* 此时root已经在[L, R] 范围内，处理右孩子大于R的情况
+        //* 此时root已经在[L, R] 范围内，处理右孩子中大于R的元素
         while (cur != nullptr) {
             while (cur->right && cur->right->val > R) {
                 cur->right = cur->right->left;

@@ -26,7 +26,7 @@ using namespace std;
 class Solution {
 public:
     vector<int> partitionLabels(string S) {
-        int rightBorder[27] = {0};              //* i为字符，rightBorder[i]为字符出现的最后位置
+        int rightBorder[27] = {0};              //* rightBorder数组记录字符最后出现的位置
         for (int i = 0; i < S.size(); i++) {    //* 统计每一个字符最后出现的位置
             rightBorder[S[i] - 'a'] = i;
         }

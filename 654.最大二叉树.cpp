@@ -87,7 +87,7 @@ public:
  * 优化思路：
  * 单调栈解法：时间复杂度 O(n)，空间复杂度 O(n)
  * 使用单调栈可以找到每个元素左侧和右侧的最近的比自身大的元素
- * 其中较小的元素对应的节点是自身的父节点
+ ! 其中较小的元素对应的节点是自身的父节点
  * 思路与排序解法类似
 */
 class Solution {
@@ -99,11 +99,11 @@ public:
         vector<TreeNode*> tree(n);
         for (int i = 0; i < n; ++i) {
             tree[i] = new TreeNode(nums[i]);
-            while (!stk.empty() && nums[i] > nums[stk.back()]) {
+            while (!stk.empty() && nums[i] > nums[stk.back()]) {    //* nums[i] 是 nums[stk.back()] 右侧第一个比它大的元素
                 right[stk.back()] = i;
                 stk.pop_back();
             }
-            if (!stk.empty()) {
+            if (!stk.empty()) {                 //* nums[stk.back()] 是 nums[i] 左侧第一个比它大的元素
                 left[i] = stk.back();
             }
             stk.push_back(i);
@@ -111,7 +111,7 @@ public:
 
         TreeNode* root = nullptr;
         for (int i = 0; i < n; ++i) {
-            if (left[i] == -1 && right[i] == -1) {
+            if (left[i] == -1 && right[i] == -1) {  //* nums[i] 是整个数组最大值
                 root = tree[i];
             }
             else if (right[i] == -1 || (left[i] != -1 && nums[left[i]] < nums[right[i]])) {
