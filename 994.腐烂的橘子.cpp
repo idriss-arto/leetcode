@@ -102,14 +102,15 @@ public:
             for (int i = 0; i < 4; ++i) {
                 int tx = r + dir_x[i];
                 int ty = c + dir_y[i];
-                if (tx < 0|| tx >= m || ty < 0|| ty >= n || ~dis[tx][ty] || !(grid[tx][ty] == 1)) {
+                if (tx < 0|| tx >= m || ty < 0|| ty >= n || !(grid[tx][ty] == 1) || ~dis[tx][ty]) {
+                    //* ~dis[tx][ty]是按位取反，即dis[tx][ty] != -1
                     continue;
                 }
                 dis[tx][ty] = dis[r][c] + 1;
                 Q.emplace(pair<int, int>(tx, ty));
                 cnt -= 1;
                 ans = dis[tx][ty];
-                if (!cnt) {
+                if (!cnt) {     //* cnt为0说明已经没有新鲜橙子了
                     break;
                 }
             }

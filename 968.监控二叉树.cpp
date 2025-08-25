@@ -53,7 +53,7 @@ private:
     int result;
     int traversal(TreeNode* cur) {
 
-        //* 空节点，该节点有覆盖
+        //* 特殊处理，空节点，当做该节点有覆盖
         if (cur == nullptr) return 2;
 
         int left = traversal(cur->left);
@@ -89,7 +89,7 @@ private:
 public:
     int minCameraCover(TreeNode* root) {
         result = 0;
-        //* 情况4
+        //* 特殊处理
         if (traversal(root) == 0) { //* root 无覆盖
             result++;
         }
